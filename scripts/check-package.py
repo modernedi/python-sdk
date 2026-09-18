@@ -52,11 +52,16 @@ def validate_python_metadata(data, version):
             "Missing public Python repository metadata")
 
 
-def validate_artifacts(root, language):
+def validate_artifacts(root, language, allow_attestations=False):
     version, repository = package_identity(root, language)
     expected = ([f"modernedi_sdk-{version}-py3-none-any.whl", f"modernedi_sdk-{version}.tar.gz"]
                 if language == "python" else [f"ModernEdi.{version}.nupkg"])
     artifacts = {file.name: file.read_bytes() for file in (root / "dist").iterdir() if file.is_file()}
+    if allow_attestations and language == "python":
+        # The official PyPI action creates these sidecars during publication. They are
+        # not extra distributions, and are not allowed in the pre-upload inventory.
+        artifacts = {name: data for name, data in artifacts.items()
+                     if name not in {f"{package}.publish.attestation" for package in expected}}
     require(set(artifacts) == set(expected), "Unexpected or missing package artifacts")
     for name, data in artifacts.items():
         if name.endswith(".whl"):
@@ -121,7 +126,7 @@ def preflight(root, language, fetch=get):
 
 
 def verify_registry(root, language, data):
-    artifacts = validate_artifacts(root, language)
+    artifacts = validate_artifacts(root, language, allow_attestations=True)
     if language == "python":
         published = {item["filename"]: item for item in json.loads(data)["urls"]}
         require(set(published) == set(artifacts), "Registry artifact inventory differs")
