@@ -1,0 +1,4026 @@
+{
+  "bundledSpecificationSha256": "8d5319f4113de990f766c8276031f9b2563c925563e69fdb3257ac7b90b4026b",
+  "cases": [
+    {
+      "id": "acknowledgeMappedOutput/200/default",
+      "schema": "MappedOutputAckResponse",
+      "value": {
+        "success": true,
+        "environment": "production",
+        "acknowledgment": {
+          "id": "7e8276c1d55988a4bf7fbf9f8c2d87187a24bd316dfed84bbf64397b8d5b6e4a",
+          "messageId": "msg-850-api",
+          "mappedOutputKey": "17#0001#00001",
+          "ackedAt": "2026-04-29T15:34:10.000000000Z"
+        },
+        "id": "7e8276c1d55988a4bf7fbf9f8c2d87187a24bd316dfed84bbf64397b8d5b6e4a",
+        "messageId": "msg-850-api",
+        "mappedOutputKey": "17#0001#00001",
+        "ackedAt": "2026-04-29T15:34:10.000000000Z"
+      }
+    },
+    {
+      "id": "watchIntegrationTransaction/401/default",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "unauthorized",
+          "message": "Missing or invalid integration API key.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {}
+        }
+      }
+    },
+    {
+      "id": "watchIntegrationTransaction/402/default",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "billing_inactive",
+          "message": "Tenant billing status \"canceled\" does not allow integration API access.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {}
+        }
+      }
+    },
+    {
+      "id": "watchIntegrationTransaction/403/default",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "insufficient_scope",
+          "message": "The Integration API key does not grant the required scope.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {
+            "requiredScopes": [
+              "configuration:write"
+            ],
+            "grantedScopes": [
+              "configuration:read"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "validateX12/413/configurationPlanLimit",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "payload_too_large",
+          "message": "Configuration plan request body must be 16 MB or smaller.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {
+            "maximumBytes": 16777216
+          }
+        }
+      }
+    },
+    {
+      "id": "validateX12/413/configurationApplyLimit",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "payload_too_large",
+          "message": "Configuration apply request body must be 16 MB or smaller.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {
+            "maximumBytes": 16777216
+          }
+        }
+      }
+    },
+    {
+      "id": "validateX12/413/configurationLimit",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "payload_too_large",
+          "message": "Mapping configuration request body must be 1 MB or smaller.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {
+            "maximumBytes": 1048576
+          }
+        }
+      }
+    },
+    {
+      "id": "validateX12/413/replayLimit",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "payload_too_large",
+          "message": "Transaction replay request body must be 16 KB or smaller.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {
+            "maximumBytes": 16384
+          }
+        }
+      }
+    },
+    {
+      "id": "validateX12/413/outboundLimit",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "payload_too_large",
+          "message": "Outbound AS2 request body must be 3 MB or smaller.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {
+            "maximumBytes": 3145728
+          }
+        }
+      }
+    },
+    {
+      "id": "getIntegrationConfigurationApplyOperation/200/succeeded",
+      "schema": "ConfigurationApplyOperationResponse",
+      "value": {
+        "success": true,
+        "operation": {
+          "operationId": "apply-3ee360bd-7e41-4c55-80f8-3f1e5839804d",
+          "changedBy": {
+            "type": "API_KEY",
+            "label": "Production deployment"
+          },
+          "status": "SUCCEEDED",
+          "desiredBundleSha256": "a30d5aec541aaf45f50cf7f1922f8f169ada0c62b94f3ae44dec0c31f97bf401",
+          "planSha256": "b9c9eb985ce73affb13467d70f994ab4b8f161c3ff7a5a708be0a317ce8d69fd",
+          "baseSnapshotEtag": "\"41e0beb711cf83eb7c849b8aef48c5e35ea428645d357a3a2a731936f7000b38\"",
+          "appliedSnapshotEtag": "\"7cc459ae46afc5c86879660f7f6710cd38b01544c3ac4bb30fb01f72130ab351\"",
+          "runtimeConfigurationRevision": 43,
+          "summary": {
+            "create": 1,
+            "update": 0,
+            "delete": 0,
+            "unchanged": 0
+          },
+          "operations": [
+            {
+              "action": "CREATE",
+              "kind": "Partner",
+              "key": "2fa59493-6678-426f-a6d9-a4c32dac19e1",
+              "path": "partners/2fa59493-6678-426f-a6d9-a4c32dac19e1/partner.json",
+              "desired": {
+                "contentSha256": "e603822785badbf68cb7977ad8e57b7efc7fc16e3a216244796b3ac3d6808064"
+              }
+            }
+          ],
+          "runtimePublication": {
+            "state": "published",
+            "retrying": false
+          },
+          "requestedAt": "2026-08-30T17:24:00.000000000Z",
+          "committedAt": "2026-08-30T17:24:00.100000000Z",
+          "completedAt": "2026-08-30T17:24:00.200000000Z"
+        }
+      }
+    },
+    {
+      "id": "getIntegrationConfigurationApplyOperation/200/publicationPending",
+      "schema": "ConfigurationApplyOperationResponse",
+      "value": {
+        "success": true,
+        "operation": {
+          "operationId": "apply-d845bc0e-7b71-4f1a-8071-b4a9a4468755",
+          "changedBy": {
+            "type": "API_KEY",
+            "label": "Production deployment"
+          },
+          "status": "PENDING",
+          "desiredBundleSha256": "a30d5aec541aaf45f50cf7f1922f8f169ada0c62b94f3ae44dec0c31f97bf401",
+          "planSha256": "b9c9eb985ce73affb13467d70f994ab4b8f161c3ff7a5a708be0a317ce8d69fd",
+          "baseSnapshotEtag": "\"41e0beb711cf83eb7c849b8aef48c5e35ea428645d357a3a2a731936f7000b38\"",
+          "appliedSnapshotEtag": "\"7cc459ae46afc5c86879660f7f6710cd38b01544c3ac4bb30fb01f72130ab351\"",
+          "runtimeConfigurationRevision": 43,
+          "summary": {
+            "create": 1,
+            "update": 0,
+            "delete": 0,
+            "unchanged": 0
+          },
+          "operations": [
+            {
+              "action": "CREATE",
+              "kind": "Partner",
+              "key": "2fa59493-6678-426f-a6d9-a4c32dac19e1",
+              "path": "partners/2fa59493-6678-426f-a6d9-a4c32dac19e1/partner.json",
+              "desired": {
+                "contentSha256": "e603822785badbf68cb7977ad8e57b7efc7fc16e3a216244796b3ac3d6808064"
+              }
+            }
+          ],
+          "runtimePublication": {
+            "state": "pending",
+            "retrying": true,
+            "message": "Runtime publication is pending automatic retry."
+          },
+          "requestedAt": "2026-08-30T17:24:00.000000000Z",
+          "committedAt": "2026-08-30T17:24:00.100000000Z",
+          "completedAt": null
+        }
+      }
+    },
+    {
+      "id": "applyIntegrationConfiguration/400/structurallyInvalid",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "configuration_apply_invalid",
+          "message": "The desired configuration bundle was structurally invalid.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {
+            "diagnostics": [
+              {
+                "severity": "ERROR",
+                "code": "FILE_HASH_MISMATCH",
+                "message": "contentSha256 did not match the logical bytes of modernedi.json.",
+                "pointer": "/files/0/contentSha256"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "applyIntegrationConfiguration/409/default",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "idempotency_key_conflict",
+          "message": "This Idempotency-Key was already used for a different configuration apply request.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {
+            "operationId": "apply-3ee360bd-7e41-4c55-80f8-3f1e5839804d"
+          }
+        }
+      }
+    },
+    {
+      "id": "applyIntegrationConfiguration/412/default",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "configuration_plan_stale",
+          "message": "The workspace configuration changed after this apply was planned.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {
+            "plan": {
+              "success": true,
+              "applicable": true,
+              "desiredBundleSha256": "a30d5aec541aaf45f50cf7f1922f8f169ada0c62b94f3ae44dec0c31f97bf401",
+              "currentSnapshotEtag": "\"7cc459ae46afc5c86879660f7f6710cd38b01544c3ac4bb30fb01f72130ab351\"",
+              "runtimeConfigurationRevision": 43,
+              "validationContext": {
+                "syntaxTreeCatalogRevision": "2026-08-29.1",
+                "syntaxTreeCatalogManifestSha256": "0dd712a9308f5dbc786e0a68765354077e58702bc4d4fb82faf2ca3f7d674f1d"
+              },
+              "planSha256": "9f20a1d5203695902046fdb1ece00d3c7e5e90dde48c5213ed7b5c2199224621",
+              "summary": {
+                "create": 1,
+                "update": 0,
+                "delete": 0,
+                "unchanged": 0
+              },
+              "operations": [
+                {
+                  "action": "CREATE",
+                  "kind": "Partner",
+                  "key": "2fa59493-6678-426f-a6d9-a4c32dac19e1",
+                  "path": "partners/2fa59493-6678-426f-a6d9-a4c32dac19e1/partner.json",
+                  "desired": {
+                    "contentSha256": "e603822785badbf68cb7977ad8e57b7efc7fc16e3a216244796b3ac3d6808064"
+                  }
+                }
+              ],
+              "diagnostics": [],
+              "scenarioImpactComplete": true,
+              "affectedScenarios": [],
+              "affectedRuns": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "applyIntegrationConfiguration/422/default",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "configuration_apply_not_applicable",
+          "message": "The desired configuration is not currently applicable. Resolve the refreshed plan diagnostics.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {
+            "plan": {
+              "success": true,
+              "applicable": false,
+              "desiredBundleSha256": "a30d5aec541aaf45f50cf7f1922f8f169ada0c62b94f3ae44dec0c31f97bf401",
+              "currentSnapshotEtag": "\"41e0beb711cf83eb7c849b8aef48c5e35ea428645d357a3a2a731936f7000b38\"",
+              "runtimeConfigurationRevision": 42,
+              "validationContext": {
+                "syntaxTreeCatalogRevision": "2026-08-29.1",
+                "syntaxTreeCatalogManifestSha256": "0dd712a9308f5dbc786e0a68765354077e58702bc4d4fb82faf2ca3f7d674f1d"
+              },
+              "planSha256": null,
+              "summary": {
+                "create": 0,
+                "update": 1,
+                "delete": 0,
+                "unchanged": 0
+              },
+              "operations": [
+                {
+                  "action": "UPDATE",
+                  "kind": "Partner",
+                  "key": "2fa59493-6678-426f-a6d9-a4c32dac19e1",
+                  "path": "partners/2fa59493-6678-426f-a6d9-a4c32dac19e1/partner.json",
+                  "current": {
+                    "resourceId": 24,
+                    "contentSha256": "7ca661ff2acdea62b05783ab13e831f66e29d1da22b783d017fa2f9dd594a85c",
+                    "apiEtag": "\"6666666666666666666666666666666666666666666666666666666666666666\""
+                  },
+                  "desired": {
+                    "contentSha256": "e603822785badbf68cb7977ad8e57b7efc7fc16e3a216244796b3ac3d6808064"
+                  }
+                }
+              ],
+              "diagnostics": [
+                {
+                  "severity": "ERROR",
+                  "code": "ACTIVE_SCENARIO_RUNS_AFFECTED",
+                  "message": "Complete or cancel the affected active scenario run before applying this configuration.",
+                  "pointer": ""
+                }
+              ],
+              "scenarioImpactComplete": true,
+              "affectedScenarios": [
+                {
+                  "bindingId": "binding-retail-production",
+                  "revision": 4,
+                  "name": "Retail production verification",
+                  "environment": "production",
+                  "definition": {
+                    "namespace": "modernedi.managed",
+                    "key": "retail-order-to-cash",
+                    "version": "1"
+                  },
+                  "effect": "REAPPLY_REQUIRED",
+                  "resources": [
+                    {
+                      "kind": "Partner",
+                      "key": "2fa59493-6678-426f-a6d9-a4c32dac19e1",
+                      "action": "UPDATE"
+                    }
+                  ]
+                }
+              ],
+              "affectedRuns": [
+                {
+                  "runId": "run-94bd1b29-649d-4662-a87c-d87dc9019269",
+                  "bindingId": "binding-retail-production",
+                  "bindingRevision": 4,
+                  "effect": "CANCEL_OR_COMPLETE_REQUIRED",
+                  "resources": [
+                    {
+                      "kind": "Partner",
+                      "key": "2fa59493-6678-426f-a6d9-a4c32dac19e1",
+                      "action": "UPDATE"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "applyIntegrationConfiguration/428/default",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "precondition_required",
+          "message": "Idempotency-Key and If-Match are required for configuration apply.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {}
+        }
+      }
+    },
+    {
+      "id": "exportIntegrationConfiguration/200/default",
+      "schema": "ConfigurationExportResponse",
+      "value": {
+        "success": true,
+        "bundleSha256": "d5501d66cac6c3217149a92a41c8c7a801c81e764214c85c23bcd03cb20b6260",
+        "snapshotSha256": "bc6335b0ec499013e4f2ffbbb85666ed97bfce4bebdb5bd66496fe1333c671bb",
+        "snapshotEtag": "\"bc6335b0ec499013e4f2ffbbb85666ed97bfce4bebdb5bd66496fe1333c671bb\"",
+        "files": [
+          {
+            "path": "_state/snapshot.json",
+            "role": "STATE",
+            "format": "JSON",
+            "mediaType": "application/json",
+            "contentSha256": "bc6335b0ec499013e4f2ffbbb85666ed97bfce4bebdb5bd66496fe1333c671bb",
+            "content": {
+              "apiVersion": "modernedi.com/v1",
+              "kind": "IntegrationConfigurationSnapshot",
+              "runtimeConfigurationRevision": 0,
+              "bundleSha256": "d5501d66cac6c3217149a92a41c8c7a801c81e764214c85c23bcd03cb20b6260",
+              "resources": []
+            }
+          },
+          {
+            "path": "modernedi.json",
+            "role": "MANIFEST",
+            "format": "JSON",
+            "mediaType": "application/json",
+            "contentSha256": "d5501d66cac6c3217149a92a41c8c7a801c81e764214c85c23bcd03cb20b6260",
+            "content": {
+              "apiVersion": "modernedi.com/v1",
+              "kind": "IntegrationConfiguration",
+              "resources": [],
+              "files": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "getConfigurationScenarioRunSelection/200/testBinding",
+      "schema": "ConfigurationScenarioRunSelectionResponse",
+      "value": {
+        "success": true,
+        "configurationApplyOperationId": "apply-3ee360bd-7e41-4c55-80f8-3f1e5839804d",
+        "appliedSnapshotEtag": "\"41e0beb711cf83eb7c849b8aef48c5e35ea428645d357a3a2a731936f7000b38\"",
+        "selection": {
+          "definition": {
+            "namespace": "example.orders",
+            "key": "order-invoice",
+            "version": "1",
+            "contentSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "environment": "test",
+          "binding": {
+            "id": "order-invoice-test",
+            "revision": 3,
+            "contentSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "parameters": {}
+        }
+      }
+    },
+    {
+      "id": "updateMappedOutputWebhook/400/default",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "invalid_request",
+          "message": "Request validation failed.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {}
+        }
+      }
+    },
+    {
+      "id": "watchIntegrationTransaction/414/default",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "query_too_large",
+          "message": "Query string exceeded the maximum allowed size.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {
+            "maximumBytes": 4096
+          }
+        }
+      }
+    },
+    {
+      "id": "getIntegrationConfigurationApplyOperation/404/default",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "configuration_apply_operation_not_found",
+          "message": "Configuration apply operation was not found.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {
+            "operationId": "apply-3ee360bd-7e41-4c55-80f8-3f1e5839804d"
+          }
+        }
+      }
+    },
+    {
+      "id": "getIntegrationConfigurationContext/200/default",
+      "schema": "ConfigurationContextResponse",
+      "value": {
+        "success": true,
+        "workspace": {
+          "id": 2
+        },
+        "apiKey": {
+          "id": 7,
+          "label": "Configuration automation",
+          "scopes": [
+            "configuration:read",
+            "configuration:write"
+          ]
+        }
+      }
+    },
+    {
+      "id": "getIntegrationConfigurationExternalRepository/200/default",
+      "schema": "ConfigurationExternalRepositoryResponse",
+      "value": {
+        "success": true,
+        "connected": false
+      }
+    },
+    {
+      "id": "listIntegrationConfigurationApplyOperations/200/default",
+      "schema": "ConfigurationApplyOperationHistoryResponse",
+      "value": {
+        "success": true,
+        "operations": [],
+        "nextCursor": null
+      }
+    },
+    {
+      "id": "listIntegrationPartners/200/default",
+      "schema": "PartnerListResponse",
+      "value": {
+        "success": true,
+        "partners": [
+          {
+            "partnerId": 1,
+            "name": "Customer One",
+            "as2ConnectionId": 1,
+            "as2ConnectionConfigured": true,
+            "productionReady": true,
+            "testReady": true,
+            "carbonCopyOnly": false,
+            "implementationAcknowledgmentEnabled": true,
+            "ediSupportEmail": "edi@example.com",
+            "unmappedInboundPolicy": "MAPPED_ONLY",
+            "signingCertificateSlot": "active",
+            "supportsNewlineAfterSegmentTerminator": false,
+            "overrideUserAgentString": null,
+            "overrideSeparatorSet": null,
+            "messageTypeGsVersionOverrides": {},
+            "x12": {
+              "production": {
+                "isaQualifier": "ZZ",
+                "isaId": "CUSTOMERONE",
+                "gsId": "CUSTOMERONE"
+              },
+              "test": {
+                "isaQualifier": "ZZ",
+                "isaId": "CUSTOMERONET",
+                "gsId": "CUSTOMERONET"
+              }
+            },
+            "etag": "\"1fdd736e97bc85c567596d7df37143a5b381212c8820d714cddedd4112f3952a\""
+          },
+          {
+            "partnerId": 2,
+            "name": "Broker One",
+            "as2ConnectionId": 2,
+            "as2ConnectionConfigured": true,
+            "productionReady": true,
+            "testReady": true,
+            "carbonCopyOnly": true,
+            "implementationAcknowledgmentEnabled": false,
+            "ediSupportEmail": "edi@example.com",
+            "unmappedInboundPolicy": "MAPPED_ONLY",
+            "signingCertificateSlot": "active",
+            "supportsNewlineAfterSegmentTerminator": false,
+            "overrideUserAgentString": null,
+            "overrideSeparatorSet": null,
+            "messageTypeGsVersionOverrides": {},
+            "x12": {
+              "production": {
+                "isaQualifier": "ZZ",
+                "isaId": "BROKERONE",
+                "gsId": "BROKERONE"
+              },
+              "test": {
+                "isaQualifier": "ZZ",
+                "isaId": "BROKERONET",
+                "gsId": "BROKERONET"
+              }
+            },
+            "etag": "\"8381eca8ca816f1d50517f241fe8696598cb4aaade4eb6ec4cd1d372d742958b\""
+          }
+        ]
+      }
+    },
+    {
+      "id": "listIntegrationTransactions/200/default",
+      "schema": "TransactionListResponse",
+      "value": {
+        "success": true,
+        "environment": "production",
+        "transactions": [
+          {
+            "id": "msg-850-api/17#0001",
+            "environment": "production",
+            "needsAttention": true,
+            "attentionReasons": [
+              "mapped_output_not_collected",
+              "watchlist"
+            ],
+            "mappingStatus": {
+              "status": "NOT_RECORDED",
+              "latestAttemptAt": null,
+              "failureCount": 0
+            },
+            "functionalAckStatus": "accepted",
+            "implementationAckStatus": null,
+            "mdnStatus": "processed",
+            "onWatchlist": true,
+            "x12AcknowledgmentExpectedBy": null,
+            "technicalAckRequested": false,
+            "technicalAckStatus": "not_requested",
+            "technicalAckExpectedBy": null,
+            "technicalAckOutcome": null,
+            "messageId": "msg-850-api",
+            "transactionKey": "17#0001",
+            "replyToMessageId": null,
+            "replyToTransactionKey": null,
+            "direction": "inbound",
+            "partnerName": "Customer One",
+            "partnerId": 1,
+            "partnerConfigurationSha256": null,
+            "timestamp": "2026-03-25T18:15:00.000000000Z",
+            "transactionSet": {
+              "code": "850",
+              "description": "Purchase Order"
+            },
+            "controlNumbers": {
+              "transaction": "0001",
+              "functionalGroup": "17"
+            },
+            "edi": {
+              "x12Version": "4010",
+              "functionalIdentifierCode": "PO",
+              "transactionGroupType": "850",
+              "segmentTerminator": "~"
+            },
+            "businessKey": {
+              "name": "purchaseOrderNumber",
+              "value": "PO-100045"
+            },
+            "functionalAckOutcome": {
+              "status": "accepted",
+              "acknowledgmentCode": "A",
+              "summary": "Functional group accepted; 1 of 1 received transaction set was accepted."
+            },
+            "functionalAckTransactionOutcome": {
+              "functionalIdentifierCode": "PO",
+              "functionalGroupControlNumber": "17",
+              "transactionSetIdentifierCode": "850",
+              "transactionSetControlNumber": "0001",
+              "implementationConventionReference": null,
+              "status": "accepted",
+              "acknowledgmentCode": "A",
+              "errorCodes": []
+            },
+            "functionalAckGroupOutcome": {
+              "functionalIdentifierCode": "PO",
+              "functionalGroupControlNumber": "17",
+              "functionalGroupVersion": null,
+              "status": "accepted",
+              "acknowledgmentCode": "A",
+              "includedTransactionSets": 1,
+              "receivedTransactionSets": 1,
+              "acceptedTransactionSets": 1,
+              "errorCodes": []
+            },
+            "functionalAckEvaluationScope": "transaction_set",
+            "implementationAckOutcome": null,
+            "implementationAckTransactionOutcome": null,
+            "implementationAckEvaluationScope": null
+          }
+        ],
+        "nextCursor": null,
+        "hasMore": false,
+        "window": {
+          "startDate": "2026-03-01T00:00:00.000000000Z",
+          "endDate": "2026-03-31T23:59:59.999999999Z",
+          "timeZone": "UTC"
+        },
+        "attentionSummary": {
+          "needsAttentionCount": 1,
+          "reasonCounts": {
+            "mappingFailure": 0,
+            "functionalAckIssue": 0,
+            "implementationAckIssue": 0,
+            "x12AckOverdue": 0,
+            "technicalAckIssue": 0,
+            "technicalAckOverdue": 0,
+            "as2MdnAttention": 0,
+            "mappedOutputNotCollected": 1,
+            "mappedOutputAckOverdue": 0,
+            "watchlist": 1
+          },
+          "freshness": {
+            "status": "current",
+            "complete": true,
+            "lastCompletedAt": "2026-03-31T23:59:45.000000000Z",
+            "reconciliationStartedAt": null,
+            "message": null
+          }
+        }
+      }
+    },
+    {
+      "id": "planIntegrationConfiguration/200/default",
+      "schema": "ConfigurationPlanResponse",
+      "value": {
+        "success": true,
+        "applicable": true,
+        "desiredBundleSha256": "a30d5aec541aaf45f50cf7f1922f8f169ada0c62b94f3ae44dec0c31f97bf401",
+        "currentSnapshotEtag": "\"41e0beb711cf83eb7c849b8aef48c5e35ea428645d357a3a2a731936f7000b38\"",
+        "runtimeConfigurationRevision": 42,
+        "validationContext": {
+          "syntaxTreeCatalogRevision": "2026-08-29.1",
+          "syntaxTreeCatalogManifestSha256": "0dd712a9308f5dbc786e0a68765354077e58702bc4d4fb82faf2ca3f7d674f1d"
+        },
+        "planSha256": "b9c9eb985ce73affb13467d70f994ab4b8f161c3ff7a5a708be0a317ce8d69fd",
+        "summary": {
+          "create": 1,
+          "update": 0,
+          "delete": 0,
+          "unchanged": 0
+        },
+        "operations": [
+          {
+            "action": "CREATE",
+            "kind": "Partner",
+            "key": "2fa59493-6678-426f-a6d9-a4c32dac19e1",
+            "path": "partners/2fa59493-6678-426f-a6d9-a4c32dac19e1/partner.json",
+            "desired": {
+              "contentSha256": "e603822785badbf68cb7977ad8e57b7efc7fc16e3a216244796b3ac3d6808064"
+            }
+          }
+        ],
+        "diagnostics": [],
+        "scenarioImpactComplete": true,
+        "affectedScenarios": [],
+        "affectedRuns": []
+      }
+    },
+    {
+      "id": "planIntegrationConfiguration/400/default",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "configuration_plan_invalid",
+          "message": "The desired configuration bundle was structurally invalid.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {
+            "diagnostics": [
+              {
+                "severity": "ERROR",
+                "code": "FILE_HASH_MISMATCH",
+                "message": "contentSha256 did not match the logical bytes of partners/2fa59493-6678-426f-a6d9-a4c32dac19e1/partner.json.",
+                "pointer": "/files/0/contentSha256"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "pollMappedOutputs/200/default",
+      "schema": "MappedOutputQueueResponse",
+      "value": {
+        "success": true,
+        "environment": "production",
+        "messages": [
+          {
+            "id": "7e8276c1d55988a4bf7fbf9f8c2d87187a24bd316dfed84bbf64397b8d5b6e4a",
+            "receiptHandle": "0af7dd1d-b6a1-4ff9-8ad1-d395de0b97f2",
+            "deliveryCount": 1,
+            "leasedUntil": "2026-04-29T15:35:00.000000000Z",
+            "environment": "production",
+            "messageId": "msg-850-api",
+            "transactionKey": "17#0001",
+            "partnerName": "Customer One",
+            "partnerId": 1,
+            "transactionTimestamp": "2026-04-29T15:33:00.000000000Z",
+            "transactionSet": {
+              "code": "850",
+              "description": "Purchase Order"
+            },
+            "controlNumbers": {
+              "transaction": "0001",
+              "functionalGroup": "17"
+            },
+            "edi": {
+              "x12Version": "4010",
+              "functionalIdentifierCode": "PO",
+              "transactionGroupType": "850",
+              "segmentTerminator": "~"
+            },
+            "mapping": {
+              "id": 44,
+              "type": "ManagedQueueMapping",
+              "file": "customer-one-850.jslt",
+              "fileSha256Hash": "5vG51TfOLEo9YN0WSMf0bj+xzluq2UptTm4flVSo8EE="
+            },
+            "mappedOutputKey": "17#0001#00001",
+            "sequenceNumber": 1,
+            "purpose": "PROCESSING",
+            "contentType": "application/json",
+            "createdAt": "2026-04-29T15:33:04.000000000Z",
+            "businessKey": {
+              "name": "purchaseOrderNumber",
+              "value": "PO-100045"
+            },
+            "extraFields": {
+              "destination": "managedQueue"
+            },
+            "payload": "{\"purchaseOrderNumber\":\"PO-100045\",\"shipTo\":{\"name\":\"Main DC\"}}"
+          }
+        ],
+        "limit": 10,
+        "visibilityTimeoutSeconds": 120,
+        "nextCursor": null,
+        "hasMore": false
+      }
+    },
+    {
+      "id": "replyToInboundAs2Message/200/default",
+      "schema": "SendSuccessResponse",
+      "value": {
+        "success": true,
+        "messageId": "<generated-message-id@modernedi>",
+        "x12": "ISA*00*          *00*          *ZZ*SENDERID       *ZZ*RECEIVERID     *260427*2100*U*00401*000000001*0*T*>~GS*IN*SENDER*RECEIVER*20260427*2100*1*X*004010~ST*810*000000001~BIG*20260427*INV-DEMO-1001*20260420*PO-DEMO-1001~IT1*1*24*EA*10.00**IN*DEMO-BUY-001~TDS*24000~SE*5*000000001~GE*1*1~IEA*1*000000001~"
+      }
+    },
+    {
+      "id": "sendAs2Message/400/default",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "invalid_generated_x12",
+          "message": "Outgoing map generated invalid X12.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {}
+        }
+      }
+    },
+    {
+      "id": "replyToInboundAs2Message/404/default",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "not_found",
+          "message": "No outgoing transform map matched partnerId \"1\", x12Version \"4010\", functionalGroupType \"IN\", transactionGroupType \"810\", and contentType \"application/xml\".",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {}
+        }
+      }
+    },
+    {
+      "id": "sendAs2Message/409/default",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "idempotency_key_conflict",
+          "message": "This Idempotency-Key was already used for a different request body or operation.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {}
+        }
+      }
+    },
+    {
+      "id": "sendAs2Message/502/default",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "tenant_as2_send_failed",
+          "message": "The tenant AS2 runtime rejected the outbound message.",
+          "retryable": true,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {
+            "tenantAs2StatusCode": 502
+          }
+        }
+      }
+    },
+    {
+      "id": "sendAs2CarbonCopy/200/default",
+      "schema": "SendSuccessResponse",
+      "value": {
+        "success": true,
+        "messageId": "<generated-message-id@modernedi>",
+        "x12": "ISA*00*          *00*          *ZZ*SENDERID       *ZZ*RECEIVERID     *260427*2100*U*00401*000000001*0*T*>~GS*SH*SENDER*RECEIVER*20260427*2100*1*X*004010~ST*856*000000001~BSN*00*ASN0001*20260427*2100~HL*1**S~TD5*B*2*UPSN*M*GROUND~REF*CN*1Z999999~HL*2*1*O~PRF*PO0001~SE*8*000000001~GE*1*1~IEA*1*000000001~"
+      }
+    },
+    {
+      "id": "sendAs2CarbonCopy/404/default",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "not_found",
+          "message": "No outgoing transform map matched partnerId \"1\", x12Version \"4010\", functionalGroupType \"SH\", transactionGroupType \"856\", and contentType \"application/xml\".",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {}
+        }
+      }
+    },
+    {
+      "id": "sendAs2Message/200/default",
+      "schema": "SendSuccessResponse",
+      "value": {
+        "success": true,
+        "messageId": "<generated-message-id@modernedi>",
+        "x12": "ISA*00*          *00*          *ZZ*SENDERID       *ZZ*RECEIVERID     *260427*2100*U*00401*000000001*0*T*>~GS*PO*SENDER*RECEIVER*20260427*2100*1*X*004010~ST*850*000000001~BEG*00*SA*PO-DEMO-1001**20260520~REF*DP*D12~N1*ST*Demo Distribution Center*92*DC-DEMO~PO1*1*24*EA*10.00**IN*DEMO-BUY-001~CTT*1~SE*6*000000001~GE*1*1~IEA*1*000000001~"
+      }
+    },
+    {
+      "id": "sendAs2Message/404/default",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "not_found",
+          "message": "No outgoing transform map matched partnerId \"1\", x12Version \"4010\", functionalGroupType \"PO\", transactionGroupType \"850\", and contentType \"application/xml\".",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {}
+        }
+      }
+    },
+    {
+      "id": "testMappedOutputWebhook/200/default",
+      "schema": "MappedOutputWebhookTestResponse",
+      "value": {
+        "success": true,
+        "synthetic": true,
+        "event": "mapped_output.test",
+        "deliveryId": "test_94b2796c-1d6a-4f87-ae63-ae4f3b25f67c",
+        "requestId": "webhook-test-2026-08-01",
+        "attemptedAt": "2026-08-01T18:30:00.000000000Z",
+        "attempted": true,
+        "delivered": true,
+        "statusCode": 204,
+        "error": null
+      }
+    },
+    {
+      "id": "unwatchIntegrationTransaction/200/default",
+      "schema": "TransactionWatchResponse",
+      "value": {
+        "success": true,
+        "environment": "production",
+        "messageId": "msg-850-api",
+        "transactionKey": "17#0001",
+        "onWatchlist": false
+      }
+    },
+    {
+      "id": "updateMappedOutputWebhook/412/default",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "etag_mismatch",
+          "message": "Configuration changed after it was read. Fetch it again and retry with the new ETag.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {
+            "currentEtag": "\"new-resource-sha256\""
+          }
+        }
+      }
+    },
+    {
+      "id": "updateMappedOutputWebhook/428/default",
+      "schema": "ErrorResponse",
+      "value": {
+        "success": false,
+        "error": {
+          "code": "precondition_required",
+          "message": "If-Match is required for configuration updates and deletes.",
+          "retryable": false,
+          "requestId": "req_01HZ9TRK7B0YQW2V4RMNC9B60A",
+          "details": {
+            "currentEtag": "\"resource-sha256\""
+          }
+        }
+      }
+    },
+    {
+      "id": "watchIntegrationTransaction/200/default",
+      "schema": "TransactionWatchResponse",
+      "value": {
+        "success": true,
+        "environment": "production",
+        "messageId": "msg-850-api",
+        "transactionKey": "17#0001",
+        "onWatchlist": true
+      }
+    },
+    {
+      "id": "mapping/INCOMING/PROCESSING/MAPPED_OUTPUTS",
+      "schema": "ConfigurationPlanRequest",
+      "value": {
+        "files": [
+          {
+            "path": "mappings/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/mapping.json",
+            "role": "RESOURCE",
+            "format": "JSON",
+            "mediaType": "application/json",
+            "contentSha256": "ef02b7f32fcb1496b98e211300deedbaa8411118ab4721e90a1de8e2f0c74c42",
+            "content": {
+              "apiVersion": "modernedi.com/v1",
+              "kind": "Mapping",
+              "metadata": {
+                "key": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+              },
+              "spec": {
+                "partnerKey": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+                "direction": "INCOMING",
+                "x12Version": "4010",
+                "functionalIdentifierCode": "PO",
+                "transactionSetIdentifierCode": "850",
+                "transform": {
+                  "type": "X12_MAPPER",
+                  "fileName": "folder/order.x12mapper",
+                  "sourcePath": "mappings/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/source.x12mapper",
+                  "sourceSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+                },
+                "output": {
+                  "contentType": "application/json",
+                  "purpose": "PROCESSING",
+                  "delivery": "MAPPED_OUTPUTS"
+                },
+                "deliveredMetadata": {
+                  "partner": false,
+                  "transactionTimestamp": true,
+                  "transactionSet": false,
+                  "transactionControlNumber": true,
+                  "functionalGroupControlNumber": false,
+                  "x12Version": true,
+                  "functionalIdentifierCode": false,
+                  "segmentTerminator": true,
+                  "mappingSourceHash": false
+                },
+                "runtime": {
+                  "extraFields": {
+                    "exampleField": "preserved"
+                  }
+                },
+                "regressionCases": [
+                  {
+                    "id": "order",
+                    "name": "Order",
+                    "comparison": "EXACT_TEXT",
+                    "input": "sample\r\n",
+                    "contentType": "application/edi-x12",
+                    "params": null,
+                    "functionalGroupIndex": null,
+                    "transactionIndex": null,
+                    "expectedOutput": "exact\n"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "optional-fields/INCOMING",
+      "schema": "MappingRegressionCase",
+      "value": {
+        "id": "order",
+        "name": "Order",
+        "comparison": "EXACT_TEXT",
+        "input": "sample\r\n",
+        "contentType": "application/edi-x12",
+        "params": null,
+        "functionalGroupIndex": null,
+        "transactionIndex": null,
+        "expectedOutput": "exact\n"
+      }
+    },
+    {
+      "id": "mapping/INCOMING/PROCESSING/TRANSACTION_RECORD",
+      "schema": "ConfigurationPlanRequest",
+      "value": {
+        "files": [
+          {
+            "path": "mappings/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/mapping.json",
+            "role": "RESOURCE",
+            "format": "JSON",
+            "mediaType": "application/json",
+            "contentSha256": "7f1f863c0a5a3a8d80ed157db526b657996c24a21182326c5e84cc5daf4bf2e3",
+            "content": {
+              "apiVersion": "modernedi.com/v1",
+              "kind": "Mapping",
+              "metadata": {
+                "key": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+              },
+              "spec": {
+                "partnerKey": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+                "direction": "INCOMING",
+                "x12Version": "4010",
+                "functionalIdentifierCode": "PO",
+                "transactionSetIdentifierCode": "850",
+                "transform": {
+                  "type": "X12_MAPPER",
+                  "fileName": "folder/order.x12mapper",
+                  "sourcePath": "mappings/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/source.x12mapper",
+                  "sourceSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+                },
+                "output": {
+                  "contentType": "application/json",
+                  "purpose": "PROCESSING",
+                  "delivery": "TRANSACTION_RECORD"
+                },
+                "deliveredMetadata": {
+                  "partner": false,
+                  "transactionTimestamp": true,
+                  "transactionSet": false,
+                  "transactionControlNumber": true,
+                  "functionalGroupControlNumber": false,
+                  "x12Version": true,
+                  "functionalIdentifierCode": false,
+                  "segmentTerminator": true,
+                  "mappingSourceHash": false
+                },
+                "runtime": {
+                  "extraFields": {
+                    "exampleField": "preserved"
+                  }
+                },
+                "regressionCases": [
+                  {
+                    "id": "order",
+                    "name": "Order",
+                    "comparison": "EXACT_TEXT",
+                    "input": "sample\r\n",
+                    "contentType": "application/edi-x12",
+                    "params": null,
+                    "functionalGroupIndex": null,
+                    "transactionIndex": null,
+                    "expectedOutput": "exact\n"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mapping/INCOMING/ACKNOWLEDGMENT/TRANSACTION_RECORD",
+      "schema": "ConfigurationPlanRequest",
+      "value": {
+        "files": [
+          {
+            "path": "mappings/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/mapping.json",
+            "role": "RESOURCE",
+            "format": "JSON",
+            "mediaType": "application/json",
+            "contentSha256": "51403b2682851eb71914b3cb2f5c7b707f6744699aff60955f096386170268e4",
+            "content": {
+              "apiVersion": "modernedi.com/v1",
+              "kind": "Mapping",
+              "metadata": {
+                "key": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+              },
+              "spec": {
+                "partnerKey": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+                "direction": "INCOMING",
+                "x12Version": "4010",
+                "functionalIdentifierCode": "PO",
+                "transactionSetIdentifierCode": "850",
+                "transform": {
+                  "type": "X12_MAPPER",
+                  "fileName": "folder/order.x12mapper",
+                  "sourcePath": "mappings/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/source.x12mapper",
+                  "sourceSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+                },
+                "output": {
+                  "contentType": "application/json",
+                  "purpose": "ACKNOWLEDGMENT",
+                  "delivery": "TRANSACTION_RECORD"
+                },
+                "deliveredMetadata": {
+                  "partner": false,
+                  "transactionTimestamp": true,
+                  "transactionSet": false,
+                  "transactionControlNumber": true,
+                  "functionalGroupControlNumber": false,
+                  "x12Version": true,
+                  "functionalIdentifierCode": false,
+                  "segmentTerminator": true,
+                  "mappingSourceHash": false
+                },
+                "runtime": {
+                  "extraFields": {
+                    "exampleField": "preserved"
+                  }
+                },
+                "regressionCases": [
+                  {
+                    "id": "order",
+                    "name": "Order",
+                    "comparison": "EXACT_TEXT",
+                    "input": "sample\r\n",
+                    "contentType": "application/edi-x12",
+                    "params": null,
+                    "functionalGroupIndex": null,
+                    "transactionIndex": null,
+                    "expectedOutput": "exact\n"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mapping/OUTGOING/PROCESSING/OUTBOUND_AS2",
+      "schema": "ConfigurationPlanRequest",
+      "value": {
+        "files": [
+          {
+            "path": "mappings/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/mapping.json",
+            "role": "RESOURCE",
+            "format": "JSON",
+            "mediaType": "application/json",
+            "contentSha256": "ee3061a5621000db142b45c10cef0a7c6661cd51b705e98f4f9e9cbf65f6c17d",
+            "content": {
+              "apiVersion": "modernedi.com/v1",
+              "kind": "Mapping",
+              "metadata": {
+                "key": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+              },
+              "spec": {
+                "partnerKey": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+                "direction": "OUTGOING",
+                "x12Version": "4010",
+                "functionalIdentifierCode": "PO",
+                "transactionSetIdentifierCode": "850",
+                "transform": {
+                  "type": "JSLT",
+                  "fileName": "folder/order.x12mapper",
+                  "sourcePath": "mappings/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/source.x12mapper",
+                  "sourceSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+                },
+                "output": {
+                  "contentType": "application/json",
+                  "purpose": "PROCESSING",
+                  "delivery": "OUTBOUND_AS2"
+                },
+                "deliveredMetadata": {
+                  "partner": false,
+                  "transactionTimestamp": true,
+                  "transactionSet": false,
+                  "transactionControlNumber": true,
+                  "functionalGroupControlNumber": false,
+                  "x12Version": true,
+                  "functionalIdentifierCode": false,
+                  "segmentTerminator": true,
+                  "mappingSourceHash": false
+                },
+                "runtime": {
+                  "extraFields": {
+                    "exampleField": "preserved"
+                  }
+                },
+                "regressionCases": [
+                  {
+                    "id": "order",
+                    "name": "Order",
+                    "comparison": "EXACT_TEXT",
+                    "input": "sample\r\n",
+                    "contentType": "application/json",
+                    "params": null,
+                    "functionalGroupIndex": null,
+                    "transactionIndex": null,
+                    "expectedOutput": "exact\n"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "optional-fields/OUTGOING",
+      "schema": "MappingRegressionCase",
+      "value": {
+        "id": "order",
+        "name": "Order",
+        "comparison": "EXACT_TEXT",
+        "input": "sample\r\n",
+        "contentType": "application/json",
+        "params": null,
+        "functionalGroupIndex": null,
+        "transactionIndex": null,
+        "expectedOutput": "exact\n"
+      }
+    },
+    {
+      "id": "scenario/grocery-order-to-invoice.scenario.json",
+      "schema": "ConfigurationResourceDocument",
+      "value": {
+        "apiVersion": "modernedi.com/v1",
+        "kind": "ScenarioDefinition",
+        "metadata": {
+          "key": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"
+        },
+        "spec": {
+          "source": {
+            "apiVersion": "modernedi.com/scenario/v1",
+            "kind": "ScenarioDefinition",
+            "metadata": {
+              "namespace": "modernedi.examples",
+              "key": "grocery-order-to-invoice",
+              "version": "1.0.0"
+            },
+            "spec": {
+              "parameters": [
+                {
+                  "id": "expectedInvoiceTotal",
+                  "type": "decimal",
+                  "required": true
+                }
+              ],
+              "actors": [
+                {
+                  "id": "groceryBuyer"
+                },
+                {
+                  "id": "grocerySupplier"
+                }
+              ],
+              "steps": [
+                {
+                  "id": "groceryPurchaseOrder",
+                  "fromActor": "groceryBuyer",
+                  "toActor": "grocerySupplier",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "875",
+                    "businessUsage": "grocery_purchase_order"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 1,
+                    "closure": {
+                      "kind": "fixed"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "purchaseOrderNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "orderedItems",
+                      "type": "set",
+                      "elementType": "string",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "purchaseOrderNumber",
+                        "orderedItems"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "advanceShipNotice",
+                  "fromActor": "grocerySupplier",
+                  "toActor": "groceryBuyer",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "856",
+                    "businessUsage": "advance_ship_notice"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 1,
+                    "closure": {
+                      "kind": "fixed"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "purchaseOrderNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "shippedItems",
+                      "type": "set",
+                      "elementType": "string",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "purchaseOrderNumber",
+                        "shippedItems"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "groceryInvoice",
+                  "fromActor": "grocerySupplier",
+                  "toActor": "groceryBuyer",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "880",
+                    "businessUsage": "grocery_invoice"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 1,
+                    "closure": {
+                      "kind": "fixed"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "purchaseOrderNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "invoiceTotal",
+                      "type": "decimal",
+                      "cardinality": "one",
+                      "normalization": [
+                        "decimal_canonical"
+                      ],
+                      "sensitivity": "financial"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "purchaseOrderNumber",
+                        "invoiceTotal"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "transitions": [
+                {
+                  "id": "shipmentForGroceryOrder",
+                  "fromStep": "groceryPurchaseOrder",
+                  "toStep": "advanceShipNotice",
+                  "relationship": "follows",
+                  "correlations": [
+                    {
+                      "id": "sameOrder",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "groceryPurchaseOrder",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "advanceShipNotice",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      }
+                    }
+                  ],
+                  "matching": {
+                    "strategy": "correlate",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "from"
+                      },
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                },
+                {
+                  "id": "invoiceSettlesShipment",
+                  "fromStep": "advanceShipNotice",
+                  "toStep": "groceryInvoice",
+                  "relationship": "follows",
+                  "correlations": [],
+                  "matching": {
+                    "strategy": "position",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "pairs"
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                }
+              ],
+              "assertions": [
+                {
+                  "id": "shippedItemsWereOrdered",
+                  "operator": "subset",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "advanceShipNotice",
+                    "fact": "shippedItems",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "fact",
+                    "stepId": "groceryPurchaseOrder",
+                    "fact": "orderedItems",
+                    "projection": "value"
+                  }
+                },
+                {
+                  "id": "invoiceTotalMatches",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "groceryInvoice",
+                    "fact": "invoiceTotal",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "parameter",
+                    "parameter": "expectedInvoiceTotal"
+                  }
+                }
+              ],
+              "checkpoints": [],
+              "branches": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "scenario/grocery-product-activity.scenario.json",
+      "schema": "ConfigurationResourceDocument",
+      "value": {
+        "apiVersion": "modernedi.com/v1",
+        "kind": "ScenarioDefinition",
+        "metadata": {
+          "key": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"
+        },
+        "spec": {
+          "source": {
+            "apiVersion": "modernedi.com/scenario/v1",
+            "kind": "ScenarioDefinition",
+            "metadata": {
+              "namespace": "modernedi.examples",
+              "key": "grocery-product-activity",
+              "version": "1.0.0"
+            },
+            "spec": {
+              "parameters": [],
+              "actors": [
+                {
+                  "id": "groceryBuyer"
+                },
+                {
+                  "id": "grocerySupplier"
+                }
+              ],
+              "steps": [
+                {
+                  "id": "productActivity",
+                  "fromActor": "groceryBuyer",
+                  "toActor": "grocerySupplier",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "852",
+                    "businessUsage": "product_activity_data"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 1,
+                    "closure": {
+                      "kind": "fixed"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "reportDate",
+                      "type": "date",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "reportedItems",
+                      "type": "list",
+                      "elementType": "string",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "activityQuantities",
+                      "type": "list",
+                      "elementType": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "reportDate",
+                        "reportedItems",
+                        "activityQuantities"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "transitions": [],
+              "assertions": [
+                {
+                  "id": "reportDateExists",
+                  "operator": "exists",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "productActivity",
+                    "fact": "reportDate",
+                    "projection": "value"
+                  }
+                },
+                {
+                  "id": "reportedItemsUnique",
+                  "operator": "unique",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "productActivity",
+                    "fact": "reportedItems",
+                    "projection": "value"
+                  }
+                }
+              ],
+              "checkpoints": [],
+              "branches": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "scenario/ocean-booking-to-invoice.scenario.json",
+      "schema": "ConfigurationResourceDocument",
+      "value": {
+        "apiVersion": "modernedi.com/v1",
+        "kind": "ScenarioDefinition",
+        "metadata": {
+          "key": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"
+        },
+        "spec": {
+          "source": {
+            "apiVersion": "modernedi.com/scenario/v1",
+            "kind": "ScenarioDefinition",
+            "metadata": {
+              "namespace": "modernedi.examples",
+              "key": "ocean-booking-to-invoice",
+              "version": "1.0.0"
+            },
+            "spec": {
+              "parameters": [
+                {
+                  "id": "bookingRequestCount",
+                  "type": "decimal",
+                  "required": true
+                },
+                {
+                  "id": "cancelRequested",
+                  "type": "boolean",
+                  "required": true
+                },
+                {
+                  "id": "inquiryRequested",
+                  "type": "boolean",
+                  "required": true
+                }
+              ],
+              "actors": [
+                {
+                  "id": "shipper"
+                },
+                {
+                  "id": "oceanCarrier"
+                }
+              ],
+              "checkpoints": [
+                {
+                  "id": "bookingDisposition"
+                },
+                {
+                  "id": "statusInquiryDecision"
+                }
+              ],
+              "steps": [
+                {
+                  "id": "bookingRequest",
+                  "fromActor": "shipper",
+                  "toActor": "oceanCarrier",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "300",
+                    "businessUsage": "booking_request_or_change"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 5,
+                    "closure": {
+                      "kind": "expected_count",
+                      "parameter": "bookingRequestCount"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "bookingReference",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim",
+                        "uppercase"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "changeSequence",
+                      "type": "decimal",
+                      "cardinality": "one",
+                      "normalization": [
+                        "decimal_canonical"
+                      ],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "bookingReference",
+                        "changeSequence"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "bookingConfirmation",
+                  "fromActor": "oceanCarrier",
+                  "toActor": "shipper",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "301",
+                    "businessUsage": "booking_confirmation"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 1,
+                    "closure": {
+                      "kind": "fixed"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "bookingReference",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim",
+                        "uppercase"
+                      ],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "bookingReference"
+                      ]
+                    },
+                    {
+                      "id": "bookingDecided",
+                      "kind": "checkpoint",
+                      "checkpoint": "bookingDisposition"
+                    }
+                  ]
+                },
+                {
+                  "id": "bookingCancellation",
+                  "fromActor": "shipper",
+                  "toActor": "oceanCarrier",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "303",
+                    "businessUsage": "booking_cancellation"
+                  },
+                  "occurrence": {
+                    "min": 0,
+                    "max": 1,
+                    "closure": {
+                      "kind": "max_reached"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "bookingReference",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim",
+                        "uppercase"
+                      ],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "bookingReference"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "shippingInstructions",
+                  "fromActor": "shipper",
+                  "toActor": "oceanCarrier",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "304",
+                    "businessUsage": "shipping_instructions"
+                  },
+                  "occurrence": {
+                    "min": 0,
+                    "max": 1,
+                    "closure": {
+                      "kind": "max_reached"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "bookingReference",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim",
+                        "uppercase"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "containerNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim",
+                        "uppercase"
+                      ],
+                      "sensitivity": "restricted"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "bookingReference",
+                        "containerNumber"
+                      ]
+                    },
+                    {
+                      "id": "inquiryDecision",
+                      "kind": "checkpoint",
+                      "checkpoint": "statusInquiryDecision"
+                    }
+                  ]
+                },
+                {
+                  "id": "shipmentStatus",
+                  "fromActor": "oceanCarrier",
+                  "toActor": "shipper",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "315",
+                    "businessUsage": "shipment_status"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 2,
+                    "closure": {
+                      "kind": "max_reached"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "bookingReference",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim",
+                        "uppercase"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "statusTimestamp",
+                      "type": "timestamp",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "bookingReference",
+                        "statusTimestamp"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "statusInquiry",
+                  "fromActor": "shipper",
+                  "toActor": "oceanCarrier",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "313",
+                    "businessUsage": "shipment_status_inquiry"
+                  },
+                  "occurrence": {
+                    "min": 0,
+                    "max": 1,
+                    "closure": {
+                      "kind": "max_reached"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "bookingReference",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim",
+                        "uppercase"
+                      ],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "bookingReference"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "arrivalNotice",
+                  "fromActor": "oceanCarrier",
+                  "toActor": "shipper",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "312",
+                    "businessUsage": "arrival_notice"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 1,
+                    "closure": {
+                      "kind": "fixed"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "bookingReference",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim",
+                        "uppercase"
+                      ],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "bookingReference"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "freightInvoice",
+                  "fromActor": "oceanCarrier",
+                  "toActor": "shipper",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "310",
+                    "businessUsage": "freight_receipt_and_invoice"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 1,
+                    "closure": {
+                      "kind": "fixed"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "bookingReference",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim",
+                        "uppercase"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "invoiceAmount",
+                      "type": "decimal",
+                      "cardinality": "one",
+                      "normalization": [
+                        "decimal_canonical"
+                      ],
+                      "sensitivity": "financial"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "bookingReference",
+                        "invoiceAmount"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "transitions": [
+                {
+                  "id": "laterBookingRequest",
+                  "fromStep": "bookingRequest",
+                  "toStep": "bookingRequest",
+                  "relationship": "supersedes",
+                  "correlations": [],
+                  "matching": {
+                    "strategy": "previous",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "record"
+                  },
+                  "effect": {
+                    "effectiveAt": {
+                      "kind": "observed_at"
+                    },
+                    "downstream": "reevaluate",
+                    "unmatched": "record"
+                  }
+                },
+                {
+                  "id": "confirmationForBooking",
+                  "fromStep": "bookingRequest",
+                  "toStep": "bookingConfirmation",
+                  "relationship": "follows",
+                  "correlations": [
+                    {
+                      "id": "sameBooking",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "bookingRequest",
+                        "fact": "bookingReference",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "bookingConfirmation",
+                        "fact": "bookingReference",
+                        "projection": "value"
+                      }
+                    }
+                  ],
+                  "matching": {
+                    "strategy": "correlate",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "from"
+                      },
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                },
+                {
+                  "id": "cancelsBooking",
+                  "fromStep": "bookingConfirmation",
+                  "toStep": "bookingCancellation",
+                  "relationship": "cancels",
+                  "correlations": [],
+                  "matching": {
+                    "strategy": "position",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "record"
+                  },
+                  "effect": {
+                    "effectiveAt": {
+                      "kind": "observed_at"
+                    },
+                    "downstream": "retain",
+                    "unmatched": "record"
+                  }
+                },
+                {
+                  "id": "cancellationForBooking",
+                  "fromStep": "bookingConfirmation",
+                  "toStep": "bookingCancellation",
+                  "relationship": "follows",
+                  "correlations": [
+                    {
+                      "id": "sameBooking",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "bookingConfirmation",
+                        "fact": "bookingReference",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "bookingCancellation",
+                        "fact": "bookingReference",
+                        "projection": "value"
+                      }
+                    }
+                  ],
+                  "matching": {
+                    "strategy": "correlate",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "from"
+                      },
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                },
+                {
+                  "id": "instructionsForBooking",
+                  "fromStep": "bookingConfirmation",
+                  "toStep": "shippingInstructions",
+                  "relationship": "follows",
+                  "correlations": [],
+                  "matching": {
+                    "strategy": "position",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "from"
+                      },
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                },
+                {
+                  "id": "statusForShipment",
+                  "fromStep": "shippingInstructions",
+                  "toStep": "shipmentStatus",
+                  "relationship": "follows",
+                  "correlations": [
+                    {
+                      "id": "sameBooking",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "shippingInstructions",
+                        "fact": "bookingReference",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "shipmentStatus",
+                        "fact": "bookingReference",
+                        "projection": "value"
+                      }
+                    }
+                  ],
+                  "matching": {
+                    "strategy": "correlate",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      },
+                      {
+                        "kind": "exactly",
+                        "scope": "pairs",
+                        "count": 2
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                },
+                {
+                  "id": "inquiryForShipment",
+                  "fromStep": "shippingInstructions",
+                  "toStep": "statusInquiry",
+                  "relationship": "follows",
+                  "correlations": [],
+                  "matching": {
+                    "strategy": "position",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "record"
+                  }
+                },
+                {
+                  "id": "arrivalAfterStatus",
+                  "fromStep": "shipmentStatus",
+                  "toStep": "arrivalNotice",
+                  "relationship": "follows",
+                  "correlations": [],
+                  "matching": {
+                    "strategy": "position",
+                    "quantifiers": [
+                      {
+                        "kind": "any",
+                        "scope": "pairs"
+                      }
+                    ],
+                    "unmatched": "record"
+                  }
+                },
+                {
+                  "id": "invoiceSettlesArrival",
+                  "fromStep": "arrivalNotice",
+                  "toStep": "freightInvoice",
+                  "relationship": "follows",
+                  "correlations": [],
+                  "matching": {
+                    "strategy": "position",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "pairs"
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                }
+              ],
+              "assertions": [
+                {
+                  "id": "bookingChangesMonotonic",
+                  "operator": "monotonic",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "bookingRequest",
+                    "fact": "changeSequence",
+                    "projection": "list"
+                  }
+                },
+                {
+                  "id": "statusTimeMonotonic",
+                  "operator": "monotonic",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "shipmentStatus",
+                    "fact": "statusTimestamp",
+                    "projection": "list"
+                  }
+                },
+                {
+                  "id": "invoiceNonnegative",
+                  "operator": "greater_than_or_equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "freightInvoice",
+                    "fact": "invoiceAmount",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "decimal",
+                    "value": 0
+                  }
+                }
+              ],
+              "branches": [
+                {
+                  "id": "bookingOutcome",
+                  "mode": "exactly_one",
+                  "checkpoint": "bookingDisposition",
+                  "alternatives": [
+                    {
+                      "id": "cancel",
+                      "kind": "when",
+                      "transitionId": "cancellationForBooking",
+                      "conditions": [
+                        {
+                          "id": "cancelRequested",
+                          "operator": "equal",
+                          "left": {
+                            "kind": "parameter",
+                            "parameter": "cancelRequested"
+                          },
+                          "right": {
+                            "kind": "literal",
+                            "type": "boolean",
+                            "value": true
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "id": "proceed",
+                      "kind": "otherwise",
+                      "transitionId": "instructionsForBooking",
+                      "conditions": []
+                    }
+                  ]
+                },
+                {
+                  "id": "statusInquiryChoice",
+                  "mode": "at_most_one",
+                  "checkpoint": "statusInquiryDecision",
+                  "alternatives": [
+                    {
+                      "id": "inquire",
+                      "kind": "when",
+                      "transitionId": "inquiryForShipment",
+                      "conditions": [
+                        {
+                          "id": "inquiryRequested",
+                          "operator": "equal",
+                          "left": {
+                            "kind": "parameter",
+                            "parameter": "inquiryRequested"
+                          },
+                          "right": {
+                            "kind": "literal",
+                            "type": "boolean",
+                            "value": true
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "scenario/retail-order-lifecycle.scenario.json",
+      "schema": "ConfigurationResourceDocument",
+      "value": {
+        "apiVersion": "modernedi.com/v1",
+        "kind": "ScenarioDefinition",
+        "metadata": {
+          "key": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"
+        },
+        "spec": {
+          "source": {
+            "apiVersion": "modernedi.com/scenario/v1",
+            "kind": "ScenarioDefinition",
+            "metadata": {
+              "namespace": "modernedi.examples",
+              "key": "retail-order-lifecycle",
+              "version": "1.0.0"
+            },
+            "spec": {
+              "parameters": [
+                {
+                  "id": "acknowledgmentCount",
+                  "type": "decimal",
+                  "required": true
+                },
+                {
+                  "id": "changeCount",
+                  "type": "decimal",
+                  "required": true
+                },
+                {
+                  "id": "changeResponseCount",
+                  "type": "decimal",
+                  "required": true
+                },
+                {
+                  "id": "shipmentCount",
+                  "type": "decimal",
+                  "required": true
+                },
+                {
+                  "id": "invoiceCount",
+                  "type": "decimal",
+                  "required": true
+                },
+                {
+                  "id": "expectedInvoiceTotal",
+                  "type": "decimal",
+                  "required": true
+                }
+              ],
+              "actors": [
+                {
+                  "id": "buyer"
+                },
+                {
+                  "id": "supplier"
+                }
+              ],
+              "steps": [
+                {
+                  "id": "purchaseOrder",
+                  "fromActor": "buyer",
+                  "toActor": "supplier",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "850",
+                    "businessUsage": "retail_purchase_order"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 1,
+                    "closure": {
+                      "kind": "fixed"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "purchaseOrderNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "orderedItems",
+                      "type": "set",
+                      "elementType": "string",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "purchaseOrderNumber",
+                        "orderedItems"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "purchaseOrderAcknowledgment",
+                  "fromActor": "supplier",
+                  "toActor": "buyer",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "855",
+                    "businessUsage": "purchase_order_acknowledgment"
+                  },
+                  "occurrence": {
+                    "min": 0,
+                    "max": 1,
+                    "closure": {
+                      "kind": "expected_count",
+                      "parameter": "acknowledgmentCount"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "purchaseOrderNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "acknowledgedItems",
+                      "type": "set",
+                      "elementType": "string",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "purchaseOrderNumber",
+                        "acknowledgedItems"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "purchaseOrderChange",
+                  "fromActor": "buyer",
+                  "toActor": "supplier",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "860",
+                    "businessUsage": "purchase_order_change"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 3,
+                    "closure": {
+                      "kind": "expected_count",
+                      "parameter": "changeCount"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "purchaseOrderNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "changeSequence",
+                      "type": "decimal",
+                      "cardinality": "one",
+                      "normalization": [
+                        "decimal_canonical"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "effectiveTimestamp",
+                      "type": "timestamp",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "purchaseOrderNumber",
+                        "changeSequence",
+                        "effectiveTimestamp"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "changeAcknowledgment",
+                  "fromActor": "supplier",
+                  "toActor": "buyer",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "865",
+                    "businessUsage": "purchase_order_change_acknowledgment"
+                  },
+                  "occurrence": {
+                    "min": 0,
+                    "max": 3,
+                    "closure": {
+                      "kind": "expected_count",
+                      "parameter": "changeResponseCount"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "purchaseOrderNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "purchaseOrderNumber"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "advanceShipNotice",
+                  "fromActor": "supplier",
+                  "toActor": "buyer",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "856",
+                    "businessUsage": "advance_ship_notice"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 4,
+                    "closure": {
+                      "kind": "expected_count",
+                      "parameter": "shipmentCount"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "purchaseOrderNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "shipmentId",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "purchaseOrderNumber",
+                        "shipmentId"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "invoice",
+                  "fromActor": "supplier",
+                  "toActor": "buyer",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "810",
+                    "businessUsage": "invoice"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 4,
+                    "closure": {
+                      "kind": "expected_count",
+                      "parameter": "invoiceCount"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "purchaseOrderNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "invoiceAmount",
+                      "type": "decimal",
+                      "cardinality": "one",
+                      "normalization": [
+                        "decimal_canonical"
+                      ],
+                      "sensitivity": "financial"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "purchaseOrderNumber",
+                        "invoiceAmount"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "transitions": [
+                {
+                  "id": "acknowledgesOrder",
+                  "fromStep": "purchaseOrder",
+                  "toStep": "purchaseOrderAcknowledgment",
+                  "relationship": "follows",
+                  "correlations": [
+                    {
+                      "id": "sameItems",
+                      "operator": "same_set",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "purchaseOrder",
+                        "fact": "orderedItems",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "purchaseOrderAcknowledgment",
+                        "fact": "acknowledgedItems",
+                        "projection": "value"
+                      }
+                    }
+                  ],
+                  "matching": {
+                    "strategy": "correlate",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "record"
+                  }
+                },
+                {
+                  "id": "initialOrderChange",
+                  "fromStep": "purchaseOrder",
+                  "toStep": "purchaseOrderChange",
+                  "relationship": "supersedes",
+                  "correlations": [
+                    {
+                      "id": "sameOrder",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "purchaseOrder",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "purchaseOrderChange",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      }
+                    }
+                  ],
+                  "matching": {
+                    "strategy": "correlate",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "fail"
+                  },
+                  "effect": {
+                    "effectiveAt": {
+                      "kind": "observed_at"
+                    },
+                    "downstream": "retain",
+                    "unmatched": "fail"
+                  }
+                },
+                {
+                  "id": "laterOrderChange",
+                  "fromStep": "purchaseOrderChange",
+                  "toStep": "purchaseOrderChange",
+                  "relationship": "supersedes",
+                  "correlations": [],
+                  "matching": {
+                    "strategy": "previous",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "record"
+                  },
+                  "effect": {
+                    "effectiveAt": {
+                      "kind": "value",
+                      "value": {
+                        "kind": "fact",
+                        "stepId": "purchaseOrderChange",
+                        "fact": "effectiveTimestamp",
+                        "projection": "value"
+                      }
+                    },
+                    "downstream": "reevaluate",
+                    "unmatched": "record"
+                  }
+                },
+                {
+                  "id": "acknowledgesChange",
+                  "fromStep": "purchaseOrderChange",
+                  "toStep": "changeAcknowledgment",
+                  "relationship": "follows",
+                  "correlations": [
+                    {
+                      "id": "sameOrder",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "purchaseOrderChange",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "changeAcknowledgment",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      }
+                    }
+                  ],
+                  "matching": {
+                    "strategy": "correlate",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "record"
+                  }
+                },
+                {
+                  "id": "shipsChangedOrder",
+                  "fromStep": "purchaseOrderChange",
+                  "toStep": "advanceShipNotice",
+                  "relationship": "follows",
+                  "correlations": [
+                    {
+                      "id": "sameOrder",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "purchaseOrderChange",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "advanceShipNotice",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      }
+                    }
+                  ],
+                  "matching": {
+                    "strategy": "correlate",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      },
+                      {
+                        "kind": "exactly",
+                        "scope": "pairs",
+                        "count": 2
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                },
+                {
+                  "id": "invoiceSettlesShipment",
+                  "fromStep": "advanceShipNotice",
+                  "toStep": "invoice",
+                  "relationship": "follows",
+                  "correlations": [],
+                  "matching": {
+                    "strategy": "position",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "from"
+                      },
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                }
+              ],
+              "assertions": [
+                {
+                  "id": "changeSequenceMonotonic",
+                  "operator": "monotonic",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "purchaseOrderChange",
+                    "fact": "changeSequence",
+                    "projection": "list"
+                  }
+                },
+                {
+                  "id": "shipmentIdsUnique",
+                  "operator": "unique",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "advanceShipNotice",
+                    "fact": "shipmentId",
+                    "projection": "list"
+                  }
+                },
+                {
+                  "id": "invoiceTotalMatches",
+                  "operator": "sum_equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "invoice",
+                    "fact": "invoiceAmount",
+                    "projection": "list"
+                  },
+                  "right": {
+                    "kind": "parameter",
+                    "parameter": "expectedInvoiceTotal"
+                  }
+                }
+              ],
+              "checkpoints": [],
+              "branches": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "scenario/warehouse-outbound.scenario.json",
+      "schema": "ConfigurationResourceDocument",
+      "value": {
+        "apiVersion": "modernedi.com/v1",
+        "kind": "ScenarioDefinition",
+        "metadata": {
+          "key": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"
+        },
+        "spec": {
+          "source": {
+            "apiVersion": "modernedi.com/scenario/v1",
+            "kind": "ScenarioDefinition",
+            "metadata": {
+              "namespace": "modernedi.examples",
+              "key": "warehouse-outbound",
+              "version": "1.0.0"
+            },
+            "spec": {
+              "parameters": [
+                {
+                  "id": "expectedAdviceCount",
+                  "type": "decimal",
+                  "required": true
+                },
+                {
+                  "id": "expectedShippedQuantity",
+                  "type": "decimal",
+                  "required": true
+                }
+              ],
+              "actors": [
+                {
+                  "id": "depositor"
+                },
+                {
+                  "id": "warehouse"
+                }
+              ],
+              "steps": [
+                {
+                  "id": "shippingOrder",
+                  "fromActor": "depositor",
+                  "toActor": "warehouse",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "940",
+                    "businessUsage": "warehouse_shipping_order"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 1,
+                    "closure": {
+                      "kind": "fixed"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "depositorOrderNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "depositorOrderNumber"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "shippingAdvice",
+                  "fromActor": "warehouse",
+                  "toActor": "depositor",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "945",
+                    "businessUsage": "warehouse_shipping_advice"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 10,
+                    "closure": {
+                      "kind": "expected_count",
+                      "parameter": "expectedAdviceCount"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "depositorOrderNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "shipmentIdentificationNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "shippedQuantity",
+                      "type": "decimal",
+                      "cardinality": "one",
+                      "normalization": [
+                        "decimal_canonical"
+                      ],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "depositorOrderNumber",
+                        "shipmentIdentificationNumber",
+                        "shippedQuantity"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "transitions": [
+                {
+                  "id": "adviceForOrder",
+                  "fromStep": "shippingOrder",
+                  "toStep": "shippingAdvice",
+                  "relationship": "follows",
+                  "within": "P2D",
+                  "correlations": [
+                    {
+                      "id": "sameOrder",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "shippingOrder",
+                        "fact": "depositorOrderNumber",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "shippingAdvice",
+                        "fact": "depositorOrderNumber",
+                        "projection": "value"
+                      }
+                    }
+                  ],
+                  "matching": {
+                    "strategy": "correlate",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "from"
+                      },
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      },
+                      {
+                        "kind": "exactly",
+                        "scope": "pairs",
+                        "count": 2
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                }
+              ],
+              "assertions": [
+                {
+                  "id": "shipmentIdsUnique",
+                  "operator": "unique",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "shippingAdvice",
+                    "fact": "shipmentIdentificationNumber",
+                    "projection": "list"
+                  }
+                },
+                {
+                  "id": "shippedQuantityMatchesExpected",
+                  "operator": "sum_equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "shippingAdvice",
+                    "fact": "shippedQuantity",
+                    "projection": "list"
+                  },
+                  "right": {
+                    "kind": "parameter",
+                    "parameter": "expectedShippedQuantity"
+                  }
+                }
+              ],
+              "checkpoints": [],
+              "branches": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "binding/test",
+      "schema": "ConfigurationResourceDocument",
+      "value": {
+        "apiVersion": "modernedi.com/v1",
+        "kind": "ScenarioBinding",
+        "metadata": {
+          "key": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"
+        },
+        "spec": {
+          "source": {
+            "$schema": "https://www.modernedi.com/docs/scenarios/schemas/scenario-binding-v1.schema.json",
+            "apiVersion": "modernedi.com/scenario-binding-authoring/v1",
+            "kind": "ScenarioBinding",
+            "metadata": {
+              "id": "retailOrderInvoice",
+              "name": "Retail order to invoice"
+            },
+            "spec": {
+              "definition": {
+                "namespace": "acme",
+                "key": "retail-order-invoice",
+                "version": "1.0.0",
+                "contentSha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+              },
+              "environment": "test",
+              "actors": [
+                {
+                  "actorId": "retailer",
+                  "endpoint": {
+                    "kind": "partner",
+                    "partnerKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+                  }
+                },
+                {
+                  "actorId": "supplier",
+                  "endpoint": {
+                    "kind": "workspace"
+                  }
+                }
+              ],
+              "steps": [
+                {
+                  "stepId": "purchaseOrder",
+                  "target": {
+                    "kind": "runtime-mapping",
+                    "mappingKey": "cccccccc-cccc-4ccc-8ccc-cccccccccccc"
+                  },
+                  "factSources": [
+                    {
+                      "fact": "purchaseOrderNumber",
+                      "source": {
+                        "kind": "x12-mapper-expression",
+                        "expression": "ST->BEG(03)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "stepId": "invoice",
+                  "target": {
+                    "kind": "runtime-mapping",
+                    "mappingKey": "cccccccc-cccc-4ccc-8ccc-cccccccccccc"
+                  },
+                  "factSources": [
+                    {
+                      "fact": "purchaseOrderNumber",
+                      "source": {
+                        "kind": "x12-mapper-expression",
+                        "expression": "ST->BIG(04)"
+                      }
+                    },
+                    {
+                      "fact": "invoiceTotal",
+                      "source": {
+                        "kind": "x12-mapper-expression",
+                        "expression": "ST->TDS(01)"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "binding/production",
+      "schema": "ConfigurationResourceDocument",
+      "value": {
+        "apiVersion": "modernedi.com/v1",
+        "kind": "ScenarioBinding",
+        "metadata": {
+          "key": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"
+        },
+        "spec": {
+          "source": {
+            "$schema": "https://www.modernedi.com/docs/scenarios/schemas/scenario-binding-v1.schema.json",
+            "apiVersion": "modernedi.com/scenario-binding-authoring/v1",
+            "kind": "ScenarioBinding",
+            "metadata": {
+              "id": "retailOrderInvoice",
+              "name": "Retail order to invoice"
+            },
+            "spec": {
+              "definition": {
+                "namespace": "acme",
+                "key": "retail-order-invoice",
+                "version": "1.0.0",
+                "contentSha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+              },
+              "environment": "production",
+              "actors": [
+                {
+                  "actorId": "retailer",
+                  "endpoint": {
+                    "kind": "partner",
+                    "partnerKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+                  }
+                },
+                {
+                  "actorId": "supplier",
+                  "endpoint": {
+                    "kind": "workspace"
+                  }
+                }
+              ],
+              "steps": [
+                {
+                  "stepId": "purchaseOrder",
+                  "target": {
+                    "kind": "runtime-mapping",
+                    "mappingKey": "cccccccc-cccc-4ccc-8ccc-cccccccccccc"
+                  },
+                  "factSources": [
+                    {
+                      "fact": "purchaseOrderNumber",
+                      "source": {
+                        "kind": "x12-mapper-expression",
+                        "expression": "ST->BEG(03)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "stepId": "invoice",
+                  "target": {
+                    "kind": "runtime-mapping",
+                    "mappingKey": "cccccccc-cccc-4ccc-8ccc-cccccccccccc"
+                  },
+                  "factSources": [
+                    {
+                      "fact": "purchaseOrderNumber",
+                      "source": {
+                        "kind": "x12-mapper-expression",
+                        "expression": "ST->BIG(04)"
+                      }
+                    },
+                    {
+                      "fact": "invoiceTotal",
+                      "source": {
+                        "kind": "x12-mapper-expression",
+                        "expression": "ST->TDS(01)"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "parameter/string",
+      "schema": "ScenarioRunParameterValue",
+      "value": "1250.00"
+    },
+    {
+      "id": "parameter/integer",
+      "schema": "ScenarioRunParameterValue",
+      "value": 2
+    },
+    {
+      "id": "parameter/flag",
+      "schema": "ScenarioRunParameterValue",
+      "value": false
+    },
+    {
+      "id": "parameter/set",
+      "schema": "ScenarioRunParameterValue",
+      "value": [
+        "PHX",
+        "LAX"
+      ]
+    },
+    {
+      "id": "configuration-export-response",
+      "schema": "ConfigurationExportResponse",
+      "value": {
+        "success": true,
+        "bundleSha256": "72b172cdd195c0cfbf2a5b086667029b62e29876effb666ade411fd3a1092e05",
+        "snapshotSha256": "46f74ef312a4271f386470d7d35b275a86332335eb536358d47121966accab51",
+        "snapshotEtag": "\"46f74ef312a4271f386470d7d35b275a86332335eb536358d47121966accab51\"",
+        "files": [
+          {
+            "path": "_state/snapshot.json",
+            "role": "STATE",
+            "format": "JSON",
+            "mediaType": "application/json",
+            "contentSha256": "46f74ef312a4271f386470d7d35b275a86332335eb536358d47121966accab51",
+            "content": {
+              "apiVersion": "modernedi.com/v1",
+              "kind": "IntegrationConfigurationSnapshot",
+              "runtimeConfigurationRevision": 42,
+              "bundleSha256": "72b172cdd195c0cfbf2a5b086667029b62e29876effb666ade411fd3a1092e05",
+              "resources": [
+                {
+                  "kind": "As2Connection",
+                  "key": "9d7e1e0c-1e98-4b44-a579-bf08d2642979",
+                  "resourceId": 12,
+                  "contentSha256": "aa2dd601db9d9955abc655ea308436808f2bf30c489915adcf7f31b091529f9e",
+                  "apiEtag": "\"5555555555555555555555555555555555555555555555555555555555555555\""
+                },
+                {
+                  "kind": "Mapping",
+                  "key": "8ccf76f0-2701-4d4c-a5c4-94a453feec81",
+                  "resourceId": 31,
+                  "contentSha256": "91d55d498eb24dfa63b1ca8a6d1b145aba67ae25564fd67a0e55f07e063604da",
+                  "apiEtag": "\"7777777777777777777777777777777777777777777777777777777777777777\""
+                },
+                {
+                  "kind": "Partner",
+                  "key": "61c5a052-9f83-49e9-a858-e7ddbc56a514",
+                  "resourceId": 24,
+                  "contentSha256": "7ca661ff2acdea62b05783ab13e831f66e29d1da22b783d017fa2f9dd594a85c",
+                  "apiEtag": "\"6666666666666666666666666666666666666666666666666666666666666666\""
+                }
+              ]
+            }
+          },
+          {
+            "path": "as2-connections/9d7e1e0c-1e98-4b44-a579-bf08d2642979/connection.json",
+            "role": "RESOURCE",
+            "format": "JSON",
+            "mediaType": "application/json",
+            "contentSha256": "aa2dd601db9d9955abc655ea308436808f2bf30c489915adcf7f31b091529f9e",
+            "content": {
+              "apiVersion": "modernedi.com/v1",
+              "kind": "As2Connection",
+              "metadata": {
+                "key": "9d7e1e0c-1e98-4b44-a579-bf08d2642979"
+              },
+              "spec": {
+                "environments": {
+                  "production": {
+                    "as2Identifier": "RETAILER_PROD",
+                    "endpointUrl": "https://as2.retailer.example/receive",
+                    "publicCertificatePem": "-----BEGIN CERTIFICATE-----\nMIIB...partner-public-certificate...\n-----END CERTIFICATE-----",
+                    "requireSignature": true,
+                    "requireEncryption": true
+                  },
+                  "test": null
+                },
+                "outbound": {
+                  "signingAlgorithm": "SHA256WITHRSA",
+                  "encryptionAlgorithm": "AES256_CBC",
+                  "compressionAlgorithm": "ZLIB",
+                  "micAlgorithm": "SHA_256",
+                  "micAlgorithmFormat": "RFC_3851"
+                },
+                "functionalAcknowledgment": {
+                  "messageStructure": "SIGNED_ENCRYPTED"
+                },
+                "mdn": {
+                  "encrypt": false,
+                  "forceSynchronousForErrors": true
+                },
+                "cmsAlgorithmProtection": false,
+                "digestCanonicalizationPolicy": "AUTO"
+              }
+            }
+          },
+          {
+            "path": "mappings/8ccf76f0-2701-4d4c-a5c4-94a453feec81/mapping.json",
+            "role": "RESOURCE",
+            "format": "JSON",
+            "mediaType": "application/json",
+            "contentSha256": "91d55d498eb24dfa63b1ca8a6d1b145aba67ae25564fd67a0e55f07e063604da",
+            "content": {
+              "apiVersion": "modernedi.com/v1",
+              "kind": "Mapping",
+              "metadata": {
+                "key": "8ccf76f0-2701-4d4c-a5c4-94a453feec81"
+              },
+              "spec": {
+                "partnerKey": "61c5a052-9f83-49e9-a858-e7ddbc56a514",
+                "direction": "INCOMING",
+                "x12Version": "4010",
+                "functionalIdentifierCode": "PO",
+                "transactionSetIdentifierCode": "850",
+                "transform": {
+                  "type": "X12_MAPPER",
+                  "fileName": "purchase-order.x12mapper",
+                  "sourcePath": "mappings/8ccf76f0-2701-4d4c-a5c4-94a453feec81/source.x12mapper",
+                  "sourceSha256": "798ac1925490d1da0c7c2c2f06f0de055540abb58ed1ad73e3c3df0cb5103291"
+                },
+                "output": {
+                  "contentType": "application/json",
+                  "purpose": "PROCESSING",
+                  "delivery": "TRANSACTION_RECORD"
+                },
+                "businessKey": {
+                  "name": "purchaseOrderNumber",
+                  "extractor": "ST->BEG(03)"
+                },
+                "deliveredMetadata": {
+                  "partner": true,
+                  "transactionTimestamp": true,
+                  "transactionSet": true,
+                  "transactionControlNumber": true,
+                  "functionalGroupControlNumber": true,
+                  "x12Version": true,
+                  "functionalIdentifierCode": true,
+                  "segmentTerminator": true,
+                  "mappingSourceHash": true
+                },
+                "runtime": {
+                  "activeAttributes": {
+                    "customer": true,
+                    "messageId": true,
+                    "timestamp": true,
+                    "elementSeparator": true,
+                    "subElementSeparator": true,
+                    "segmentTerminator": true,
+                    "repetitionSeparator": true,
+                    "transactionX12": true,
+                    "transactionIdentifier": true,
+                    "functionalGroupX12": true,
+                    "interchangeX12": true,
+                    "x12AgencyCode": true,
+                    "x12VersionStr": true,
+                    "functionalGroupType": true,
+                    "functionalGroupControlNumber": true,
+                    "transactionGroupType": true,
+                    "senderIdQualifier": true,
+                    "senderId": true,
+                    "gsSenderId": true,
+                    "gsVersionStr": true,
+                    "usageIndicator": true,
+                    "userAgent": true,
+                    "mapFileSha256Hash": true,
+                    "testMessage": true
+                  }
+                }
+              }
+            }
+          },
+          {
+            "path": "mappings/8ccf76f0-2701-4d4c-a5c4-94a453feec81/source.x12mapper",
+            "role": "SOURCE",
+            "format": "TEXT",
+            "mediaType": "text/plain; charset=utf-8",
+            "contentSha256": "798ac1925490d1da0c7c2c2f06f0de055540abb58ed1ad73e3c3df0cb5103291",
+            "content": "let poNumber = ST->BEG(03)\n{purchaseOrderNumber: poNumber}\n"
+          },
+          {
+            "path": "modernedi.json",
+            "role": "MANIFEST",
+            "format": "JSON",
+            "mediaType": "application/json",
+            "contentSha256": "72b172cdd195c0cfbf2a5b086667029b62e29876effb666ade411fd3a1092e05",
+            "content": {
+              "apiVersion": "modernedi.com/v1",
+              "kind": "IntegrationConfiguration",
+              "resources": [
+                {
+                  "kind": "As2Connection",
+                  "key": "9d7e1e0c-1e98-4b44-a579-bf08d2642979",
+                  "path": "as2-connections/9d7e1e0c-1e98-4b44-a579-bf08d2642979/connection.json",
+                  "contentSha256": "aa2dd601db9d9955abc655ea308436808f2bf30c489915adcf7f31b091529f9e"
+                },
+                {
+                  "kind": "Mapping",
+                  "key": "8ccf76f0-2701-4d4c-a5c4-94a453feec81",
+                  "path": "mappings/8ccf76f0-2701-4d4c-a5c4-94a453feec81/mapping.json",
+                  "contentSha256": "91d55d498eb24dfa63b1ca8a6d1b145aba67ae25564fd67a0e55f07e063604da"
+                },
+                {
+                  "kind": "Partner",
+                  "key": "61c5a052-9f83-49e9-a858-e7ddbc56a514",
+                  "path": "partners/61c5a052-9f83-49e9-a858-e7ddbc56a514/partner.json",
+                  "contentSha256": "7ca661ff2acdea62b05783ab13e831f66e29d1da22b783d017fa2f9dd594a85c"
+                }
+              ],
+              "files": [
+                {
+                  "path": "as2-connections/9d7e1e0c-1e98-4b44-a579-bf08d2642979/connection.json",
+                  "contentSha256": "aa2dd601db9d9955abc655ea308436808f2bf30c489915adcf7f31b091529f9e"
+                },
+                {
+                  "path": "mappings/8ccf76f0-2701-4d4c-a5c4-94a453feec81/mapping.json",
+                  "contentSha256": "91d55d498eb24dfa63b1ca8a6d1b145aba67ae25564fd67a0e55f07e063604da"
+                },
+                {
+                  "path": "mappings/8ccf76f0-2701-4d4c-a5c4-94a453feec81/source.x12mapper",
+                  "contentSha256": "798ac1925490d1da0c7c2c2f06f0de055540abb58ed1ad73e3c3df0cb5103291"
+                },
+                {
+                  "path": "partners/61c5a052-9f83-49e9-a858-e7ddbc56a514/partner.json",
+                  "contentSha256": "7ca661ff2acdea62b05783ab13e831f66e29d1da22b783d017fa2f9dd594a85c"
+                }
+              ]
+            }
+          },
+          {
+            "path": "partners/61c5a052-9f83-49e9-a858-e7ddbc56a514/partner.json",
+            "role": "RESOURCE",
+            "format": "JSON",
+            "mediaType": "application/json",
+            "contentSha256": "7ca661ff2acdea62b05783ab13e831f66e29d1da22b783d017fa2f9dd594a85c",
+            "content": {
+              "apiVersion": "modernedi.com/v1",
+              "kind": "Partner",
+              "metadata": {
+                "key": "61c5a052-9f83-49e9-a858-e7ddbc56a514"
+              },
+              "spec": {
+                "name": "Example Retailer",
+                "as2ConnectionKey": "9d7e1e0c-1e98-4b44-a579-bf08d2642979",
+                "x12": {
+                  "production": {
+                    "isaQualifier": "ZZ",
+                    "isaId": "RETAILER",
+                    "gsId": "RETAILER"
+                  },
+                  "test": null
+                },
+                "ediSupportEmail": "edi@example-retailer.test",
+                "carbonCopyOnly": false,
+                "implementationAcknowledgmentEnabled": true,
+                "unmappedInboundPolicy": "MAPPED_ONLY",
+                "signingCertificateSlot": "active",
+                "supportsNewlineAfterSegmentTerminator": false,
+                "overrideUserAgentString": null,
+                "overrideSeparatorSet": null,
+                "messageTypeGsVersionOverrides": {}
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "configuration-plan-request",
+      "schema": "ConfigurationPlanRequest",
+      "value": {
+        "files": [
+          {
+            "path": "_state/snapshot.json",
+            "role": "STATE",
+            "format": "JSON",
+            "mediaType": "application/json",
+            "contentSha256": "41e0beb711cf83eb7c849b8aef48c5e35ea428645d357a3a2a731936f7000b38",
+            "content": {
+              "apiVersion": "modernedi.com/v1",
+              "kind": "IntegrationConfigurationSnapshot",
+              "runtimeConfigurationRevision": 42,
+              "bundleSha256": "d5501d66cac6c3217149a92a41c8c7a801c81e764214c85c23bcd03cb20b6260",
+              "resources": []
+            }
+          },
+          {
+            "path": "modernedi.json",
+            "role": "MANIFEST",
+            "format": "JSON",
+            "mediaType": "application/json",
+            "contentSha256": "a30d5aec541aaf45f50cf7f1922f8f169ada0c62b94f3ae44dec0c31f97bf401",
+            "content": {
+              "apiVersion": "modernedi.com/v1",
+              "kind": "IntegrationConfiguration",
+              "resources": [
+                {
+                  "kind": "Partner",
+                  "key": "2fa59493-6678-426f-a6d9-a4c32dac19e1",
+                  "path": "partners/2fa59493-6678-426f-a6d9-a4c32dac19e1/partner.json",
+                  "contentSha256": "e603822785badbf68cb7977ad8e57b7efc7fc16e3a216244796b3ac3d6808064"
+                }
+              ],
+              "files": [
+                {
+                  "path": "partners/2fa59493-6678-426f-a6d9-a4c32dac19e1/partner.json",
+                  "contentSha256": "e603822785badbf68cb7977ad8e57b7efc7fc16e3a216244796b3ac3d6808064"
+                }
+              ]
+            }
+          },
+          {
+            "path": "partners/2fa59493-6678-426f-a6d9-a4c32dac19e1/partner.json",
+            "role": "RESOURCE",
+            "format": "JSON",
+            "mediaType": "application/json",
+            "contentSha256": "e603822785badbf68cb7977ad8e57b7efc7fc16e3a216244796b3ac3d6808064",
+            "content": {
+              "apiVersion": "modernedi.com/v1",
+              "kind": "Partner",
+              "metadata": {
+                "key": "2fa59493-6678-426f-a6d9-a4c32dac19e1"
+              },
+              "spec": {
+                "name": "Example Retailer",
+                "as2ConnectionKey": null,
+                "x12": {
+                  "production": {
+                    "isaQualifier": "ZZ",
+                    "isaId": "EXAMPLERETAILER",
+                    "gsId": "EXAMPLERETAILER"
+                  },
+                  "test": null
+                },
+                "ediSupportEmail": "edi@example-retailer.test",
+                "carbonCopyOnly": false,
+                "implementationAcknowledgmentEnabled": true,
+                "unmappedInboundPolicy": "MAPPED_ONLY",
+                "signingCertificateSlot": "active",
+                "supportsNewlineAfterSegmentTerminator": false,
+                "overrideUserAgentString": null,
+                "overrideSeparatorSet": null,
+                "messageTypeGsVersionOverrides": {}
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "scenario-evidence-report",
+      "schema": "ScenarioEvidenceReport",
+      "value": {
+        "apiVersion": "modernedi.com/scenario-evidence-report/v1",
+        "createdAt": "2026-09-17T12:34:56.123456789Z",
+        "claim": {
+          "type": "implementation_verification",
+          "statement": "ModernEDI observed and evaluated this scenario run against the exact applied binding recorded in this report.",
+          "scope": "This report proves only the recorded run; it does not certify the tenant's broader EDI implementation."
+        },
+        "run": {
+          "id": "run-aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+          "status": "cancelled",
+          "outcome": "inconclusive",
+          "phase": "cancelled",
+          "revision": 2,
+          "environment": "test",
+          "adapterId": "scenario-graph-interpreter-v1",
+          "definition": {
+            "namespace": "modernedi",
+            "key": "synthetic",
+            "version": "1.0.0",
+            "contentSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "binding": {
+            "id": "synthetic-binding",
+            "revision": 1
+          },
+          "startedBy": {
+            "apiKeyId": 1,
+            "label": "Synthetic SDK fixture"
+          },
+          "startedAt": "2026-09-17T12:34:56.123456789Z",
+          "completedAt": "2026-09-17T12:34:56.123456789Z",
+          "lastUpdatedAt": "2026-09-17T12:34:56.123456789Z"
+        },
+        "binding": {
+          "id": "synthetic-binding",
+          "revision": 1,
+          "name": "Synthetic fixture",
+          "snapshotContentSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "definitionContentSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "adapterId": "scenario-graph-interpreter-v1",
+          "environment": "test",
+          "authority": {
+            "partners": [],
+            "mappings": [],
+            "syntaxTrees": [],
+            "targets": []
+          }
+        },
+        "operations": {
+          "total": 2,
+          "succeeded": 2,
+          "failed": 0,
+          "failures": [],
+          "successfulTransitions": [
+            {
+              "operationId": "fixture-start",
+              "action": "start",
+              "disposition": "started",
+              "fromRevision": 0,
+              "toRevision": 1,
+              "actor": {
+                "apiKeyId": 1,
+                "label": "Synthetic SDK fixture"
+              },
+              "requestedAt": "2026-09-17T12:34:56.123456789Z",
+              "completedAt": "2026-09-17T12:34:56.123456789Z"
+            },
+            {
+              "operationId": "fixture-cancel",
+              "action": "cancel",
+              "disposition": "cancelled",
+              "fromRevision": 1,
+              "toRevision": 2,
+              "actor": {
+                "apiKeyId": 1,
+                "label": "Synthetic SDK fixture"
+              },
+              "requestedAt": "2026-09-17T12:34:56.123456789Z",
+              "completedAt": "2026-09-17T12:34:56.123456789Z"
+            }
+          ]
+        },
+        "evidence": {
+          "kind": "graph",
+          "counts": {
+            "observations": 0,
+            "checkpoints": 0
+          },
+          "steps": [],
+          "checks": [],
+          "references": []
+        }
+      }
+    }
+  ]
+}

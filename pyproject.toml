@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "modernedi-sdk"
+version = "0.1.0"
+description = "Typed, server-side Python client for the ModernEDI Integration API"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+authors = [{name = "ModernEDI", email = "support@modernedi.com"}]
+dependencies = ["httpx>=0.28,<1", "pydantic>=2.11,<3", "typing-extensions>=4.12,<5"]
+classifiers = ["Development Status :: 3 - Alpha", "Programming Language :: Python :: 3", "Typing :: Typed"]
+
+[project.urls]
+Documentation = "https://www.modernedi.com/integration-api/"
+Source = "https://github.com/modernedi/python-sdk"
+Issues = "https://github.com/modernedi/python-sdk/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/modernedi"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "tests", "examples", "README.md", "LICENSE", "pyproject.toml"]
