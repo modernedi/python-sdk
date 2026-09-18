@@ -3,12 +3,12 @@
   "repository": "modernedi/python-sdk",
   "package": "modernedi-sdk",
   "version": "0.1.0",
-  "sourceRevision": "25e651fbbb53f1a846e2474bd839c8cd92faff82",
+  "sourceRevision": "ef9ffd8932a4260b60ada6510b1329c2cdba815b",
   "verification": {
     "version": 1,
     "scope": "python-sdk",
-    "revision": "25e651fbbb53f1a846e2474bd839c8cd92faff82",
-    "verifiedAt": "2026-09-18T07:18:50.107Z",
+    "revision": "ef9ffd8932a4260b60ada6510b1329c2cdba815b",
+    "verifiedAt": "2026-09-18T07:23:23.705Z",
     "commands": [
       "Public language SDK release contracts",
       "python generated source drift",
@@ -19,8 +19,8 @@
   },
   "files": {
     ".gitattributes": "d60f352d0db1404c70afb4bb8b2ca3fd1c610572aa40720e8a0b7baa7885418c",
-    ".github/workflows/ci.yml": "449db0a4e9f9867913aa79460b32c385e7b0fa83b797c724db76240bea0a3dbc",
-    ".github/workflows/publish.yml": "85a7e12215230d9dea03e3032baafc318347e57fb20640c411383fb025e9d053",
+    ".github/workflows/ci.yml": "a782bd0e21f61d925bdc80dd4afe2a5953a5ef3f5e8c241ec93675c2d0468da8",
+    ".github/workflows/publish.yml": "b55530f976953c7496435b4dd3a4d1f7241580fd4505b17b1e3c5e7f7d979a9b",
     ".gitignore": "6776fcedbf47cdbda56ed409eb275bc2e44c4e2bfbe235bdf6db64c3747175dd",
     "examples/configuration_plan.py": "ac45c57002b16bf32cb0259ee56ab46e9f84c8570140014c5420da6bc555a8c4",
     "LICENSE": "ae08cf545eb00cd3fcf378b59f5aa4e2f89604702ceb4da930275a71d9b852c8",
