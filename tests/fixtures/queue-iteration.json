@@ -1,0 +1,27 @@
+{
+  "description": "Synthetic lease-aware queue scans. Repeated and empty scan cursors are valid; every invocation remains bounded.",
+  "message": {
+    "receiptHandle": "synthetic-receipt", "deliveryCount": 1, "messageId": "synthetic-message",
+    "transactionKey": "1#0001", "environment": "test", "mappedOutputKey": "1#0001#0",
+    "sequenceNumber": 0, "purpose": "PROCESSING", "payload": "{}"
+  },
+  "cases": [
+    { "id": "repeated-cursor", "pages": [
+      {"items": ["one"], "nextCursor": "same opaque cursor"},
+      {"items": ["two"], "nextCursor": "same opaque cursor"},
+      {"items": ["three"], "nextCursor": null}],
+      "maxPolls": 10, "expected": ["one", "two", "three"], "polls": 3 },
+    { "id": "empty-scan-page", "pages": [
+      {"items": [], "nextCursor": "scan onward"}, {"items": ["one"], "nextCursor": null}],
+      "maxPolls": 10, "expected": ["one"], "polls": 2 },
+    { "id": "bounded-repeated-cursor", "pages": [{"items": ["redelivery"], "nextCursor": "same"}],
+      "maxPolls": 2, "expected": ["redelivery", "redelivery"], "polls": 2 },
+    { "id": "bounded-empty-scan", "pages": [{"items": [], "nextCursor": "same"}],
+      "maxPolls": 2, "expected": [], "polls": 2 },
+    { "id": "empty-terminal", "pages": [{"items": [], "nextCursor": null}],
+      "maxPolls": 10, "expected": [], "polls": 1 },
+    { "id": "initial-cursor", "cursor": "same opaque cursor", "pages": [
+      {"items": ["one"], "nextCursor": "same opaque cursor"}, {"items": ["two"], "nextCursor": null}],
+      "maxPolls": 10, "expected": ["one", "two"], "polls": 2 }
+  ]
+}

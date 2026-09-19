@@ -10,6 +10,7 @@ from modernedi import ModernEdiClient, AsyncModernEdiClient, ModernEdiApiError, 
 
 CORPUS = json.loads((Path(__file__).parent / "fixtures/retry-behavior.json").read_text(encoding="utf-8"))
 GROUPS = {"getIntegrationUsage": "account", "planIntegrationConfiguration": "configuration_as_code",
+          "exportIntegrationConfiguration": "configuration_as_code", "pollMappedOutputs": "mapped_outputs",
           "testMappedOutputWebhook": "mapped_outputs", "sendGeneratedX12Message": "outbound_as2",
           "watchIntegrationTransaction": "transactions", "unwatchIntegrationTransaction": "transactions"}
 
@@ -83,3 +84,8 @@ class RetryBehaviorTests(unittest.TestCase):
                     else:
                         self.assertIsNone(failure)
                         self.assertEqual(result.status_code, row["status"])
+                        if row.get("emptyBody"):
+                            self.assertIsNone(result.data)
+                            self.assertEqual(result.raw_body, b"")
+                        if row.get("etag"):
+                            self.assertEqual(result.etag, row["etag"])

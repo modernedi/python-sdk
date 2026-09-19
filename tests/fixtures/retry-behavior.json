@@ -4,6 +4,8 @@
   "apiKey": "synthetic-shared-contract",
   "requests": {
     "getIntegrationUsage": { "method": "GET", "path": "/v1/usage", "parameters": {} },
+    "exportIntegrationConfiguration": { "method": "GET", "path": "/v1/configuration/export", "parameters": {"ifNoneMatch": "\"snapshot\""} },
+    "pollMappedOutputs": { "method": "GET", "path": "/v1/mapped-outputs", "parameters": {"environment": "test"} },
     "planIntegrationConfiguration": { "method": "POST", "path": "/v1/configuration/plan", "parameters": {}, "body": { "files": [] } },
     "testMappedOutputWebhook": { "method": "POST", "path": "/v1/partners/7/mapped-output-webhook/test", "parameters": { "partnerId": 7 } },
     "sendGeneratedX12Message": {
@@ -21,6 +23,9 @@
     }
   },
   "cases": [
+    { "id": "conditional-export-not-modified", "operationId": "exportIntegrationConfiguration", "responses": [{ "status": 304, "headers": {"ETag": "\"snapshot\""} }], "attempts": 1, "status": 304, "emptyBody": true, "etag": "\"snapshot\"" },
+    { "id": "queue-lease-http-failure-is-not-retried", "operationId": "pollMappedOutputs", "responses": [{ "status": 503 }, { "status": 204 }], "attempts": 1, "status": 503 },
+    { "id": "queue-lease-network-failure-is-not-retried", "operationId": "pollMappedOutputs", "responses": [{ "networkError": true }, { "status": 204 }], "attempts": 1, "networkError": true },
     { "id": "retries-off-by-default", "operationId": "getIntegrationUsage", "retry": false, "responses": [{ "status": 503 }], "attempts": 1, "status": 503 },
     { "id": "safe-read", "operationId": "getIntegrationUsage", "responses": [{ "status": 503 }, { "status": 204 }], "attempts": 2, "status": 204 },
     { "id": "read-only-post-plan", "operationId": "planIntegrationConfiguration", "responses": [{ "status": 502 }, { "status": 204 }], "attempts": 2, "status": 204 },

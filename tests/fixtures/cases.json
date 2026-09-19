@@ -1,5 +1,5 @@
 {
-  "bundledSpecificationSha256": "8d5319f4113de990f766c8276031f9b2563c925563e69fdb3257ac7b90b4026b",
+  "bundledSpecificationSha256": "db002ecff1a918950d9cce186201b3a3cea9a17a1d89b0fe4b35588cf77a69d4",
   "cases": [
     {
       "id": "acknowledgeMappedOutput/200/default",
@@ -12,11 +12,7 @@
           "messageId": "msg-850-api",
           "mappedOutputKey": "17#0001#00001",
           "ackedAt": "2026-04-29T15:34:10.000000000Z"
-        },
-        "id": "7e8276c1d55988a4bf7fbf9f8c2d87187a24bd316dfed84bbf64397b8d5b6e4a",
-        "messageId": "msg-850-api",
-        "mappedOutputKey": "17#0001#00001",
-        "ackedAt": "2026-04-29T15:34:10.000000000Z"
+        }
       }
     },
     {

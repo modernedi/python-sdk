@@ -3,10 +3,10 @@
 Server-side Python clients for the [ModernEDI Integration API](https://www.modernedi.com/integration-api/),
 including mappings, mapped outputs, transactions, configuration-as-code, and optional scenarios.
 
-**Preview 0.1.0:** the API may evolve before 1.0. Install the official package from PyPI:
+**Preview 0.2.0:** the API may evolve before 1.0. Install the official package from PyPI:
 
 ```sh
-python -m pip install modernedi-sdk==0.1.0
+python -m pip install modernedi-sdk==0.2.0
 ```
 
 Requires Python 3.10 or newer. Both synchronous and native asynchronous clients are included.
@@ -119,6 +119,28 @@ also cancels retry waits.
 `paginate_cursor` and `paginate_cursor_async` accept page-loading, item, and next-cursor functions.
 They preserve opaque cursors, detect cycles, and default to a 1,000-page limit. Repeat the same
 filters on every page. Lower `max_pages` to bound work for your use case.
+
+For the lease-acquiring mapped-output queue, use `iterate_mapped_outputs` (or
+`iterate_mapped_outputs_async`), not ordinary list pagination:
+
+```python
+from modernedi import iterate_mapped_outputs
+
+for output in iterate_mapped_outputs(
+    lambda cursor: client.mapped_outputs.poll_mapped_outputs(cursor=cursor, environment="test"),
+    max_polls=20,
+):
+    # Durably save/deduplicate output.id, then acknowledge its latest receipt_handle.
+    print(output.id)
+```
+
+The helper accepts repeated cursors, continues past empty pages with a cursor, and stops
+at the end of the scan or `max_polls` (default 1,000). It does not acknowledge, deduplicate,
+or continuously watch. Queue polls are never automatically retried: a lost response can
+already have acquired leases, which expire at the visibility timeout. Single-output
+acknowledgment details are under `response.data.acknowledgment`, not duplicated at the top level.
+Conditional configuration export returns status `304` with `data is None` and the ETag
+when unchanged; this is a normal result, not an exception.
 
 ## Verify mapped-output webhooks
 

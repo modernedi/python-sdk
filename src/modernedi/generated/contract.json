@@ -1,7 +1,7 @@
 {
   "apiVersion": "1.35.0",
   "generatorVersion": "7.24.0",
-  "bundledSpecificationSha256": "8d5319f4113de990f766c8276031f9b2563c925563e69fdb3257ac7b90b4026b",
+  "bundledSpecificationSha256": "db002ecff1a918950d9cce186201b3a3cea9a17a1d89b0fe4b35588cf77a69d4",
   "operations": [
     {
       "operationId": "acknowledgeMappedOutput",
@@ -493,7 +493,7 @@
     "models/integration_partner.py": "20ab35e9721bb025b5922193509ff539d29663b02032acfd8b58be1291a1618c",
     "models/map_stage.py": "e2240114bbcc8a9721992e4db2943f5fede22dc837a1837eb7fb5273dc7dcd49",
     "models/mapped_output_ack_request.py": "2ef1162f6365b9e300d32738796c23f476c2a27193360bf8fcbf001479b4c6c4",
-    "models/mapped_output_ack_response.py": "7aa801a3b517ba4fe8d85619c41d24da0d22c282942a4fb954adabab83c1e77f",
+    "models/mapped_output_ack_response.py": "372d44e12b912c0b229420763a02e5e7ecfb31a0dc68a20b60bc6d2240c1e173",
     "models/mapped_output_acknowledgment.py": "76bd02a91ca880047ef020a457f02a19783fb6dfc97739522bef446a5d73a213",
     "models/mapped_output_bulk_ack_request_acks_inner.py": "db2e62cb572a5257aa95d3b0e36b52755523b5e4d9a3d5ba1d1c15eeeab2ff09",
     "models/mapped_output_bulk_ack_request.py": "9ec225b4eb45a934b381f29602b7edf24cc4073119082a04b3d4a725f9e9cc7e",
@@ -719,6 +719,6 @@
     "models/x12_validation_response.py": "1367692ee7149ec9ecb80047108bc8c9e5a3ec89146a7c34c04da19bd4596da2",
     "models/x12_validation_result.py": "9254f6508ed742b6ef2db2c704c2fc2e6e266eb3814a7af147d5432f9e642d1f",
     "models/x12_versions_response.py": "29524f0c03b929d4097be66d268d86bc2c8e4928840203f9c332859bee4d1078",
-    "operations.py": "32738c40e26d74640a7ec8136b219007cfdf3bc41ce9c54022cbf6af1e142b77"
+    "operations.py": "6a193d2a87cd4f06114502faf5fcb65f8926505fd109f96d8c84888314b5c49d"
   }
 }

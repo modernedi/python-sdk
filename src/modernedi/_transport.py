@@ -166,7 +166,7 @@ class _BaseTransport:
             if "content-type" in request_headers and request_headers["content-type"] != body.content_type:
                 raise ValueError("Content-Type must match RequestBody.content_type")
             _header(request_headers, "content-type", body.content_type)
-        retry_safe = method in {"GET", "HEAD", "OPTIONS"} or (
+        retry_safe = (method in {"GET", "HEAD", "OPTIONS"} and path != "/v1/mapped-outputs") or (
             method == "POST" and path == "/v1/configuration/plan") or (
             method in {"PUT", "DELETE"} and path == "/v1/integration/transactions/{messageId}/{transactionKey}/watch") or (
             any(name.lower() == "idempotency-key" for name in headers) and
