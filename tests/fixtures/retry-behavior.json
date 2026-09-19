@@ -1,0 +1,42 @@
+{
+  "description": "Synthetic, network-free retry contract. All clients use these requests and expectations; SDK-specific adapters only translate method and parameter names.",
+  "baseUrl": "https://sdk.example.test/edi",
+  "apiKey": "synthetic-shared-contract",
+  "requests": {
+    "getIntegrationUsage": { "method": "GET", "path": "/v1/usage", "parameters": {} },
+    "planIntegrationConfiguration": { "method": "POST", "path": "/v1/configuration/plan", "parameters": {}, "body": { "files": [] } },
+    "testMappedOutputWebhook": { "method": "POST", "path": "/v1/partners/7/mapped-output-webhook/test", "parameters": { "partnerId": 7 } },
+    "sendGeneratedX12Message": {
+      "method": "POST", "path": "/v1/as2/x12/send",
+      "parameters": { "partnerId": 7, "x12Version": "4010", "functionalGroupType": "PO", "transactionGroupType": 850, "test": true },
+      "body": "ST*850~", "contentType": "application/edi-x12"
+    },
+    "watchIntegrationTransaction": {
+      "method": "PUT", "path": "/v1/integration/transactions/message%2Fid/17%230001/watch",
+      "parameters": { "messageId": "message/id", "transactionKey": "17#0001", "environment": "test" }
+    },
+    "unwatchIntegrationTransaction": {
+      "method": "DELETE", "path": "/v1/integration/transactions/message%2Fid/17%230001/watch",
+      "parameters": { "messageId": "message/id", "transactionKey": "17#0001", "environment": "test" }
+    }
+  },
+  "cases": [
+    { "id": "retries-off-by-default", "operationId": "getIntegrationUsage", "retry": false, "responses": [{ "status": 503 }], "attempts": 1, "status": 503 },
+    { "id": "safe-read", "operationId": "getIntegrationUsage", "responses": [{ "status": 503 }, { "status": 204 }], "attempts": 2, "status": 204 },
+    { "id": "read-only-post-plan", "operationId": "planIntegrationConfiguration", "responses": [{ "status": 502 }, { "status": 204 }], "attempts": 2, "status": 204 },
+    { "id": "idempotent-watch", "operationId": "watchIntegrationTransaction", "responses": [{ "status": 504 }, { "status": 204 }], "attempts": 2, "status": 204 },
+    { "id": "idempotent-unwatch", "operationId": "unwatchIntegrationTransaction", "responses": [{ "status": 503 }, { "status": 204 }], "attempts": 2, "status": 204 },
+    { "id": "mutation-without-key", "operationId": "sendGeneratedX12Message", "responses": [{ "status": 503 }], "attempts": 1, "status": 503 },
+    { "id": "mutation-empty-key", "operationId": "sendGeneratedX12Message", "idempotencyKey": "", "responses": [{ "status": 503 }], "attempts": 1, "status": 503 },
+    { "id": "mutation-blank-key", "operationId": "sendGeneratedX12Message", "idempotencyKey": "   ", "responses": [{ "status": 503 }], "attempts": 1, "status": 503 },
+    { "id": "mutation-supported-key", "operationId": "sendGeneratedX12Message", "idempotencyKey": "stable-command", "responses": [{ "status": 503 }, { "status": 204 }], "attempts": 2, "status": 204 },
+    { "id": "supported-header-option", "operationId": "sendGeneratedX12Message", "headers": { "idempotency-key": "stable-command" }, "responses": [{ "status": 503 }, { "status": 204 }], "attempts": 2, "status": 204 },
+    { "id": "unsupported-header-option", "operationId": "testMappedOutputWebhook", "headers": { "Idempotency-Key": "not-supported" }, "responses": [{ "status": 503 }], "attempts": 1, "status": 503 },
+    { "id": "conflict-is-not-retryable", "operationId": "sendGeneratedX12Message", "idempotencyKey": "stable-command", "responses": [{ "status": 409 }], "attempts": 1, "status": 409 },
+    { "id": "retry-after-zero", "operationId": "getIntegrationUsage", "responses": [{ "status": 429, "headers": { "Retry-After": "0" } }, { "status": 204 }], "attempts": 2, "status": 204 },
+    { "id": "never-shorten-retry-after", "operationId": "getIntegrationUsage", "responses": [{ "status": 429, "headers": { "Retry-After": "60" } }], "attempts": 1, "status": 429, "retryAfter": "60" },
+    { "id": "safe-network-failure", "operationId": "getIntegrationUsage", "responses": [{ "networkError": true }, { "status": 204 }], "attempts": 2, "status": 204 },
+    { "id": "unsafe-network-failure", "operationId": "testMappedOutputWebhook", "headers": { "Idempotency-Key": "not-supported" }, "responses": [{ "networkError": true }], "attempts": 1, "networkError": true },
+    { "id": "attempts-are-bounded", "operationId": "getIntegrationUsage", "responses": [{ "status": 503 }], "attempts": 3, "status": 503 }
+  ]
+}

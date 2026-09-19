@@ -3,12 +3,12 @@
   "repository": "modernedi/python-sdk",
   "package": "modernedi-sdk",
   "version": "0.1.0",
-  "sourceRevision": "284a8d52ef8eb71f8829e33b80ecf5b1daff2fcc",
+  "sourceRevision": "2d88c12fa1f64443d2b42e57d7146d663fe27e17",
   "verification": {
     "version": 1,
     "scope": "python-sdk",
-    "revision": "284a8d52ef8eb71f8829e33b80ecf5b1daff2fcc",
-    "verifiedAt": "2026-09-18T08:01:30.367Z",
+    "revision": "2d88c12fa1f64443d2b42e57d7146d663fe27e17",
+    "verifiedAt": "2026-09-19T05:37:01.473Z",
     "commands": [
       "Public language SDK release contracts",
       "python generated source drift",
@@ -442,7 +442,9 @@
     "src/modernedi/py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "src/modernedi/webhook.py": "764006a5a3e91791d4136cead81e5bda985fc6bdddb1740cda75a72f549312da",
     "tests/fixtures/cases.json": "cc3e0d6102fff0cb46448aae746d61b3b335a3c5310937d847b543c7e702e9b5",
+    "tests/fixtures/retry-behavior.json": "9efbe04001c17d0f52f7c3987b04709a59ddde6f7f75b80fbe3b3b2b2098681b",
     "tests/test_contract.py": "e62499ade12bda229d68c572be6eea4437089bdced846e97914021454292412f",
-    "tests/test_helpers.py": "7bb2a7385f872d3fe686bc29e2002ef12a9a006744809f25b2a7064a8b09b396"
+    "tests/test_helpers.py": "7bb2a7385f872d3fe686bc29e2002ef12a9a006744809f25b2a7064a8b09b396",
+    "tests/test_retry_behavior.py": "533e3ea1e23c54f3482ad6489cb1041f641aa901c1194680f68853aa5064a505"
   }
 }
