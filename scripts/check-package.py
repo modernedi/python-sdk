@@ -6,6 +6,8 @@ import io
 import json
 from pathlib import Path, PurePosixPath
 import re
+import subprocess
+import sys
 import tarfile
 import time
 import urllib.error
@@ -97,9 +99,9 @@ def validate_artifacts(root, language, allow_attestations=False):
     return artifacts
 
 
-def get(url):
+def get(url, timeout=30):
     try:
-        with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "ModernEDI-package-verification"}), timeout=30) as response:
+        with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "ModernEDI-package-verification"}), timeout=timeout) as response:
             return response.read()
     except urllib.error.HTTPError as error:
         if error.code == 404:
@@ -147,6 +149,55 @@ def verify_registry(root, language, data):
         (directory / next(iter(artifacts))).write_bytes(data)
 
 
+def await_registry(root, language, fetch=get, run=subprocess.run, clock=time.monotonic, sleep=time.sleep):
+    version, _ = package_identity(root, language)
+    deadline = clock() + 600
+    diagnostic = "Registry metadata is not visible yet."
+    while clock() < deadline:
+        remaining = deadline - clock()
+        if remaining <= 0:
+            break
+        data = fetch(registry_url(language, version), timeout=min(30, remaining))
+        if data is not None:
+            verify_registry(root, language, data)
+            if language != "python":
+                require(clock() <= deadline, "Registry visibility timed out; inspect before retrying publication")
+                return
+            # The release JSON API can lead the install index. Probe through pip,
+            # then install these exact verified registry bytes without resolving
+            # this package through the index again. Never retry the upload.
+            directory = root / "registry"
+            directory.mkdir(exist_ok=True)
+            remaining = deadline - clock()
+            if remaining <= 0:
+                break
+            try:
+                result = run([sys.executable, "-m", "pip", "--isolated", "--disable-pip-version-check",
+                              "download", "--no-cache-dir", "--no-deps", "--only-binary=:all:",
+                              "--index-url", "https://pypi.org/simple", "--dest", str(directory),
+                              f"modernedi-sdk=={version}"],
+                             capture_output=True, text=True, timeout=min(60, remaining), check=False)
+            except subprocess.TimeoutExpired:
+                diagnostic = "The bounded pip download timed out."
+            else:
+                if result.returncode == 0:
+                    name = f"modernedi_sdk-{version}-py3-none-any.whl"
+                    require({file.name for file in directory.iterdir()} == {name},
+                            "Unexpected or missing registry download")
+                    require(hashlib.sha256((directory / name).read_bytes()).digest() ==
+                            hashlib.sha256((root / "dist" / name).read_bytes()).digest(),
+                            "Downloaded registry wheel digest differs")
+                    require(clock() <= deadline, "Registry visibility timed out; inspect before retrying publication")
+                    return
+                diagnostic = (result.stderr or result.stdout or "pip download failed.")[-2000:].strip()
+        remaining = deadline - clock()
+        if remaining <= 0:
+            break
+        print(f"Waiting for {language} {version} registry visibility; no upload will be retried.", flush=True)
+        sleep(min(20, remaining))
+    raise ValueError(f"Registry visibility timed out; inspect before retrying publication. {diagnostic}")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action", choices=["check", "preflight", "registry"])
@@ -158,15 +209,7 @@ def main():
     elif args.action == "preflight":
         preflight(root, args.language)
     else:
-        version, _ = package_identity(root, args.language)
-        deadline = time.monotonic() + 600
-        while True:
-            data = get(registry_url(args.language, version))
-            if data is not None:
-                verify_registry(root, args.language, data)
-                break
-            require(time.monotonic() < deadline, "Registry visibility timed out; inspect before retrying publication")
-            time.sleep(20)
+        await_registry(root, args.language)
     print(f"Verified {args.language} {args.action}.")
 
 

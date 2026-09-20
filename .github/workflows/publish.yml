@@ -109,6 +109,6 @@ jobs:
           EXPECTED_VERSION: ${{ inputs.version }}
         run: |
           python -m venv "$RUNNER_TEMP/registry-python"
-          "$RUNNER_TEMP/registry-python/bin/python" -m pip install --no-cache-dir --index-url https://pypi.org/simple "modernedi-sdk==$EXPECTED_VERSION"
+          "$RUNNER_TEMP/registry-python/bin/python" -m pip install --no-cache-dir --index-url https://pypi.org/simple "registry/modernedi_sdk-$EXPECTED_VERSION-py3-none-any.whl"
           "$RUNNER_TEMP/registry-python/bin/python" -m pip check
           "$RUNNER_TEMP/registry-python/bin/python" -I -m unittest discover -s tests
