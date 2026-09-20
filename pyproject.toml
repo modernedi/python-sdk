@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "modernedi-sdk"
-version = "0.2.0"
+version = "0.2.1"
 description = "Typed, server-side Python client for the ModernEDI Integration API"
 readme = "README.md"
 requires-python = ">=3.10"

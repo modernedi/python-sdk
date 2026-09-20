@@ -1,5 +1,5 @@
 {
-  "bundledSpecificationSha256": "db002ecff1a918950d9cce186201b3a3cea9a17a1d89b0fe4b35588cf77a69d4",
+  "bundledSpecificationSha256": "374d78f01b34be657d66b8dd8dbde91079c280f15b002ff39a019660771cbeec",
   "cases": [
     {
       "id": "acknowledgeMappedOutput/200/default",
@@ -3580,6 +3580,130 @@
         "PHX",
         "LAX"
       ]
+    },
+    {
+      "id": "outbound-json/numericString",
+      "schema": "OutboundTransformEnvelope",
+      "value": {
+        "contentType": "application/json",
+        "input": "42"
+      }
+    },
+    {
+      "id": "outbound-json/booleanString",
+      "schema": "OutboundTransformEnvelope",
+      "value": {
+        "contentType": "application/json",
+        "input": "true"
+      }
+    },
+    {
+      "id": "outbound-json/text",
+      "schema": "OutboundTransformEnvelope",
+      "value": {
+        "contentType": "application/json",
+        "input": "ABC"
+      }
+    },
+    {
+      "id": "outbound-json/empty",
+      "schema": "OutboundTransformEnvelope",
+      "value": {
+        "contentType": "application/json",
+        "input": ""
+      }
+    },
+    {
+      "id": "outbound-json/encodedObject",
+      "schema": "OutboundTransformEnvelope",
+      "value": {
+        "contentType": "application/json",
+        "input": "{\"number\":42}"
+      }
+    },
+    {
+      "id": "outbound-json/nothing",
+      "schema": "OutboundTransformEnvelope",
+      "value": {
+        "contentType": "application/json",
+        "input": null
+      }
+    },
+    {
+      "id": "outbound-json/integer",
+      "schema": "OutboundTransformEnvelope",
+      "value": {
+        "contentType": "application/json",
+        "input": 42
+      }
+    },
+    {
+      "id": "outbound-json/decimal",
+      "schema": "OutboundTransformEnvelope",
+      "value": {
+        "contentType": "application/json",
+        "input": 1.25
+      }
+    },
+    {
+      "id": "outbound-json/flag",
+      "schema": "OutboundTransformEnvelope",
+      "value": {
+        "contentType": "application/json",
+        "input": false
+      }
+    },
+    {
+      "id": "outbound-json/array",
+      "schema": "OutboundTransformEnvelope",
+      "value": {
+        "contentType": "application/json",
+        "input": [
+          1,
+          "2",
+          null
+        ]
+      }
+    },
+    {
+      "id": "outbound-json/object",
+      "schema": "OutboundTransformEnvelope",
+      "value": {
+        "contentType": "application/json",
+        "input": {
+          "number": 42
+        }
+      }
+    },
+    {
+      "id": "integer-precision/OutboundBusinessKeyValue/9007199254740993",
+      "schema": "OutboundBusinessKeyValue",
+      "wireJson": "9007199254740993"
+    },
+    {
+      "id": "integer-precision/OutboundBusinessKeyValue/-9007199254740993",
+      "schema": "OutboundBusinessKeyValue",
+      "wireJson": "-9007199254740993"
+    },
+    {
+      "id": "integer-precision/ScenarioRunParameterValue/9007199254740993",
+      "schema": "ScenarioRunParameterValue",
+      "wireJson": "9007199254740993"
+    },
+    {
+      "id": "integer-precision/ScenarioRunParameterValue/-9007199254740993",
+      "schema": "ScenarioRunParameterValue",
+      "wireJson": "-9007199254740993"
+    },
+    {
+      "id": "integer-precision/OutboundTransformEnvelopeInput/9007199254740993",
+      "schema": "OutboundTransformEnvelopeInput",
+      "wireJson": "9007199254740993"
+    },
+    {
+      "id": "integer-precision/OutboundTransformEnvelopeInput/-9007199254740993",
+      "schema": "OutboundTransformEnvelopeInput",
+      "wireJson": "-9007199254740993"
     },
     {
       "id": "configuration-export-response",

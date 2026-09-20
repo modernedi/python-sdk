@@ -24,7 +24,7 @@ from pydantic_core import to_jsonable_python
 
 class UsageSnapshot(BaseModel):
     """
-    Workspace AS2-message usage and self-service plan enforcement state, measured in UTC.
+    Workspace AS2-message usage across Production and Test traffic and self-service plan enforcement state, measured in UTC. Both traffic environments share one daily quota. Transaction-based breakdowns count a message ID once per traffic environment, even if the same ID exists in both.
     """ # noqa: E501
     as_of: str = Field(description="UTC RFC 3339 instant with exactly nine fractional digits and a trailing `Z`.", alias="asOf", json_schema_extra={"examples": ["2026-07-15T18:30:00Z"]})
     time_zone: StrictStr = Field(description="Time zone defining daily and hourly buckets; currently always `UTC`.", alias="timeZone", json_schema_extra={"examples": ["UTC"]})
@@ -32,7 +32,7 @@ class UsageSnapshot(BaseModel):
     daily_limit: Optional[StrictInt] = Field(default=None, description="Included AS2 messages per UTC day, or `null` for an unlimited plan.", alias="dailyLimit")
     warning_threshold: Optional[StrictInt] = Field(default=None, description="Attempted-message count that changes `status` to `approaching_limit`, or `null` for unlimited plans.", alias="warningThreshold")
     rejection_threshold: Optional[StrictInt] = Field(default=None, description="Attempted-message count after which new AS2 messages are rejected, or `null` for unlimited plans.", alias="rejectionThreshold")
-    attempted_messages_today: StrictInt = Field(description="AS2 messages attempted since 00:00 UTC, including accepted and rejected messages.", alias="attemptedMessagesToday")
+    attempted_messages_today: StrictInt = Field(description="AS2 messages attempted across Production and Test traffic since 00:00 UTC, including accepted and rejected messages. Quota status and usage notifications use this count.", alias="attemptedMessagesToday")
     accepted_messages_today: StrictInt = Field(description="AS2 messages accepted for processing since 00:00 UTC.", alias="acceptedMessagesToday")
     rejected_messages_today: StrictInt = Field(description="AS2 messages rejected by quota enforcement since 00:00 UTC.", alias="rejectedMessagesToday")
     quarantine_retention_days: Optional[StrictInt] = Field(default=None, description="Days quota-rejected payloads are retained for support recovery, or `null` when enforcement is not configured.", alias="quarantineRetentionDays")

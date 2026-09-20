@@ -12,19 +12,11 @@ import re
 import time
 from typing import Any, Generic, Mapping, TypeVar
 from urllib.parse import quote, urlsplit
-from uuid import UUID
 
 import httpx
+from ._wire import to_wire_value
 
 T = TypeVar("T")
-
-
-def _json_default(value: Any) -> Any:
-    if hasattr(value, "to_dict"):
-        return value.to_dict()
-    if isinstance(value, UUID):
-        return str(value)
-    raise TypeError(f"Cannot serialize {type(value).__name__} as JSON")
 
 
 @dataclass(frozen=True)
@@ -35,7 +27,7 @@ class RequestBody:
 
     @classmethod
     def json(cls, value: Any, content_type: str = "application/json") -> RequestBody:
-        return cls(json.dumps(value, default=_json_default, ensure_ascii=False, allow_nan=False,
+        return cls(json.dumps(to_wire_value(value), ensure_ascii=False, allow_nan=False,
                               separators=(",", ":")).encode("utf-8"), content_type)
 
     @classmethod

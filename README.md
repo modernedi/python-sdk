@@ -3,10 +3,10 @@
 Server-side Python clients for the [ModernEDI Integration API](https://www.modernedi.com/integration-api/),
 including mappings, mapped outputs, transactions, configuration-as-code, and optional scenarios.
 
-**Preview 0.2.0:** the API may evolve before 1.0. Install the official package from PyPI:
+**Preview 0.2.1:** the API may evolve before 1.0. Install the official package from PyPI:
 
 ```sh
-python -m pip install modernedi-sdk==0.2.0
+python -m pip install modernedi-sdk==0.2.1
 ```
 
 Requires Python 3.10 or newer. Both synchronous and native asynchronous clients are included.

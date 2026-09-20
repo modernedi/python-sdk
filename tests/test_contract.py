@@ -56,7 +56,8 @@ class ContractTests(unittest.TestCase):
         with httpx.Client(transport=httpx.MockTransport(lambda request: requests.append(request) or httpx.Response(200, json=exported))) as http:
             client = ModernEdiClient(api_key="synthetic", http_client=http)
             response = client.configuration_as_code.export_integration_configuration()
-            plan = models.ConfigurationPlanRequest.from_dict({"files": json.loads(response.data.to_json())["files"]})
+            # Exercise the public README/example without an extra JSON round trip.
+            plan = models.ConfigurationPlanRequest.from_dict({"files": response.data.to_dict()["files"]})
             with httpx.Client(transport=httpx.MockTransport(lambda request: requests.append(request) or httpx.Response(204))) as plan_http:
                 ModernEdiClient(api_key="synthetic", http_client=plan_http).configuration_as_code.plan_integration_configuration(body=plan)
             actual = json.loads(requests[-1].content)
@@ -64,6 +65,43 @@ class ContractTests(unittest.TestCase):
             for file in actual["files"]:
                 content = file["content"] if file["format"] == "TEXT" else json.dumps(file["content"], sort_keys=True, separators=(",", ":"), ensure_ascii=False)
                 self.assertEqual(hashlib.sha256(content.encode()).hexdigest(), file["contentSha256"])
+
+    def test_scalar_unions_preserve_integer_precision_and_types(self):
+        for model in (models.OutboundBusinessKeyValue, models.ScenarioRunParameterScalar,
+                      models.ScenarioRunParameterValue, models.OutboundTransformEnvelopeInput,
+                      models.PreviewOutboundX12Request):
+            for value in (9007199254740993, -9007199254740993, 0, 42, 1.25, True, False, "42"):
+                with self.subTest(model=model.__name__, value=value):
+                    parsed = model.from_dict(value)
+                    self.assertEqual(parsed.to_dict(), value)
+                    self.assertIs(type(parsed.to_dict()), type(value))
+                    self.assertEqual(json.loads(parsed.to_json()), value)
+
+    def test_integer_business_identity_survives_actual_outbound_request(self):
+        original = 9007199254740993
+        envelope = models.OutboundTransformEnvelope.from_dict({
+            "contentType": "application/json", "input": {"shipmentId": original},
+            "businessKey": {"name": "shipmentId", "value": original},
+        })
+        requests = []
+        with httpx.Client(transport=httpx.MockTransport(lambda request: requests.append(request) or httpx.Response(204))) as http:
+            ModernEdiClient(api_key="synthetic", http_client=http).outbound_as2.send_as2_message(
+                body=RequestBody.json(envelope, "application/vnd.modernedi.outbound+json"),
+                partner_id=1, x12_version="4010", functional_group_type="IN", transaction_group_type=810)
+        actual = json.loads(requests[0].content)
+        self.assertEqual(actual["businessKey"]["value"], original)
+        self.assertIs(type(actual["businessKey"]["value"]), int)
+        self.assertEqual(actual["input"]["shipmentId"], original)
+
+    def test_nullable_json_input_is_explicit_not_missing(self):
+        envelope = models.OutboundTransformEnvelope.from_dict({"contentType": "application/json", "input": None})
+        self.assertEqual(json.loads(envelope.to_json()), {"contentType": "application/json", "input": None})
+        for parsed in (models.OutboundTransformEnvelopeInput.from_dict(None),
+                       models.OutboundTransformEnvelopeInput.from_json("null"),
+                       models.OutboundTransformEnvelopeInput(actual_instance=None)):
+            self.assertEqual(parsed.to_json(), "null")
+        with self.assertRaises(ValueError):
+            models.OutboundTransformEnvelope.from_dict({"contentType": "application/json"})
 
     def test_raw_body_and_metadata(self):
         requests = []
@@ -187,8 +225,9 @@ class AsyncTests(unittest.IsolatedAsyncioTestCase):
 def _round_trip(case):
     def test(self):
         model = getattr(models, case["schema"])
-        parsed = model.from_dict(case["value"])
-        self.assertEqual(json.loads(parsed.to_json()), case["value"], case["id"])
+        expected = json.loads(case["wireJson"]) if "wireJson" in case else case["value"]
+        parsed = model.from_dict(expected)
+        self.assertEqual(json.loads(parsed.to_json()), expected, case["id"])
     return test
 
 for index, case in enumerate(CORPUS["cases"]):

@@ -29,7 +29,7 @@ class OutboundBusinessKeyValue(BaseModel):
     oneof_schema_2_validator: Optional[Union[StrictFloat, StrictInt]] = None
     # data type: bool
     oneof_schema_3_validator: Optional[StrictBool] = None
-    actual_instance: Optional[Union[bool, float, str]] = None
+    actual_instance: Optional[Union[bool, float, int, str]] = None
     one_of_schemas: Set[str] = { "bool", "float", "str" }
 
     model_config = ConfigDict(
@@ -81,7 +81,7 @@ class OutboundBusinessKeyValue(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Union[str, Dict[str, Any]]) -> Self:
-        return cls.from_json(json.dumps(obj))
+        return cls.from_json(json.dumps(to_wire_value(obj), ensure_ascii=False, allow_nan=False))
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
@@ -137,7 +137,7 @@ class OutboundBusinessKeyValue(BaseModel):
         else:
             return json.dumps(to_wire_value(self.actual_instance), ensure_ascii=False, allow_nan=False)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], bool, float, str]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], bool, float, int, str]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

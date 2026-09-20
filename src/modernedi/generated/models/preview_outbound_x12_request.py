@@ -98,7 +98,7 @@ class PreviewOutboundX12Request(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Dict[str, Any]) -> Self:
-        return cls.from_json(json.dumps(obj))
+        return cls.from_json(json.dumps(to_wire_value(obj), ensure_ascii=False, allow_nan=False))
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
@@ -167,7 +167,7 @@ class PreviewOutboundX12Request(BaseModel):
         else:
             return json.dumps(to_wire_value(self.actual_instance), ensure_ascii=False, allow_nan=False)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], Dict[str, object], List[object], bool, float, str]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], Dict[str, object], List[object], bool, float, int, str]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

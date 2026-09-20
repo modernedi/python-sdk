@@ -24,7 +24,7 @@ class OutboundTransformEnvelope(BaseModel):
     OutboundTransformEnvelope
     """ # noqa: E501
     content_type: StrictStr = Field(description="Content type of `input` and the outgoing map to select. Use this envelope with HTTP `Content-Type: application/vnd.modernedi.outbound+json` when the source input is XML, text, or JSON with extra transform params. Ordinary `application/json` is always treated as the source document itself. ", alias="contentType", json_schema_extra={"examples": ["application/xml"]})
-    input: OutboundTransformEnvelopeInput
+    input: Optional[OutboundTransformEnvelopeInput]
     business_key: Optional[OutboundBusinessKey] = Field(default=None, description="Optional business identifier to store on the outbound transaction record, such as an invoice number, ASN number, BOL number, shipment id, or other value your system uses for reconciliation. This is recorded for transaction search and display only; it does not affect outgoing-map selection or transform execution. ", alias="businessKey")
     params: Optional[Dict[str, Any]] = Field(default=None, description="Optional transform parameters. For XSLT maps, each key is bound as an external stylesheet parameter with the same simple, unqualified name. `json` and `text` are reserved by ModernEDI. JSON strings map to `xs:string`, integers to integer numbers, decimals to decimal numbers, booleans to `xs:boolean`, null to an empty sequence, objects to `map(xs:string, item()*)`, and arrays to XDM sequences. Arrays of objects therefore work with declarations such as `<xsl:param name=\"pallets\" as=\"map(xs:string, xs:anyAtomicType)*\" required=\"yes\"/>`. JSLT still uses `.` as its current input, but for JSLT maps ModernEDI evaluates the map with a root wrapper object shaped as `{ \"input\": <source>, \"params\": <params> }`. Source fields are therefore read as `.input.invoice.number` instead of directly from the root, and params are read as `.params.bolNumber`, `.params.pallets[0]`, and so on. When JSLT repeated output needs params inside a `for` loop, bind `.params` before the loop, such as `let params = .params`, and read `$params.bolNumber` inside the loop because `.` is the current source item there. Use `required=\"yes\"` for XSLT params that every live request must supply. Params JSON files in the mapper editor are used only for test-running a map; they are not live defaults for this API. In the mapper editor, params are standalone JSON fixture files that can be edited like other workspace files and selected when test-running the map. While authoring JSLT, the editor uses the selected source and params fixture files for completions, diagnostics, and quick fixes for wrapper root mistakes, missing sample paths, and `get-key` object-key typos. ", json_schema_extra={"examples": [{"bolNumber": "BOL-DEMO-8842", "totalWeightInLbs": 1232.54, "transactionSetControlNumber": "000002321", "pallets": [{"buyerSku": "DEMO-SKU-001", "itemNumber": "DEMO-ITEM-001", "numCases": 187, "sscc18": "000000000000000101"}]}]})
     additional_properties: Dict[str, Any] = {}
@@ -78,6 +78,11 @@ class OutboundTransformEnvelope(BaseModel):
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
+
+        # set to None if input (nullable) is None
+        # and model_fields_set contains the field
+        if self.input is None and "input" in self.model_fields_set:
+            _dict['input'] = None
 
         return _dict
 

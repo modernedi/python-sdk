@@ -80,7 +80,7 @@ class ConfigurationScenarioDefinitionMatchQuantifier(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Union[str, Dict[str, Any]]) -> Self:
-        return cls.from_json(json.dumps(obj))
+        return cls.from_json(json.dumps(to_wire_value(obj), ensure_ascii=False, allow_nan=False))
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

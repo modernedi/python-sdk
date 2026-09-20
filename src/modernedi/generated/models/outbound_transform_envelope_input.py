@@ -32,7 +32,7 @@ class OutboundTransformEnvelopeInput(BaseModel):
     oneof_schema_4_validator: Optional[Union[StrictFloat, StrictInt]] = None
     # data type: bool
     oneof_schema_5_validator: Optional[StrictBool] = None
-    actual_instance: Optional[Union[Dict[str, object], List[object], bool, float, str]] = None
+    actual_instance: Optional[Union[Dict[str, object], List[object], bool, float, int, str]] = None
     one_of_schemas: Set[str] = { "Dict[str, object]", "List[object]", "bool", "float", "str" }
 
     model_config = ConfigDict(
@@ -52,6 +52,9 @@ class OutboundTransformEnvelopeInput(BaseModel):
 
     @field_validator('actual_instance')
     def actual_instance_must_validate_oneof(cls, v):
+        if v is None:
+            return v
+
         instance = OutboundTransformEnvelopeInput.model_construct()
         error_messages = []
         match = 0
@@ -96,12 +99,15 @@ class OutboundTransformEnvelopeInput(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Union[str, Dict[str, Any]]) -> Self:
-        return cls.from_json(json.dumps(obj))
+        return cls.from_json(json.dumps(to_wire_value(obj), ensure_ascii=False, allow_nan=False))
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: Optional[str]) -> Self:
         """Returns the object represented by the json string"""
         instance = cls.model_construct()
+        if json_str is None or json.loads(json_str) is None:
+            return instance
+
         error_messages = []
         match = 0
 
@@ -170,7 +176,7 @@ class OutboundTransformEnvelopeInput(BaseModel):
         else:
             return json.dumps(to_wire_value(self.actual_instance), ensure_ascii=False, allow_nan=False)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], Dict[str, object], List[object], bool, float, str]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], Dict[str, object], List[object], bool, float, int, str]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None
