@@ -3,12 +3,12 @@
   "repository": "modernedi/python-sdk",
   "package": "modernedi-sdk",
   "version": "0.3.0",
-  "sourceRevision": "c9a1ce666eedea1f5611c49168994eb2529c08d9",
+  "sourceRevision": "f660e428e7ef29e93d7290e2a5d356d46f422637",
   "verification": {
     "version": 1,
     "scope": "python-sdk",
-    "revision": "c9a1ce666eedea1f5611c49168994eb2529c08d9",
-    "verifiedAt": "2026-10-05T04:35:07.114Z",
+    "revision": "f660e428e7ef29e93d7290e2a5d356d46f422637",
+    "verifiedAt": "2026-10-05T05:06:11.047Z",
     "commands": [
       "Committed package release references",
       "Public language SDK release contracts",
