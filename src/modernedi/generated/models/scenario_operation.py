@@ -1,6 +1,6 @@
 # coding: utf-8
 
-"""Generated from the ModernEDI Integration API 1.35.0. Do not edit.
+"""Generated from the ModernEDI Integration API 1.36.0. Do not edit.
 
 OpenAPI Generator 7.24.0; see the package README for usage.
 """
@@ -39,8 +39,8 @@ class ScenarioOperation(BaseModel):
     @field_validator('action', mode="before")
     def action_validate_regular_expression(cls, value):
         """Validates the regular expression"""
-        if isinstance(value, str) and not re.match(r"^(start|cancel|attach_transaction|reevaluate_graph_clock|graph_(dispatch|observe|reconcile)_[0-9]{3}_[0-9]{6})$", value):
-            raise ValueError(r"must validate the regular expression /^(start|cancel|attach_transaction|reevaluate_graph_clock|graph_(dispatch|observe|reconcile)_[0-9]{3}_[0-9]{6})$/")
+        if isinstance(value, str) and not re.match(r"^(start|cancel|attach_transaction|close_steps|reevaluate_graph_clock|graph_(dispatch|observe|reconcile)_[0-9]{3}_[0-9]{6})$", value):
+            raise ValueError(r"must validate the regular expression /^(start|cancel|attach_transaction|close_steps|reevaluate_graph_clock|graph_(dispatch|observe|reconcile)_[0-9]{3}_[0-9]{6})$/")
         return value
 
     @field_validator('disposition')

@@ -1,6 +1,6 @@
 # coding: utf-8
 
-"""Generated from the ModernEDI Integration API 1.35.0. Do not edit.
+"""Generated from the ModernEDI Integration API 1.36.0. Do not edit.
 
 OpenAPI Generator 7.24.0; see the package README for usage.
 """

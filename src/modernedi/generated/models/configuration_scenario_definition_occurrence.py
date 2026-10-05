@@ -1,6 +1,6 @@
 # coding: utf-8
 
-"""Generated from the ModernEDI Integration API 1.35.0. Do not edit.
+"""Generated from the ModernEDI Integration API 1.36.0. Do not edit.
 
 OpenAPI Generator 7.24.0; see the package README for usage.
 """
@@ -23,7 +23,7 @@ class ConfigurationScenarioDefinitionOccurrence(BaseModel):
     """
     How many documents this step may contribute to one run and the rule that says when no more are expected. One observed document is one occurrence. For example, an 850 order can be exactly once while 856 shipment notices can repeat. The server also enforces min <= max.
     """ # noqa: E501
-    min: Annotated[int, Field(le=1000, strict=True, ge=0)] = Field(description="Minimum accepted count once a reachable step closes. Zero is a no-document outcome only when expected_count resolves to 0 or branch selection makes the step unreachable; zero alone does not close a stream.")
+    min: Annotated[int, Field(le=1000, strict=True, ge=0)] = Field(description="Minimum accepted count once a reachable step closes. Zero permits a no-document outcome when expected_count resolves to 0, explicit closure records no documents, or branch selection makes the step unreachable; zero alone does not close a stream.")
     max: Annotated[int, Field(le=1000, strict=True, ge=1)] = Field(description="Structural per-step ceiling for authored occurrences. Validate and Apply also enforce one conservative run-state capacity budget across all steps, paired documents, checks, and durable evidence.")
     closure: Optional[ConfigurationScenarioDefinitionOccurrenceClosure] = None
     __properties: ClassVar[List[str]] = ["min", "max", "closure"]

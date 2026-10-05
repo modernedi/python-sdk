@@ -1,6 +1,6 @@
 # coding: utf-8
 
-"""Generated from the ModernEDI Integration API 1.35.0. Do not edit.
+"""Generated from the ModernEDI Integration API 1.36.0. Do not edit.
 
 OpenAPI Generator 7.24.0; see the package README for usage.
 """
@@ -13,26 +13,29 @@ import pprint
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
 from typing import Any, List, Optional
 from modernedi.generated.models.expected_count_closure import ExpectedCountClosure
+from modernedi.generated.models.explicit_closure import ExplicitClosure
 from modernedi.generated.models.fixed_closure import FixedClosure
 from modernedi.generated.models.maximum_reached_closure import MaximumReachedClosure
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self
 
-CONFIGURATIONSCENARIODEFINITIONOCCURRENCECLOSURE_ONE_OF_SCHEMAS = ["ExpectedCountClosure", "FixedClosure", "MaximumReachedClosure"]
+CONFIGURATIONSCENARIODEFINITIONOCCURRENCECLOSURE_ONE_OF_SCHEMAS = ["ExpectedCountClosure", "ExplicitClosure", "FixedClosure", "MaximumReachedClosure"]
 
 class ConfigurationScenarioDefinitionOccurrenceClosure(BaseModel):
     """
-    The objective rule that tells a run no more documents are expected for one repeated step. fixed closes at the required fixed count; max_reached closes only at the authored maximum; expected_count closes at a required or defaulted run parameter, including an explicit zero. Branch selection supplies the no-document outcome for an unselected destination. There is no manual-close operation in v1.
+    The rule that tells a run no more documents will be attached to a step. fixed closes at the fixed count; max_reached closes at the maximum; expected_count uses a required or defaulted count parameter. explicit waits for an authorized browser or API decision, even at max: advance with closeSteps records the exact attached count and time, then evaluates all existing checks. Closing does not assert success, reopen the step, or send EDI. An explicit min-zero step can close with no documents. Existing attachments may still refresh pending evidence while the run is active. A new run is required for additional documents after closure. Branch selection supplies the no-document outcome for an unselected destination.
     """
     # data type: FixedClosure
     oneof_schema_1_validator: Optional[FixedClosure] = None
     # data type: MaximumReachedClosure
     oneof_schema_2_validator: Optional[MaximumReachedClosure] = None
+    # data type: ExplicitClosure
+    oneof_schema_3_validator: Optional[ExplicitClosure] = None
     # data type: ExpectedCountClosure
-    oneof_schema_3_validator: Optional[ExpectedCountClosure] = None
-    actual_instance: Optional[Union[ExpectedCountClosure, FixedClosure, MaximumReachedClosure]] = None
-    one_of_schemas: Set[str] = { "ExpectedCountClosure", "FixedClosure", "MaximumReachedClosure" }
+    oneof_schema_4_validator: Optional[ExpectedCountClosure] = None
+    actual_instance: Optional[Union[ExpectedCountClosure, ExplicitClosure, FixedClosure, MaximumReachedClosure]] = None
+    one_of_schemas: Set[str] = { "ExpectedCountClosure", "ExplicitClosure", "FixedClosure", "MaximumReachedClosure" }
 
     model_config = ConfigDict(
         validate_assignment=True,
@@ -64,6 +67,11 @@ class ConfigurationScenarioDefinitionOccurrenceClosure(BaseModel):
             error_messages.append(f"Error! Input type `{type(v)}` is not `MaximumReachedClosure`")
         else:
             match += 1
+        # validate data type: ExplicitClosure
+        if not isinstance(v, ExplicitClosure):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `ExplicitClosure`")
+        else:
+            match += 1
         # validate data type: ExpectedCountClosure
         if not isinstance(v, ExpectedCountClosure):
             error_messages.append(f"Error! Input type `{type(v)}` is not `ExpectedCountClosure`")
@@ -71,10 +79,10 @@ class ConfigurationScenarioDefinitionOccurrenceClosure(BaseModel):
             match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in ConfigurationScenarioDefinitionOccurrenceClosure with oneOf schemas: ExpectedCountClosure, FixedClosure, MaximumReachedClosure. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in ConfigurationScenarioDefinitionOccurrenceClosure with oneOf schemas: ExpectedCountClosure, ExplicitClosure, FixedClosure, MaximumReachedClosure. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in ConfigurationScenarioDefinitionOccurrenceClosure with oneOf schemas: ExpectedCountClosure, FixedClosure, MaximumReachedClosure. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in ConfigurationScenarioDefinitionOccurrenceClosure with oneOf schemas: ExpectedCountClosure, ExplicitClosure, FixedClosure, MaximumReachedClosure. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -101,6 +109,12 @@ class ConfigurationScenarioDefinitionOccurrenceClosure(BaseModel):
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
+        # deserialize data into ExplicitClosure
+        try:
+            instance.actual_instance = ExplicitClosure.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
         # deserialize data into ExpectedCountClosure
         try:
             instance.actual_instance = ExpectedCountClosure.from_json(json_str)
@@ -110,10 +124,10 @@ class ConfigurationScenarioDefinitionOccurrenceClosure(BaseModel):
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into ConfigurationScenarioDefinitionOccurrenceClosure with oneOf schemas: ExpectedCountClosure, FixedClosure, MaximumReachedClosure. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into ConfigurationScenarioDefinitionOccurrenceClosure with oneOf schemas: ExpectedCountClosure, ExplicitClosure, FixedClosure, MaximumReachedClosure. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into ConfigurationScenarioDefinitionOccurrenceClosure with oneOf schemas: ExpectedCountClosure, FixedClosure, MaximumReachedClosure. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into ConfigurationScenarioDefinitionOccurrenceClosure with oneOf schemas: ExpectedCountClosure, ExplicitClosure, FixedClosure, MaximumReachedClosure. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -127,7 +141,7 @@ class ConfigurationScenarioDefinitionOccurrenceClosure(BaseModel):
         else:
             return json.dumps(to_wire_value(self.actual_instance), ensure_ascii=False, allow_nan=False)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], ExpectedCountClosure, FixedClosure, MaximumReachedClosure]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], ExpectedCountClosure, ExplicitClosure, FixedClosure, MaximumReachedClosure]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

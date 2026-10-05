@@ -1,6 +1,6 @@
 # coding: utf-8
 
-"""Generated from the ModernEDI Integration API 1.35.0. Do not edit.
+"""Generated from the ModernEDI Integration API 1.36.0. Do not edit.
 
 OpenAPI Generator 7.24.0; see the package README for usage.
 """
@@ -12,9 +12,10 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from modernedi.generated.models.configuration_verification_mapping import ConfigurationVerificationMapping
+from modernedi.generated.models.configuration_verification_scenario_binding import ConfigurationVerificationScenarioBinding
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -27,10 +28,12 @@ class ConfigurationVerificationIdentity(BaseModel):
     desired_bundle_sha256: Annotated[str, Field(strict=True)] = Field(description="Lowercase hexadecimal SHA-256 digest.", alias="desiredBundleSha256", json_schema_extra={"examples": ["30d7e671476880c8d357370bf9a7c21fc59f55d2435073e92763f61d1c72f749"]})
     base_snapshot_etag: StrictStr = Field(description="Exact workspace snapshot used to plan.", alias="baseSnapshotEtag")
     evaluator_sha256: Annotated[str, Field(strict=True)] = Field(description="Lowercase hexadecimal SHA-256 digest.", alias="evaluatorSha256", json_schema_extra={"examples": ["30d7e671476880c8d357370bf9a7c21fc59f55d2435073e92763f61d1c72f749"]})
-    mappings: Annotated[List[ConfigurationVerificationMapping], Field(min_length=1, max_length=25)] = Field(description="All desired mappings containing saved cases, sorted by resource key.")
+    mappings: Annotated[List[ConfigurationVerificationMapping], Field(min_length=0, max_length=25)] = Field(description="All desired mappings containing saved cases, sorted by resource key.")
+    scenario_bindings: Annotated[List[ConfigurationVerificationScenarioBinding], Field(max_length=25)] = Field(description="Desired bindings with saved offline conversation tests. These tests use actual mapping-case documents and the scenario interpreter, without live delivery or acknowledgement evidence.", alias="scenarioBindings")
     untested_mapping_count: Annotated[int, Field(strict=True, ge=0)] = Field(description="Desired mappings without saved cases. A passing suite does not cover these mappings.", alias="untestedMappingCount")
+    untested_scenario_binding_count: Optional[Annotated[int, Field(strict=True, ge=0)]] = Field(description="Desired scenario bindings without saved conversation tests. Null for historical runs that did not measure conversation coverage.", alias="untestedScenarioBindingCount")
     case_count: Annotated[int, Field(le=100, strict=True, ge=1)] = Field(description="Total selected saved cases, including cases not reached before cancellation or timeout.", alias="caseCount")
-    __properties: ClassVar[List[str]] = ["planSha256", "desiredBundleSha256", "baseSnapshotEtag", "evaluatorSha256", "mappings", "untestedMappingCount", "caseCount"]
+    __properties: ClassVar[List[str]] = ["planSha256", "desiredBundleSha256", "baseSnapshotEtag", "evaluatorSha256", "mappings", "scenarioBindings", "untestedMappingCount", "untestedScenarioBindingCount", "caseCount"]
 
     @field_validator('plan_sha256', mode="before")
     def plan_sha256_validate_regular_expression(cls, value):
@@ -96,6 +99,18 @@ class ConfigurationVerificationIdentity(BaseModel):
                 if _item_mappings:
                     _items.append(_item_mappings.to_dict())
             _dict['mappings'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in scenario_bindings (list)
+        _items = []
+        if self.scenario_bindings:
+            for _item_scenario_bindings in self.scenario_bindings:
+                if _item_scenario_bindings:
+                    _items.append(_item_scenario_bindings.to_dict())
+            _dict['scenarioBindings'] = _items
+        # set to None if untested_scenario_binding_count (nullable) is None
+        # and model_fields_set contains the field
+        if self.untested_scenario_binding_count is None and "untested_scenario_binding_count" in self.model_fields_set:
+            _dict['untestedScenarioBindingCount'] = None
+
         return _dict
 
     @classmethod
@@ -113,7 +128,9 @@ class ConfigurationVerificationIdentity(BaseModel):
             "baseSnapshotEtag": obj.get("baseSnapshotEtag"),
             "evaluatorSha256": obj.get("evaluatorSha256"),
             "mappings": [ConfigurationVerificationMapping.from_dict(_item) for _item in obj["mappings"]] if obj.get("mappings") is not None else None,
+            "scenarioBindings": [ConfigurationVerificationScenarioBinding.from_dict(_item) for _item in obj["scenarioBindings"]] if obj.get("scenarioBindings") is not None else None,
             "untestedMappingCount": obj.get("untestedMappingCount"),
+            "untestedScenarioBindingCount": obj.get("untestedScenarioBindingCount"),
             "caseCount": obj.get("caseCount")
         }.items() if key in obj})
         return _obj

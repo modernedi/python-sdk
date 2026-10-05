@@ -1,6 +1,6 @@
 # coding: utf-8
 
-"""Generated from the ModernEDI Integration API 1.35.0. Do not edit.
+"""Generated from the ModernEDI Integration API 1.36.0. Do not edit.
 
 OpenAPI Generator 7.24.0; see the package README for usage.
 """
@@ -15,8 +15,8 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from modernedi.generated.models.configuration_verification_case_result import ConfigurationVerificationCaseResult
 from modernedi.generated.models.configuration_verification_identity import ConfigurationVerificationIdentity
+from modernedi.generated.models.configuration_verification_run_cases_inner import ConfigurationVerificationRunCasesInner
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -26,12 +26,12 @@ class ConfigurationVerificationRun(BaseModel):
     Durable bounded suite. Results expire after 90 days; only the most recent 200 workspace runs are retained. Freshness is checked on reads.
     """ # noqa: E501
     run_id: Annotated[str, Field(strict=True)] = Field(description="Server-owned verification run identity.", alias="runId")
-    status: StrictStr = Field(description="PASSED covers only selected saved cases; it does not establish delivery, partner acceptance or scenario success.")
+    status: StrictStr = Field(description="PASSED covers the selected mapping and offline conversation expectations; it does not establish delivery, partner acceptance or a successful live scenario run.")
     created_at: str = Field(description="Server admission time.", alias="createdAt")
     completed_at: Optional[str] = Field(description="Server completion time; null while running.", alias="completedAt")
     applied_operation_id: Optional[StrictStr] = Field(description="Apply operation explicitly linked to this result, or null.", alias="appliedOperationId")
     identity: ConfigurationVerificationIdentity
-    cases: Annotated[List[ConfigurationVerificationCaseResult], Field(max_length=100)] = Field(description="Completed case outcomes. Incomplete suites cannot pass.")
+    cases: Annotated[List[ConfigurationVerificationRunCasesInner], Field(max_length=100)] = Field(description="Completed case outcomes. Incomplete suites cannot pass.")
     freshness: StrictStr = Field(description="Whether current workspace, evaluator and catalog still match this result.")
     stale_reasons: List[StrictStr] = Field(description="Empty only when current.", alias="staleReasons")
     __properties: ClassVar[List[str]] = ["runId", "status", "createdAt", "completedAt", "appliedOperationId", "identity", "cases", "freshness", "staleReasons"]
@@ -139,7 +139,7 @@ class ConfigurationVerificationRun(BaseModel):
             "completedAt": obj.get("completedAt"),
             "appliedOperationId": obj.get("appliedOperationId"),
             "identity": ConfigurationVerificationIdentity.from_dict(obj["identity"]) if obj.get("identity") is not None else None,
-            "cases": [ConfigurationVerificationCaseResult.from_dict(_item) for _item in obj["cases"]] if obj.get("cases") is not None else None,
+            "cases": [ConfigurationVerificationRunCasesInner.from_dict(_item) for _item in obj["cases"]] if obj.get("cases") is not None else None,
             "freshness": obj.get("freshness"),
             "staleReasons": obj.get("staleReasons")
         }.items() if key in obj})

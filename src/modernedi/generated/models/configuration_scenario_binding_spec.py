@@ -1,6 +1,6 @@
 # coding: utf-8
 
-"""Generated from the ModernEDI Integration API 1.35.0. Do not edit.
+"""Generated from the ModernEDI Integration API 1.36.0. Do not edit.
 
 OpenAPI Generator 7.24.0; see the package README for usage.
 """
@@ -12,10 +12,11 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from modernedi.generated.models.configuration_scenario_binding_actor_binding import ConfigurationScenarioBindingActorBinding
 from modernedi.generated.models.configuration_scenario_binding_definition_reference import ConfigurationScenarioBindingDefinitionReference
+from modernedi.generated.models.configuration_scenario_binding_regression_case import ConfigurationScenarioBindingRegressionCase
 from modernedi.generated.models.configuration_scenario_binding_step_binding import ConfigurationScenarioBindingStepBinding
 from typing import Optional, Set
 from typing_extensions import Self
@@ -25,11 +26,12 @@ class ConfigurationScenarioBindingSpec(BaseModel):
     """
     References one exact published definition and binds all of its actors and steps. Apply resolves and freezes authoritative artifacts for runtime use.
     """ # noqa: E501
+    regression_cases: Optional[Annotated[List[ConfigurationScenarioBindingRegressionCase], Field(max_length=10)]] = Field(default=None, description="Optional offline tests for this binding. Each observation references a saved case on the step's bound runtime mapping. Tests execute proposed maps and the existing graph interpreter without sending EDI or creating live run evidence. Case order is canonicalized by ID; observation order is preserved. Up to 10 cases, 20 observations each, and 64 KiB total.", alias="regressionCases")
     definition: ConfigurationScenarioBindingDefinitionReference
     environment: StrictStr = Field(description="Required workspace traffic selector, frozen into the applied binding. Production and test traffic use the same deployed mappings; this does not deploy unpublished mappings or create another workspace. Runs use the selected AS2/X12 profile and keep transaction lookup, acknowledgments, and evidence in that environment, without falling back to the other profile.")
     actors: Annotated[List[ConfigurationScenarioBindingActorBinding], Field(min_length=1, max_length=100)] = Field(description="Exactly one binding for every definition actor. IDs must be unique; exactly one endpoint must be this workspace and at least one must be a current external partner.")
     steps: Annotated[List[ConfigurationScenarioBindingStepBinding], Field(min_length=1, max_length=500)] = Field(description="Exactly one binding for every definition step. IDs must be unique.")
-    __properties: ClassVar[List[str]] = ["definition", "environment", "actors", "steps"]
+    __properties: ClassVar[List[str]] = ["regressionCases", "definition", "environment", "actors", "steps"]
 
     @field_validator('environment')
     def environment_validate_enum(cls, value):
@@ -74,6 +76,13 @@ class ConfigurationScenarioBindingSpec(BaseModel):
             exclude=excluded_fields,
             exclude_unset=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in regression_cases (list)
+        _items = []
+        if self.regression_cases:
+            for _item_regression_cases in self.regression_cases:
+                if _item_regression_cases:
+                    _items.append(_item_regression_cases.to_dict())
+            _dict['regressionCases'] = _items
         # override the default output from pydantic by calling `to_dict()` of definition
         if self.definition:
             _dict['definition'] = self.definition.to_dict()
@@ -103,6 +112,7 @@ class ConfigurationScenarioBindingSpec(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({key: value for key, value in {
+            "regressionCases": [ConfigurationScenarioBindingRegressionCase.from_dict(_item) for _item in obj["regressionCases"]] if obj.get("regressionCases") is not None else None,
             "definition": ConfigurationScenarioBindingDefinitionReference.from_dict(obj["definition"]) if obj.get("definition") is not None else None,
             "environment": obj.get("environment"),
             "actors": [ConfigurationScenarioBindingActorBinding.from_dict(_item) for _item in obj["actors"]] if obj.get("actors") is not None else None,

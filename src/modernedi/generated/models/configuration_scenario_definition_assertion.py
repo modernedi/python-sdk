@@ -1,6 +1,6 @@
 # coding: utf-8
 
-"""Generated from the ModernEDI Integration API 1.35.0. Do not edit.
+"""Generated from the ModernEDI Integration API 1.36.0. Do not edit.
 
 OpenAPI Generator 7.24.0; see the package README for usage.
 """
@@ -14,19 +14,19 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, Optional
 from typing_extensions import Annotated
-from modernedi.generated.models.configuration_scenario_definition_value_operand import ConfigurationScenarioDefinitionValueOperand
+from modernedi.generated.models.configuration_scenario_definition_assertion_operand import ConfigurationScenarioDefinitionAssertionOperand
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
 class ConfigurationScenarioDefinitionAssertion(BaseModel):
     """
-    A fact rule that must hold for the run to pass. For example, exists can require every 810 invoice to expose invoiceTotal, sum_equal can compare shipped and invoiced totals, and monotonic can require successive 315 status timestamps to move forward. Binary operators require right; unary operators reject it.
+    A fact rule that must hold for the run to pass. sum_equal compares overall totals. keyed_sum_equal instead sums decimal amounts per item key across occurrences, then requires identical keys and per-key totals on both sides. keyed_equal requires identical keys and consistent decimal values per key, including across repeated occurrences (useful for unit prices). Keyed comparisons wait for both steps to close before passing and require keyed_facts operands. Binary operators require right; unary operators reject it.
     """ # noqa: E501
     id: Annotated[str, Field(strict=True)] = Field(description="A stable identifier beginning with a letter and containing at most 128 letters, digits, underscores, or hyphens.")
     operator: StrictStr
-    left: ConfigurationScenarioDefinitionValueOperand
-    right: Optional[ConfigurationScenarioDefinitionValueOperand] = None
+    left: ConfigurationScenarioDefinitionAssertionOperand
+    right: Optional[ConfigurationScenarioDefinitionAssertionOperand] = None
     __properties: ClassVar[List[str]] = ["id", "operator", "left", "right"]
 
     @field_validator('id', mode="before")
@@ -39,8 +39,8 @@ class ConfigurationScenarioDefinitionAssertion(BaseModel):
     @field_validator('operator')
     def operator_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in set(['equal', 'not_equal', 'exists', 'unique', 'same_set', 'subset', 'sum_equal', 'less_than_or_equal', 'greater_than_or_equal', 'monotonic']):
-            raise ValueError("must be one of enum values ('equal', 'not_equal', 'exists', 'unique', 'same_set', 'subset', 'sum_equal', 'less_than_or_equal', 'greater_than_or_equal', 'monotonic')")
+        if value not in set(['equal', 'not_equal', 'exists', 'unique', 'same_set', 'subset', 'sum_equal', 'keyed_sum_equal', 'keyed_equal', 'less_than_or_equal', 'greater_than_or_equal', 'monotonic']):
+            raise ValueError("must be one of enum values ('equal', 'not_equal', 'exists', 'unique', 'same_set', 'subset', 'sum_equal', 'keyed_sum_equal', 'keyed_equal', 'less_than_or_equal', 'greater_than_or_equal', 'monotonic')")
         return value
 
     model_config = ConfigDict(
@@ -99,7 +99,7 @@ class ConfigurationScenarioDefinitionAssertion(BaseModel):
         _obj = cls.model_validate({key: value for key, value in {
             "id": obj.get("id"),
             "operator": obj.get("operator"),
-            "left": ConfigurationScenarioDefinitionValueOperand.from_dict(obj["left"]) if obj.get("left") is not None else None,
-            "right": ConfigurationScenarioDefinitionValueOperand.from_dict(obj["right"]) if obj.get("right") is not None else None
+            "left": ConfigurationScenarioDefinitionAssertionOperand.from_dict(obj["left"]) if obj.get("left") is not None else None,
+            "right": ConfigurationScenarioDefinitionAssertionOperand.from_dict(obj["right"]) if obj.get("right") is not None else None
         }.items() if key in obj})
         return _obj

@@ -1,5 +1,5 @@
 {
-  "bundledSpecificationSha256": "374d78f01b34be657d66b8dd8dbde91079c280f15b002ff39a019660771cbeec",
+  "bundledSpecificationSha256": "676c5c93eb83abdfd06986481ef80b4f921a82df9875284540385d244d235a2f",
   "cases": [
     {
       "id": "acknowledgeMappedOutput/200/default",
@@ -1769,6 +1769,944 @@
       }
     },
     {
+      "id": "scenario/motor-carrier-shipment.scenario.json",
+      "schema": "ConfigurationResourceDocument",
+      "value": {
+        "apiVersion": "modernedi.com/v1",
+        "kind": "ScenarioDefinition",
+        "metadata": {
+          "key": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"
+        },
+        "spec": {
+          "source": {
+            "$schema": "https://www.modernedi.com/docs/scenarios/schemas/scenario-definition-v1.schema.json",
+            "apiVersion": "modernedi.com/scenario/v1",
+            "kind": "ScenarioDefinition",
+            "metadata": {
+              "namespace": "modernedi.examples",
+              "key": "motor-carrier-shipment",
+              "version": "1.0.0"
+            },
+            "spec": {
+              "actors": [
+                {
+                  "id": "shipper"
+                },
+                {
+                  "id": "carrier"
+                }
+              ],
+              "steps": [
+                {
+                  "id": "loadTender",
+                  "fromActor": "shipper",
+                  "toActor": "carrier",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "204",
+                    "businessUsage": "loadTender"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 1,
+                    "closure": {
+                      "kind": "fixed"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "loadId",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "carrier",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "agreedCharge",
+                      "type": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "financial"
+                    },
+                    {
+                      "name": "purpose",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "currency",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "loadId",
+                        "carrier",
+                        "agreedCharge",
+                        "purpose",
+                        "currency"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "tenderResponse",
+                  "fromActor": "carrier",
+                  "toActor": "shipper",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "990",
+                    "businessUsage": "tenderResponse"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 1,
+                    "closure": {
+                      "kind": "fixed"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "loadId",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "carrier",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "action",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "actionSupported",
+                      "type": "boolean",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "loadId",
+                        "carrier",
+                        "action",
+                        "actionSupported"
+                      ]
+                    },
+                    {
+                      "id": "decision",
+                      "kind": "checkpoint",
+                      "checkpoint": "responseObserved"
+                    }
+                  ]
+                },
+                {
+                  "id": "shipmentStatus",
+                  "fromActor": "carrier",
+                  "toActor": "shipper",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "214",
+                    "businessUsage": "shipmentStatus"
+                  },
+                  "occurrence": {
+                    "min": 0,
+                    "max": 5,
+                    "closure": {
+                      "kind": "explicit"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "loadId",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "carrier",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "statusCode",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "eventTimestamp",
+                      "type": "timestamp",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "eventDate",
+                      "type": "date",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "timeCode",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "oneUtcMinuteEvent",
+                      "type": "boolean",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "pickupCount",
+                      "type": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "deliveryCount",
+                      "type": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "loadId",
+                        "carrier",
+                        "statusCode",
+                        "eventTimestamp",
+                        "eventDate",
+                        "timeCode",
+                        "oneUtcMinuteEvent",
+                        "pickupCount",
+                        "deliveryCount"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "freightInvoice",
+                  "fromActor": "carrier",
+                  "toActor": "shipper",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "210",
+                    "businessUsage": "freightInvoice"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 1,
+                    "closure": {
+                      "kind": "fixed"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "loadId",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "carrier",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "currency",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "netCharge",
+                      "type": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "financial"
+                    },
+                    {
+                      "name": "summaryCharge",
+                      "type": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "financial"
+                    },
+                    {
+                      "name": "detailCharge",
+                      "type": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "financial"
+                    },
+                    {
+                      "name": "chargeCount",
+                      "type": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "deliveryDate",
+                      "type": "date",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "invoiceDate",
+                      "type": "date",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "loadId",
+                        "carrier",
+                        "currency",
+                        "netCharge",
+                        "summaryCharge",
+                        "detailCharge",
+                        "chargeCount",
+                        "deliveryDate",
+                        "invoiceDate"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "transitions": [
+                {
+                  "id": "responseForTender",
+                  "fromStep": "loadTender",
+                  "toStep": "tenderResponse",
+                  "relationship": "follows",
+                  "within": "PT2H",
+                  "correlations": [
+                    {
+                      "id": "sameLoad",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "loadTender",
+                        "fact": "loadId",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "tenderResponse",
+                        "fact": "loadId",
+                        "projection": "value"
+                      }
+                    },
+                    {
+                      "id": "sameCarrier",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "loadTender",
+                        "fact": "carrier",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "tenderResponse",
+                        "fact": "carrier",
+                        "projection": "value"
+                      }
+                    }
+                  ],
+                  "matching": {
+                    "strategy": "correlate",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "from"
+                      },
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                },
+                {
+                  "id": "acceptedLoadStatus",
+                  "fromStep": "tenderResponse",
+                  "toStep": "shipmentStatus",
+                  "relationship": "follows",
+                  "within": "P7D",
+                  "correlations": [
+                    {
+                      "id": "sameLoad",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "tenderResponse",
+                        "fact": "loadId",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "shipmentStatus",
+                        "fact": "loadId",
+                        "projection": "value"
+                      }
+                    },
+                    {
+                      "id": "sameCarrier",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "tenderResponse",
+                        "fact": "carrier",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "shipmentStatus",
+                        "fact": "carrier",
+                        "projection": "value"
+                      }
+                    }
+                  ],
+                  "matching": {
+                    "strategy": "correlate",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "from"
+                      },
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                },
+                {
+                  "id": "invoiceAfterStatus",
+                  "fromStep": "shipmentStatus",
+                  "toStep": "freightInvoice",
+                  "relationship": "follows",
+                  "within": "P7D",
+                  "correlations": [
+                    {
+                      "id": "sameLoad",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "shipmentStatus",
+                        "fact": "loadId",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "freightInvoice",
+                        "fact": "loadId",
+                        "projection": "value"
+                      }
+                    },
+                    {
+                      "id": "sameCarrier",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "shipmentStatus",
+                        "fact": "carrier",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "freightInvoice",
+                        "fact": "carrier",
+                        "projection": "value"
+                      }
+                    }
+                  ],
+                  "matching": {
+                    "strategy": "correlate",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "from"
+                      },
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                }
+              ],
+              "assertions": [
+                {
+                  "id": "originalTender",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "loadTender",
+                    "fact": "purpose",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "string",
+                    "value": "00"
+                  }
+                },
+                {
+                  "id": "onePickup",
+                  "operator": "sum_equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "shipmentStatus",
+                    "fact": "pickupCount",
+                    "projection": "list"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "decimal",
+                    "value": 1
+                  }
+                },
+                {
+                  "id": "oneDelivery",
+                  "operator": "sum_equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "shipmentStatus",
+                    "fact": "deliveryCount",
+                    "projection": "list"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "decimal",
+                    "value": 1
+                  }
+                },
+                {
+                  "id": "oneInvoiceCharge",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "freightInvoice",
+                    "fact": "chargeCount",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "decimal",
+                    "value": 1
+                  }
+                },
+                {
+                  "id": "invoiceDetailMatches",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "freightInvoice",
+                    "fact": "detailCharge",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "fact",
+                    "stepId": "freightInvoice",
+                    "fact": "netCharge",
+                    "projection": "value"
+                  }
+                },
+                {
+                  "id": "responseActionSupported",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "tenderResponse",
+                    "fact": "actionSupported",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "boolean",
+                    "value": true
+                  }
+                },
+                {
+                  "id": "responseCarrierMatches",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "loadTender",
+                    "fact": "carrier",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "fact",
+                    "stepId": "tenderResponse",
+                    "fact": "carrier",
+                    "projection": "value"
+                  }
+                },
+                {
+                  "id": "invoiceCarrierMatches",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "loadTender",
+                    "fact": "carrier",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "fact",
+                    "stepId": "freightInvoice",
+                    "fact": "carrier",
+                    "projection": "value"
+                  }
+                },
+                {
+                  "id": "statusCodesSupported",
+                  "operator": "subset",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "shipmentStatus",
+                    "fact": "statusCode",
+                    "projection": "set"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "set",
+                    "elementType": "string",
+                    "value": [
+                      "AF",
+                      "X6",
+                      "D1"
+                    ]
+                  }
+                },
+                {
+                  "id": "pickupComesFirst",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "shipmentStatus",
+                    "fact": "statusCode",
+                    "projection": "first"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "string",
+                    "value": "AF"
+                  }
+                },
+                {
+                  "id": "deliveryComesLast",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "shipmentStatus",
+                    "fact": "statusCode",
+                    "projection": "latest"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "string",
+                    "value": "D1"
+                  }
+                },
+                {
+                  "id": "eventsAreChronological",
+                  "operator": "monotonic",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "shipmentStatus",
+                    "fact": "eventTimestamp",
+                    "projection": "list"
+                  }
+                },
+                {
+                  "id": "eventTimesAreUnique",
+                  "operator": "unique",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "shipmentStatus",
+                    "fact": "eventTimestamp",
+                    "projection": "list"
+                  }
+                },
+                {
+                  "id": "eventTimeProfile",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "shipmentStatus",
+                    "fact": "oneUtcMinuteEvent",
+                    "projection": "set"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "set",
+                    "elementType": "boolean",
+                    "value": [
+                      true
+                    ]
+                  }
+                },
+                {
+                  "id": "utcOnly",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "shipmentStatus",
+                    "fact": "timeCode",
+                    "projection": "set"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "set",
+                    "elementType": "string",
+                    "value": [
+                      "UT"
+                    ]
+                  }
+                },
+                {
+                  "id": "deliveryDateMatches",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "shipmentStatus",
+                    "fact": "eventDate",
+                    "projection": "latest"
+                  },
+                  "right": {
+                    "kind": "fact",
+                    "stepId": "freightInvoice",
+                    "fact": "deliveryDate",
+                    "projection": "value"
+                  }
+                },
+                {
+                  "id": "invoiceDateAfterDelivery",
+                  "operator": "greater_than_or_equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "freightInvoice",
+                    "fact": "invoiceDate",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "fact",
+                    "stepId": "freightInvoice",
+                    "fact": "deliveryDate",
+                    "projection": "value"
+                  }
+                },
+                {
+                  "id": "tenderUsesUsd",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "loadTender",
+                    "fact": "currency",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "string",
+                    "value": "USD"
+                  }
+                },
+                {
+                  "id": "invoiceCurrencyMatches",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "loadTender",
+                    "fact": "currency",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "fact",
+                    "stepId": "freightInvoice",
+                    "fact": "currency",
+                    "projection": "value"
+                  }
+                },
+                {
+                  "id": "invoiceMatchesAgreedCharge",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "loadTender",
+                    "fact": "agreedCharge",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "fact",
+                    "stepId": "freightInvoice",
+                    "fact": "netCharge",
+                    "projection": "value"
+                  }
+                },
+                {
+                  "id": "invoiceSummaryMatches",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "freightInvoice",
+                    "fact": "netCharge",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "fact",
+                    "stepId": "freightInvoice",
+                    "fact": "summaryCharge",
+                    "projection": "value"
+                  }
+                }
+              ],
+              "parameters": [],
+              "checkpoints": [
+                {
+                  "id": "responseObserved"
+                }
+              ],
+              "branches": [
+                {
+                  "id": "acceptedOrDeclined",
+                  "mode": "at_most_one",
+                  "checkpoint": "responseObserved",
+                  "alternatives": [
+                    {
+                      "id": "accepted",
+                      "kind": "when",
+                      "transitionId": "acceptedLoadStatus",
+                      "conditions": [
+                        {
+                          "id": "accept",
+                          "operator": "equal",
+                          "left": {
+                            "kind": "fact",
+                            "stepId": "tenderResponse",
+                            "fact": "action",
+                            "projection": "value"
+                          },
+                          "right": {
+                            "kind": "literal",
+                            "type": "string",
+                            "value": "A"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "scenario/ocean-booking-to-invoice.scenario.json",
       "schema": "ConfigurationResourceDocument",
       "value": {
@@ -3162,6 +4100,1749 @@
       }
     },
     {
+      "id": "scenario/supplier-order-fulfillment.scenario.json",
+      "schema": "ConfigurationResourceDocument",
+      "value": {
+        "apiVersion": "modernedi.com/v1",
+        "kind": "ScenarioDefinition",
+        "metadata": {
+          "key": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"
+        },
+        "spec": {
+          "source": {
+            "$schema": "https://www.modernedi.com/docs/scenarios/schemas/scenario-definition-v1.schema.json",
+            "apiVersion": "modernedi.com/scenario/v1",
+            "kind": "ScenarioDefinition",
+            "metadata": {
+              "namespace": "modernedi.examples",
+              "key": "supplier-order-fulfillment",
+              "version": "1.0.0"
+            },
+            "spec": {
+              "parameters": [
+                {
+                  "id": "acknowledgmentCount",
+                  "type": "decimal",
+                  "required": true
+                }
+              ],
+              "actors": [
+                {
+                  "id": "retailer"
+                },
+                {
+                  "id": "supplier"
+                }
+              ],
+              "steps": [
+                {
+                  "id": "purchaseOrder",
+                  "fromActor": "retailer",
+                  "toActor": "supplier",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "850",
+                    "businessUsage": "purchase_order"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 1,
+                    "closure": {
+                      "kind": "fixed"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "purchaseOrderNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "lineKeys",
+                      "type": "list",
+                      "elementType": "string",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "quantities",
+                      "type": "list",
+                      "elementType": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "linesValid",
+                      "type": "boolean",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "unitPrices",
+                      "type": "list",
+                      "elementType": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "financial"
+                    },
+                    {
+                      "name": "orderTotal",
+                      "type": "decimal",
+                      "cardinality": "one",
+                      "normalization": [
+                        "decimal_canonical"
+                      ],
+                      "sensitivity": "financial"
+                    },
+                    {
+                      "name": "currency",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "purchaseOrderNumber",
+                        "lineKeys",
+                        "quantities",
+                        "linesValid",
+                        "unitPrices",
+                        "orderTotal",
+                        "currency"
+                      ]
+                    },
+                    {
+                      "id": "acknowledgmentDecision",
+                      "kind": "checkpoint",
+                      "checkpoint": "orderObserved"
+                    }
+                  ]
+                },
+                {
+                  "id": "purchaseOrderAcknowledgment",
+                  "fromActor": "supplier",
+                  "toActor": "retailer",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "855",
+                    "businessUsage": "purchase_order_acknowledgment"
+                  },
+                  "occurrence": {
+                    "min": 0,
+                    "max": 1,
+                    "closure": {
+                      "kind": "expected_count",
+                      "parameter": "acknowledgmentCount"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "purchaseOrderNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "acknowledgmentCode",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "purchaseOrderNumber",
+                        "acknowledgmentCode"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "advanceShipNotice",
+                  "fromActor": "supplier",
+                  "toActor": "retailer",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "856",
+                    "businessUsage": "advance_ship_notice"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 1,
+                    "closure": {
+                      "kind": "fixed"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "purchaseOrderNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "shipmentId",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "lineKeys",
+                      "type": "list",
+                      "elementType": "string",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "quantities",
+                      "type": "list",
+                      "elementType": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "linesValid",
+                      "type": "boolean",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "purchaseOrderNumber",
+                        "shipmentId",
+                        "lineKeys",
+                        "quantities",
+                        "linesValid"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "invoice",
+                  "fromActor": "supplier",
+                  "toActor": "retailer",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "810",
+                    "businessUsage": "invoice"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 1,
+                    "closure": {
+                      "kind": "fixed"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "purchaseOrderNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "shipmentId",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "lineKeys",
+                      "type": "list",
+                      "elementType": "string",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "quantities",
+                      "type": "list",
+                      "elementType": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "linesValid",
+                      "type": "boolean",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "unitPrices",
+                      "type": "list",
+                      "elementType": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "financial"
+                    },
+                    {
+                      "name": "lineTotal",
+                      "type": "decimal",
+                      "cardinality": "one",
+                      "normalization": [
+                        "decimal_canonical"
+                      ],
+                      "sensitivity": "financial"
+                    },
+                    {
+                      "name": "invoiceTotal",
+                      "type": "decimal",
+                      "cardinality": "one",
+                      "normalization": [
+                        "decimal_canonical"
+                      ],
+                      "sensitivity": "financial"
+                    },
+                    {
+                      "name": "currency",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "purchaseOrderNumber",
+                        "shipmentId",
+                        "lineKeys",
+                        "quantities",
+                        "linesValid",
+                        "unitPrices",
+                        "lineTotal",
+                        "invoiceTotal",
+                        "currency"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "transitions": [
+                {
+                  "id": "acknowledgmentForOrder",
+                  "fromStep": "purchaseOrder",
+                  "toStep": "purchaseOrderAcknowledgment",
+                  "relationship": "follows",
+                  "within": "P2D",
+                  "correlations": [
+                    {
+                      "id": "purchaseOrderNumber",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "purchaseOrder",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "purchaseOrderAcknowledgment",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      }
+                    }
+                  ],
+                  "matching": {
+                    "strategy": "correlate",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "from"
+                      },
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                },
+                {
+                  "id": "shipmentForOrder",
+                  "fromStep": "purchaseOrder",
+                  "toStep": "advanceShipNotice",
+                  "relationship": "follows",
+                  "within": "P7D",
+                  "correlations": [
+                    {
+                      "id": "purchaseOrderNumber",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "purchaseOrder",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "advanceShipNotice",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      }
+                    }
+                  ],
+                  "matching": {
+                    "strategy": "correlate",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "from"
+                      },
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                },
+                {
+                  "id": "invoiceForOrder",
+                  "fromStep": "purchaseOrder",
+                  "toStep": "invoice",
+                  "relationship": "follows",
+                  "within": "P30D",
+                  "correlations": [
+                    {
+                      "id": "purchaseOrderNumber",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "purchaseOrder",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "invoice",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      }
+                    }
+                  ],
+                  "matching": {
+                    "strategy": "correlate",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "from"
+                      },
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                },
+                {
+                  "id": "invoiceForShipment",
+                  "fromStep": "advanceShipNotice",
+                  "toStep": "invoice",
+                  "relationship": "follows",
+                  "within": "P7D",
+                  "correlations": [
+                    {
+                      "id": "purchaseOrderNumber",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "advanceShipNotice",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "invoice",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      }
+                    },
+                    {
+                      "id": "shipmentId",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "advanceShipNotice",
+                        "fact": "shipmentId",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "invoice",
+                        "fact": "shipmentId",
+                        "projection": "value"
+                      }
+                    }
+                  ],
+                  "matching": {
+                    "strategy": "correlate",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "from"
+                      },
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                }
+              ],
+              "assertions": [
+                {
+                  "id": "purchaseOrderLineKeysUnique",
+                  "operator": "unique",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "purchaseOrder",
+                    "fact": "lineKeys",
+                    "projection": "value"
+                  }
+                },
+                {
+                  "id": "purchaseOrderLinesValid",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "purchaseOrder",
+                    "fact": "linesValid",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "boolean",
+                    "value": true
+                  }
+                },
+                {
+                  "id": "advanceShipNoticeLineKeysUnique",
+                  "operator": "unique",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "advanceShipNotice",
+                    "fact": "lineKeys",
+                    "projection": "value"
+                  }
+                },
+                {
+                  "id": "advanceShipNoticeLinesValid",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "advanceShipNotice",
+                    "fact": "linesValid",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "boolean",
+                    "value": true
+                  }
+                },
+                {
+                  "id": "invoiceLineKeysUnique",
+                  "operator": "unique",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "invoice",
+                    "fact": "lineKeys",
+                    "projection": "value"
+                  }
+                },
+                {
+                  "id": "invoiceLinesValid",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "invoice",
+                    "fact": "linesValid",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "boolean",
+                    "value": true
+                  }
+                },
+                {
+                  "id": "acknowledgmentAcceptsWithoutChanges",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "purchaseOrderAcknowledgment",
+                    "fact": "acknowledgmentCode",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "string",
+                    "value": "AK"
+                  }
+                },
+                {
+                  "id": "advanceShipNoticeLineKeysMatchOrder",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "purchaseOrder",
+                    "fact": "lineKeys",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "fact",
+                    "stepId": "advanceShipNotice",
+                    "fact": "lineKeys",
+                    "projection": "value"
+                  }
+                },
+                {
+                  "id": "advanceShipNoticeQuantitiesMatchOrder",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "purchaseOrder",
+                    "fact": "quantities",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "fact",
+                    "stepId": "advanceShipNotice",
+                    "fact": "quantities",
+                    "projection": "value"
+                  }
+                },
+                {
+                  "id": "invoiceLineKeysMatchOrder",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "purchaseOrder",
+                    "fact": "lineKeys",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "fact",
+                    "stepId": "invoice",
+                    "fact": "lineKeys",
+                    "projection": "value"
+                  }
+                },
+                {
+                  "id": "invoiceQuantitiesMatchOrder",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "purchaseOrder",
+                    "fact": "quantities",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "fact",
+                    "stepId": "invoice",
+                    "fact": "quantities",
+                    "projection": "value"
+                  }
+                },
+                {
+                  "id": "invoicePricesMatchOrder",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "purchaseOrder",
+                    "fact": "unitPrices",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "fact",
+                    "stepId": "invoice",
+                    "fact": "unitPrices",
+                    "projection": "value"
+                  }
+                },
+                {
+                  "id": "orderUsesUsd",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "purchaseOrder",
+                    "fact": "currency",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "string",
+                    "value": "USD"
+                  }
+                },
+                {
+                  "id": "invoiceCurrencyMatchesOrder",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "purchaseOrder",
+                    "fact": "currency",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "fact",
+                    "stepId": "invoice",
+                    "fact": "currency",
+                    "projection": "value"
+                  }
+                },
+                {
+                  "id": "invoiceTotalMatchesLines",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "invoice",
+                    "fact": "lineTotal",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "fact",
+                    "stepId": "invoice",
+                    "fact": "invoiceTotal",
+                    "projection": "value"
+                  }
+                },
+                {
+                  "id": "invoiceTotalMatchesOrder",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "purchaseOrder",
+                    "fact": "orderTotal",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "fact",
+                    "stepId": "invoice",
+                    "fact": "invoiceTotal",
+                    "projection": "value"
+                  }
+                }
+              ],
+              "checkpoints": [
+                {
+                  "id": "orderObserved"
+                }
+              ],
+              "branches": [
+                {
+                  "id": "acknowledgmentChoice",
+                  "mode": "at_most_one",
+                  "checkpoint": "orderObserved",
+                  "alternatives": [
+                    {
+                      "id": "expectAcknowledgment",
+                      "kind": "when",
+                      "transitionId": "acknowledgmentForOrder",
+                      "conditions": [
+                        {
+                          "id": "acknowledgmentExpected",
+                          "operator": "equal",
+                          "left": {
+                            "kind": "parameter",
+                            "parameter": "acknowledgmentCount"
+                          },
+                          "right": {
+                            "kind": "literal",
+                            "type": "decimal",
+                            "value": 1
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "scenario/supplier-partial-fulfillment.scenario.json",
+      "schema": "ConfigurationResourceDocument",
+      "value": {
+        "apiVersion": "modernedi.com/v1",
+        "kind": "ScenarioDefinition",
+        "metadata": {
+          "key": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"
+        },
+        "spec": {
+          "source": {
+            "$schema": "https://www.modernedi.com/docs/scenarios/schemas/scenario-definition-v1.schema.json",
+            "apiVersion": "modernedi.com/scenario/v1",
+            "kind": "ScenarioDefinition",
+            "metadata": {
+              "namespace": "modernedi.examples",
+              "key": "supplier-partial-fulfillment",
+              "version": "1.0.0"
+            },
+            "spec": {
+              "parameters": [],
+              "actors": [
+                {
+                  "id": "retailer"
+                },
+                {
+                  "id": "supplier"
+                }
+              ],
+              "steps": [
+                {
+                  "id": "purchaseOrder",
+                  "fromActor": "retailer",
+                  "toActor": "supplier",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "850",
+                    "businessUsage": "purchase_order"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 1,
+                    "closure": {
+                      "kind": "fixed"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "purchaseOrderNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "lineKeys",
+                      "type": "list",
+                      "elementType": "string",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "quantities",
+                      "type": "list",
+                      "elementType": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "linesValid",
+                      "type": "boolean",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "unitPrices",
+                      "type": "list",
+                      "elementType": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "financial"
+                    },
+                    {
+                      "name": "orderTotal",
+                      "type": "decimal",
+                      "cardinality": "one",
+                      "normalization": [
+                        "decimal_canonical"
+                      ],
+                      "sensitivity": "financial"
+                    },
+                    {
+                      "name": "currency",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "purchaseOrderNumber",
+                        "lineKeys",
+                        "quantities",
+                        "linesValid",
+                        "unitPrices",
+                        "orderTotal",
+                        "currency"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "purchaseOrderAcknowledgment",
+                  "fromActor": "supplier",
+                  "toActor": "retailer",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "855",
+                    "businessUsage": "purchase_order_acknowledgment"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 1,
+                    "closure": {
+                      "kind": "fixed"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "purchaseOrderNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "acknowledgmentCode",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "lineKeys",
+                      "type": "list",
+                      "elementType": "string",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "quantities",
+                      "type": "list",
+                      "elementType": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "unitPrices",
+                      "type": "list",
+                      "elementType": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "financial"
+                    },
+                    {
+                      "name": "linesValid",
+                      "type": "boolean",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "hasBackorder",
+                      "type": "boolean",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "backorderedQuantity",
+                      "type": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "purchaseOrderNumber",
+                        "acknowledgmentCode",
+                        "lineKeys",
+                        "quantities",
+                        "unitPrices",
+                        "linesValid",
+                        "hasBackorder",
+                        "backorderedQuantity"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "advanceShipNotice",
+                  "fromActor": "supplier",
+                  "toActor": "retailer",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "856",
+                    "businessUsage": "advance_ship_notice"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 3,
+                    "closure": {
+                      "kind": "explicit"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "purchaseOrderNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "shipmentId",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "lineKeys",
+                      "type": "list",
+                      "elementType": "string",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "quantities",
+                      "type": "list",
+                      "elementType": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "linesValid",
+                      "type": "boolean",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "purchaseOrderNumber",
+                        "shipmentId",
+                        "lineKeys",
+                        "quantities",
+                        "linesValid"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "invoice",
+                  "fromActor": "supplier",
+                  "toActor": "retailer",
+                  "transaction": {
+                    "standard": "X12",
+                    "transactionSet": "810",
+                    "businessUsage": "invoice"
+                  },
+                  "occurrence": {
+                    "min": 1,
+                    "max": 3,
+                    "closure": {
+                      "kind": "explicit"
+                    }
+                  },
+                  "facts": [
+                    {
+                      "name": "purchaseOrderNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "shipmentId",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "lineKeys",
+                      "type": "list",
+                      "elementType": "string",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "quantities",
+                      "type": "list",
+                      "elementType": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "linesValid",
+                      "type": "boolean",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "unitPrices",
+                      "type": "list",
+                      "elementType": "decimal",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "financial"
+                    },
+                    {
+                      "name": "lineTotal",
+                      "type": "decimal",
+                      "cardinality": "one",
+                      "normalization": [
+                        "decimal_canonical"
+                      ],
+                      "sensitivity": "financial"
+                    },
+                    {
+                      "name": "invoiceTotal",
+                      "type": "decimal",
+                      "cardinality": "one",
+                      "normalization": [
+                        "decimal_canonical"
+                      ],
+                      "sensitivity": "financial"
+                    },
+                    {
+                      "name": "currency",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [
+                        "trim"
+                      ],
+                      "sensitivity": "business"
+                    },
+                    {
+                      "name": "invoiceNumber",
+                      "type": "string",
+                      "cardinality": "one",
+                      "normalization": [],
+                      "sensitivity": "business"
+                    }
+                  ],
+                  "pipeline": [
+                    {
+                      "id": "exchange",
+                      "kind": "exchange"
+                    },
+                    {
+                      "id": "extract",
+                      "kind": "extract",
+                      "facts": [
+                        "purchaseOrderNumber",
+                        "shipmentId",
+                        "lineKeys",
+                        "quantities",
+                        "linesValid",
+                        "unitPrices",
+                        "lineTotal",
+                        "invoiceTotal",
+                        "currency",
+                        "invoiceNumber"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "transitions": [
+                {
+                  "id": "acknowledgmentForOrder",
+                  "fromStep": "purchaseOrder",
+                  "toStep": "purchaseOrderAcknowledgment",
+                  "relationship": "follows",
+                  "within": "P2D",
+                  "correlations": [
+                    {
+                      "id": "purchaseOrderNumber",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "purchaseOrder",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "purchaseOrderAcknowledgment",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      }
+                    }
+                  ],
+                  "matching": {
+                    "strategy": "correlate",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "from"
+                      },
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                },
+                {
+                  "id": "shipmentForOrder",
+                  "fromStep": "purchaseOrder",
+                  "toStep": "advanceShipNotice",
+                  "relationship": "follows",
+                  "within": "P14D",
+                  "correlations": [
+                    {
+                      "id": "purchaseOrderNumber",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "purchaseOrder",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "advanceShipNotice",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      }
+                    }
+                  ],
+                  "matching": {
+                    "strategy": "correlate",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "from"
+                      },
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                },
+                {
+                  "id": "invoiceForOrder",
+                  "fromStep": "purchaseOrder",
+                  "toStep": "invoice",
+                  "relationship": "follows",
+                  "within": "P21D",
+                  "correlations": [
+                    {
+                      "id": "purchaseOrderNumber",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "purchaseOrder",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "invoice",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      }
+                    }
+                  ],
+                  "matching": {
+                    "strategy": "correlate",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "from"
+                      },
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                },
+                {
+                  "id": "invoiceForShipment",
+                  "fromStep": "advanceShipNotice",
+                  "toStep": "invoice",
+                  "relationship": "follows",
+                  "within": "P2D",
+                  "correlations": [
+                    {
+                      "id": "purchaseOrderNumber",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "advanceShipNotice",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "invoice",
+                        "fact": "purchaseOrderNumber",
+                        "projection": "value"
+                      }
+                    },
+                    {
+                      "id": "shipmentId",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "advanceShipNotice",
+                        "fact": "shipmentId",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "invoice",
+                        "fact": "shipmentId",
+                        "projection": "value"
+                      }
+                    },
+                    {
+                      "id": "sameItems",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "advanceShipNotice",
+                        "fact": "lineKeys",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "invoice",
+                        "fact": "lineKeys",
+                        "projection": "value"
+                      }
+                    },
+                    {
+                      "id": "sameQuantities",
+                      "operator": "equal",
+                      "left": {
+                        "kind": "fact",
+                        "stepId": "advanceShipNotice",
+                        "fact": "quantities",
+                        "projection": "value"
+                      },
+                      "right": {
+                        "kind": "fact",
+                        "stepId": "invoice",
+                        "fact": "quantities",
+                        "projection": "value"
+                      }
+                    }
+                  ],
+                  "matching": {
+                    "strategy": "correlate",
+                    "quantifiers": [
+                      {
+                        "kind": "every",
+                        "scope": "from"
+                      },
+                      {
+                        "kind": "every",
+                        "scope": "to"
+                      },
+                      {
+                        "kind": "exactly",
+                        "scope": "per_from",
+                        "count": 1
+                      },
+                      {
+                        "kind": "exactly",
+                        "scope": "per_to",
+                        "count": 1
+                      }
+                    ],
+                    "unmatched": "fail"
+                  }
+                }
+              ],
+              "assertions": [
+                {
+                  "id": "acknowledgmentContainsChanges",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "purchaseOrderAcknowledgment",
+                    "fact": "acknowledgmentCode",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "string",
+                    "value": "AC"
+                  }
+                },
+                {
+                  "id": "acknowledgmentIdentifiesBackorder",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "purchaseOrderAcknowledgment",
+                    "fact": "hasBackorder",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "boolean",
+                    "value": true
+                  }
+                },
+                {
+                  "id": "purchaseOrderLinesValid",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "purchaseOrder",
+                    "fact": "linesValid",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "boolean",
+                    "value": true
+                  }
+                },
+                {
+                  "id": "purchaseOrderAcknowledgmentLinesValid",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "purchaseOrderAcknowledgment",
+                    "fact": "linesValid",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "boolean",
+                    "value": true
+                  }
+                },
+                {
+                  "id": "advanceShipNoticeLinesValid",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "advanceShipNotice",
+                    "fact": "linesValid",
+                    "projection": "set"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "set",
+                    "elementType": "boolean",
+                    "value": [
+                      true
+                    ]
+                  }
+                },
+                {
+                  "id": "invoiceLinesValid",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "invoice",
+                    "fact": "linesValid",
+                    "projection": "set"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "set",
+                    "elementType": "boolean",
+                    "value": [
+                      true
+                    ]
+                  }
+                },
+                {
+                  "id": "orderUsesUsd",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "purchaseOrder",
+                    "fact": "currency",
+                    "projection": "value"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "string",
+                    "value": "USD"
+                  }
+                },
+                {
+                  "id": "invoicesUseUsd",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "invoice",
+                    "fact": "currency",
+                    "projection": "set"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": "set",
+                    "elementType": "string",
+                    "value": [
+                      "USD"
+                    ]
+                  }
+                },
+                {
+                  "id": "shipmentIdsUnique",
+                  "operator": "unique",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "advanceShipNotice",
+                    "fact": "shipmentId",
+                    "projection": "list"
+                  }
+                },
+                {
+                  "id": "invoiceNumbersUnique",
+                  "operator": "unique",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "invoice",
+                    "fact": "invoiceNumber",
+                    "projection": "list"
+                  }
+                },
+                {
+                  "id": "purchaseOrderAcknowledgmentQuantitiesMatchOrder",
+                  "operator": "keyed_sum_equal",
+                  "left": {
+                    "kind": "keyed_facts",
+                    "stepId": "purchaseOrderAcknowledgment",
+                    "keyFact": "lineKeys",
+                    "fact": "quantities"
+                  },
+                  "right": {
+                    "kind": "keyed_facts",
+                    "stepId": "purchaseOrder",
+                    "keyFact": "lineKeys",
+                    "fact": "quantities"
+                  }
+                },
+                {
+                  "id": "advanceShipNoticeQuantitiesMatchOrder",
+                  "operator": "keyed_sum_equal",
+                  "left": {
+                    "kind": "keyed_facts",
+                    "stepId": "advanceShipNotice",
+                    "keyFact": "lineKeys",
+                    "fact": "quantities"
+                  },
+                  "right": {
+                    "kind": "keyed_facts",
+                    "stepId": "purchaseOrder",
+                    "keyFact": "lineKeys",
+                    "fact": "quantities"
+                  }
+                },
+                {
+                  "id": "invoiceQuantitiesMatchOrder",
+                  "operator": "keyed_sum_equal",
+                  "left": {
+                    "kind": "keyed_facts",
+                    "stepId": "invoice",
+                    "keyFact": "lineKeys",
+                    "fact": "quantities"
+                  },
+                  "right": {
+                    "kind": "keyed_facts",
+                    "stepId": "purchaseOrder",
+                    "keyFact": "lineKeys",
+                    "fact": "quantities"
+                  }
+                },
+                {
+                  "id": "purchaseOrderAcknowledgmentPricesMatchOrder",
+                  "operator": "keyed_equal",
+                  "left": {
+                    "kind": "keyed_facts",
+                    "stepId": "purchaseOrderAcknowledgment",
+                    "keyFact": "lineKeys",
+                    "fact": "unitPrices"
+                  },
+                  "right": {
+                    "kind": "keyed_facts",
+                    "stepId": "purchaseOrder",
+                    "keyFact": "lineKeys",
+                    "fact": "unitPrices"
+                  }
+                },
+                {
+                  "id": "invoicePricesMatchOrder",
+                  "operator": "keyed_equal",
+                  "left": {
+                    "kind": "keyed_facts",
+                    "stepId": "invoice",
+                    "keyFact": "lineKeys",
+                    "fact": "unitPrices"
+                  },
+                  "right": {
+                    "kind": "keyed_facts",
+                    "stepId": "purchaseOrder",
+                    "keyFact": "lineKeys",
+                    "fact": "unitPrices"
+                  }
+                },
+                {
+                  "id": "eachInvoiceTotalMatchesItsLines",
+                  "operator": "equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "invoice",
+                    "fact": "invoiceTotal",
+                    "projection": "list"
+                  },
+                  "right": {
+                    "kind": "fact",
+                    "stepId": "invoice",
+                    "fact": "lineTotal",
+                    "projection": "list"
+                  }
+                },
+                {
+                  "id": "invoiceTotalsMatchOrder",
+                  "operator": "sum_equal",
+                  "left": {
+                    "kind": "fact",
+                    "stepId": "invoice",
+                    "fact": "invoiceTotal",
+                    "projection": "list"
+                  },
+                  "right": {
+                    "kind": "fact",
+                    "stepId": "purchaseOrder",
+                    "fact": "orderTotal",
+                    "projection": "value"
+                  }
+                }
+              ],
+              "checkpoints": [],
+              "branches": []
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "scenario/warehouse-outbound.scenario.json",
       "schema": "ConfigurationResourceDocument",
       "value": {
@@ -3465,6 +6146,34 @@
                     }
                   ]
                 }
+              ],
+              "regressionCases": [
+                {
+                  "id": "order-pending",
+                  "name": "Order awaits invoice",
+                  "parameters": {
+                    "count": 1,
+                    "label": "synthetic",
+                    "enabled": false,
+                    "ports": [
+                      "PHX",
+                      "LAX"
+                    ]
+                  },
+                  "observations": [
+                    {
+                      "stepId": "purchaseOrder",
+                      "mappingCaseId": "order",
+                      "observedAfterSeconds": 0
+                    }
+                  ],
+                  "evaluatedAfterSeconds": 60,
+                  "closeSteps": [],
+                  "expected": {
+                    "outcome": "PENDING",
+                    "checks": []
+                  }
+                }
               ]
             }
           }
@@ -3552,9 +6261,316 @@
                     }
                   ]
                 }
+              ],
+              "regressionCases": [
+                {
+                  "id": "order-pending",
+                  "name": "Order awaits invoice",
+                  "parameters": {
+                    "count": 1,
+                    "label": "synthetic",
+                    "enabled": false,
+                    "ports": [
+                      "PHX",
+                      "LAX"
+                    ]
+                  },
+                  "observations": [
+                    {
+                      "stepId": "purchaseOrder",
+                      "mappingCaseId": "order",
+                      "observedAfterSeconds": 0
+                    }
+                  ],
+                  "evaluatedAfterSeconds": 60,
+                  "closeSteps": [],
+                  "expected": {
+                    "outcome": "PENDING",
+                    "checks": []
+                  }
+                }
               ]
             }
           }
+        }
+      }
+    },
+    {
+      "id": "conversation-verification/PASSED",
+      "schema": "ConfigurationVerificationResponse",
+      "value": {
+        "success": true,
+        "run": {
+          "runId": "verify-11111111-1111-4111-8111-111111111111",
+          "status": "PASSED",
+          "createdAt": "2026-09-08T00:00:00Z",
+          "completedAt": "2026-09-08T00:00:01Z",
+          "appliedOperationId": null,
+          "freshness": "CURRENT",
+          "staleReasons": [],
+          "identity": {
+            "planSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "desiredBundleSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "baseSnapshotEtag": "\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"",
+            "evaluatorSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "mappings": [
+              {
+                "mappingResourceKey": "11111111-1111-4111-8111-111111111111",
+                "candidateSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "casesSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "caseCount": 1,
+                "syntaxTree": {
+                  "x12Version": "4010",
+                  "transactionSetIdentifierCode": "850",
+                  "schemaVersion": 1,
+                  "catalogRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "manifestSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "syntaxTreeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                }
+              }
+            ],
+            "caseCount": 2,
+            "untestedMappingCount": 2,
+            "scenarioBindings": [
+              {
+                "scenarioBindingResourceKey": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+                "definitionSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "bindingSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "authoritySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "casesSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "caseCount": 1,
+                "steps": [
+                  {
+                    "stepId": "invoice",
+                    "syntaxTree": {
+                      "x12Version": "4010",
+                      "transactionSetIdentifierCode": "850",
+                      "schemaVersion": 1,
+                      "catalogRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "manifestSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "syntaxTreeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                    }
+                  }
+                ]
+              }
+            ],
+            "untestedScenarioBindingCount": 0
+          },
+          "cases": [
+            {
+              "mappingResourceKey": "11111111-1111-4111-8111-111111111111",
+              "id": "order",
+              "name": "Synthetic order example",
+              "status": "PASSED",
+              "caseSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "expectedOutputSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "actualOutputSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            {
+              "scenarioBindingResourceKey": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+              "id": "negative",
+              "name": "Reject wrong currency",
+              "mode": "OFFLINE",
+              "caseSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "status": "PASSED",
+              "expectedOutcome": "FAILED",
+              "actualOutcome": "FAILED",
+              "actualChecksSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "checkCount": 1,
+              "diagnosticCode": null,
+              "checks": [
+                {
+                  "id": "assertion:currency",
+                  "outcome": "FAILED",
+                  "code": "VALUE_MISMATCH"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "conversation-verification/FAILED",
+      "schema": "ConfigurationVerificationResponse",
+      "value": {
+        "success": true,
+        "run": {
+          "runId": "verify-11111111-1111-4111-8111-111111111111",
+          "status": "FAILED",
+          "createdAt": "2026-09-08T00:00:00Z",
+          "completedAt": "2026-09-08T00:00:01Z",
+          "appliedOperationId": null,
+          "freshness": "CURRENT",
+          "staleReasons": [],
+          "identity": {
+            "planSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "desiredBundleSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "baseSnapshotEtag": "\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"",
+            "evaluatorSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "mappings": [
+              {
+                "mappingResourceKey": "11111111-1111-4111-8111-111111111111",
+                "candidateSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "casesSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "caseCount": 1,
+                "syntaxTree": {
+                  "x12Version": "4010",
+                  "transactionSetIdentifierCode": "850",
+                  "schemaVersion": 1,
+                  "catalogRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "manifestSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "syntaxTreeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                }
+              }
+            ],
+            "caseCount": 2,
+            "untestedMappingCount": 2,
+            "scenarioBindings": [
+              {
+                "scenarioBindingResourceKey": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+                "definitionSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "bindingSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "authoritySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "casesSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "caseCount": 1,
+                "steps": [
+                  {
+                    "stepId": "invoice",
+                    "syntaxTree": {
+                      "x12Version": "4010",
+                      "transactionSetIdentifierCode": "850",
+                      "schemaVersion": 1,
+                      "catalogRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "manifestSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "syntaxTreeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                    }
+                  }
+                ]
+              }
+            ],
+            "untestedScenarioBindingCount": 0
+          },
+          "cases": [
+            {
+              "mappingResourceKey": "11111111-1111-4111-8111-111111111111",
+              "id": "order",
+              "name": "Synthetic order example",
+              "status": "PASSED",
+              "caseSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "expectedOutputSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "actualOutputSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            {
+              "scenarioBindingResourceKey": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+              "id": "negative",
+              "name": "Reject wrong currency",
+              "mode": "OFFLINE",
+              "caseSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "status": "FAILED",
+              "expectedOutcome": "FAILED",
+              "actualOutcome": "FAILED",
+              "actualChecksSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "checkCount": 1,
+              "diagnosticCode": "EXPECTED_RESULT_MISMATCH",
+              "checks": [
+                {
+                  "id": "assertion:currency",
+                  "outcome": "FAILED",
+                  "code": "VALUE_MISMATCH"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "conversation-verification/ERROR",
+      "schema": "ConfigurationVerificationResponse",
+      "value": {
+        "success": true,
+        "run": {
+          "runId": "verify-11111111-1111-4111-8111-111111111111",
+          "status": "ERROR",
+          "createdAt": "2026-09-08T00:00:00Z",
+          "completedAt": "2026-09-08T00:00:01Z",
+          "appliedOperationId": null,
+          "freshness": "CURRENT",
+          "staleReasons": [],
+          "identity": {
+            "planSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "desiredBundleSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "baseSnapshotEtag": "\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"",
+            "evaluatorSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "mappings": [
+              {
+                "mappingResourceKey": "11111111-1111-4111-8111-111111111111",
+                "candidateSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "casesSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "caseCount": 1,
+                "syntaxTree": {
+                  "x12Version": "4010",
+                  "transactionSetIdentifierCode": "850",
+                  "schemaVersion": 1,
+                  "catalogRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "manifestSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "syntaxTreeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                }
+              }
+            ],
+            "caseCount": 2,
+            "untestedMappingCount": 2,
+            "scenarioBindings": [
+              {
+                "scenarioBindingResourceKey": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+                "definitionSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "bindingSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "authoritySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "casesSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "caseCount": 1,
+                "steps": [
+                  {
+                    "stepId": "invoice",
+                    "syntaxTree": {
+                      "x12Version": "4010",
+                      "transactionSetIdentifierCode": "850",
+                      "schemaVersion": 1,
+                      "catalogRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "manifestSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "syntaxTreeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                    }
+                  }
+                ]
+              }
+            ],
+            "untestedScenarioBindingCount": 0
+          },
+          "cases": [
+            {
+              "mappingResourceKey": "11111111-1111-4111-8111-111111111111",
+              "id": "order",
+              "name": "Synthetic order example",
+              "status": "PASSED",
+              "caseSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "expectedOutputSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "actualOutputSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            {
+              "scenarioBindingResourceKey": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+              "id": "negative",
+              "name": "Reject wrong currency",
+              "mode": "OFFLINE",
+              "caseSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "status": "ERROR",
+              "expectedOutcome": "FAILED",
+              "actualOutcome": null,
+              "actualChecksSha256": null,
+              "checkCount": 0,
+              "diagnosticCode": "MAPPING_CASE_FAILED",
+              "checks": []
+            }
+          ]
         }
       }
     },
@@ -3580,6 +6596,52 @@
         "PHX",
         "LAX"
       ]
+    },
+    {
+      "id": "scenario/ordinary-advance-request",
+      "schema": "AdvanceScenarioRunRequest",
+      "value": {}
+    },
+    {
+      "id": "scenario/explicit-closure-request",
+      "schema": "AdvanceScenarioRunRequest",
+      "value": {
+        "closeSteps": [
+          "advanceShipNotice",
+          "invoice"
+        ]
+      }
+    },
+    {
+      "id": "scenario/explicit-closure-operation",
+      "schema": "ScenarioOperation",
+      "value": {
+        "id": "op-synthetic-close",
+        "action": "close_steps",
+        "disposition": "advanced",
+        "fromRevision": 1,
+        "toRevision": 2
+      }
+    },
+    {
+      "id": "scenario/closable-step",
+      "schema": "ScenarioGraphStep",
+      "value": {
+        "stepId": "invoice",
+        "fromActor": "supplier",
+        "toActor": "retailer",
+        "transactionSet": "810",
+        "direction": "outgoing",
+        "targetKind": "runtime_mapping",
+        "attachable": true,
+        "closable": true,
+        "occurrence": {
+          "min": 1,
+          "max": 3
+        },
+        "observedOccurrences": [],
+        "occurrences": []
+      }
     },
     {
       "id": "outbound-json/numericString",

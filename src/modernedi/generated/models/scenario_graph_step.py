@@ -1,6 +1,6 @@
 # coding: utf-8
 
-"""Generated from the ModernEDI Integration API 1.35.0. Do not edit.
+"""Generated from the ModernEDI Integration API 1.36.0. Do not edit.
 
 OpenAPI Generator 7.24.0; see the package README for usage.
 """
@@ -12,7 +12,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from modernedi.generated.models.scenario_graph_occurrence import ScenarioGraphOccurrence
 from modernedi.generated.models.scenario_graph_step_occurrence import ScenarioGraphStepOccurrence
@@ -31,10 +31,11 @@ class ScenarioGraphStep(BaseModel):
     direction: StrictStr
     target_kind: StrictStr = Field(alias="targetKind")
     attachable: StrictBool = Field(description="True only for runtime_mapping and observation_only targets. Adapter steps are advanced through /advance.")
+    closable: Optional[StrictBool] = Field(default=None, description="Present and true only when the server currently permits explicitly closing this step through advance.closeSteps. Omitted otherwise. Reaching max does not close an explicit stream.")
     occurrence: ScenarioGraphStepOccurrence
     observed_occurrences: List[Annotated[int, Field(strict=True, ge=1)]] = Field(alias="observedOccurrences")
     occurrences: List[ScenarioGraphOccurrence]
-    __properties: ClassVar[List[str]] = ["stepId", "fromActor", "toActor", "transactionSet", "direction", "targetKind", "attachable", "occurrence", "observedOccurrences", "occurrences"]
+    __properties: ClassVar[List[str]] = ["stepId", "fromActor", "toActor", "transactionSet", "direction", "targetKind", "attachable", "closable", "occurrence", "observedOccurrences", "occurrences"]
 
     @field_validator('step_id', mode="before")
     def step_id_validate_regular_expression(cls, value):
@@ -143,6 +144,7 @@ class ScenarioGraphStep(BaseModel):
             "direction": obj.get("direction"),
             "targetKind": obj.get("targetKind"),
             "attachable": obj.get("attachable"),
+            "closable": obj.get("closable"),
             "occurrence": ScenarioGraphStepOccurrence.from_dict(obj["occurrence"]) if obj.get("occurrence") is not None else None,
             "observedOccurrences": obj.get("observedOccurrences"),
             "occurrences": [ScenarioGraphOccurrence.from_dict(_item) for _item in obj["occurrences"]] if obj.get("occurrences") is not None else None
