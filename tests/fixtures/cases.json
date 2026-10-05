@@ -1,5 +1,5 @@
 {
-  "bundledSpecificationSha256": "755cf1e8ca297977b34fd9ad3bafefff1bb9e16ded18780e1dbd2e9efe42a4e4",
+  "bundledSpecificationSha256": "6bf52ed80ac7a03d72570d392aefeb14a69567fb9463e44aecf2aa4a4f7d8833",
   "cases": [
     {
       "id": "acknowledgeMappedOutput/200/default",
@@ -6568,6 +6568,184 @@
               "actualChecksSha256": null,
               "checkCount": 0,
               "diagnosticCode": "MAPPING_CASE_FAILED",
+              "checks": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "conversation-verification/FACT_EVALUATION_TIMEOUT",
+      "schema": "ConfigurationVerificationResponse",
+      "value": {
+        "success": true,
+        "run": {
+          "runId": "verify-11111111-1111-4111-8111-111111111111",
+          "status": "ERROR",
+          "createdAt": "2026-09-08T00:00:00Z",
+          "completedAt": "2026-09-08T00:00:01Z",
+          "appliedOperationId": null,
+          "freshness": "CURRENT",
+          "staleReasons": [],
+          "identity": {
+            "planSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "desiredBundleSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "baseSnapshotEtag": "\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"",
+            "evaluatorSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "mappings": [
+              {
+                "mappingResourceKey": "11111111-1111-4111-8111-111111111111",
+                "candidateSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "casesSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "caseCount": 1,
+                "syntaxTree": {
+                  "x12Version": "4010",
+                  "transactionSetIdentifierCode": "850",
+                  "schemaVersion": 1,
+                  "catalogRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "manifestSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "syntaxTreeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                }
+              }
+            ],
+            "caseCount": 2,
+            "untestedMappingCount": 2,
+            "scenarioBindings": [
+              {
+                "scenarioBindingResourceKey": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+                "definitionSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "bindingSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "authoritySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "casesSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "caseCount": 1,
+                "steps": [
+                  {
+                    "stepId": "invoice",
+                    "syntaxTree": {
+                      "x12Version": "4010",
+                      "transactionSetIdentifierCode": "850",
+                      "schemaVersion": 1,
+                      "catalogRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "manifestSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "syntaxTreeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                    }
+                  }
+                ]
+              }
+            ],
+            "untestedScenarioBindingCount": 0
+          },
+          "cases": [
+            {
+              "mappingResourceKey": "11111111-1111-4111-8111-111111111111",
+              "id": "order",
+              "name": "Synthetic order example",
+              "status": "PASSED",
+              "caseSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "expectedOutputSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "actualOutputSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            {
+              "scenarioBindingResourceKey": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+              "id": "negative",
+              "name": "Reject wrong currency",
+              "mode": "OFFLINE",
+              "caseSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "status": "ERROR",
+              "expectedOutcome": "FAILED",
+              "actualOutcome": null,
+              "actualChecksSha256": null,
+              "checkCount": 0,
+              "diagnosticCode": "FACT_EVALUATION_TIMEOUT",
+              "checks": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "conversation-verification/FACT_EVALUATION_BUSY_OR_LIMIT",
+      "schema": "ConfigurationVerificationResponse",
+      "value": {
+        "success": true,
+        "run": {
+          "runId": "verify-11111111-1111-4111-8111-111111111111",
+          "status": "ERROR",
+          "createdAt": "2026-09-08T00:00:00Z",
+          "completedAt": "2026-09-08T00:00:01Z",
+          "appliedOperationId": null,
+          "freshness": "CURRENT",
+          "staleReasons": [],
+          "identity": {
+            "planSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "desiredBundleSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "baseSnapshotEtag": "\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"",
+            "evaluatorSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "mappings": [
+              {
+                "mappingResourceKey": "11111111-1111-4111-8111-111111111111",
+                "candidateSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "casesSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "caseCount": 1,
+                "syntaxTree": {
+                  "x12Version": "4010",
+                  "transactionSetIdentifierCode": "850",
+                  "schemaVersion": 1,
+                  "catalogRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "manifestSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "syntaxTreeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                }
+              }
+            ],
+            "caseCount": 2,
+            "untestedMappingCount": 2,
+            "scenarioBindings": [
+              {
+                "scenarioBindingResourceKey": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+                "definitionSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "bindingSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "authoritySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "casesSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "caseCount": 1,
+                "steps": [
+                  {
+                    "stepId": "invoice",
+                    "syntaxTree": {
+                      "x12Version": "4010",
+                      "transactionSetIdentifierCode": "850",
+                      "schemaVersion": 1,
+                      "catalogRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "manifestSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "syntaxTreeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                    }
+                  }
+                ]
+              }
+            ],
+            "untestedScenarioBindingCount": 0
+          },
+          "cases": [
+            {
+              "mappingResourceKey": "11111111-1111-4111-8111-111111111111",
+              "id": "order",
+              "name": "Synthetic order example",
+              "status": "PASSED",
+              "caseSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "expectedOutputSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "actualOutputSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            {
+              "scenarioBindingResourceKey": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+              "id": "negative",
+              "name": "Reject wrong currency",
+              "mode": "OFFLINE",
+              "caseSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "status": "ERROR",
+              "expectedOutcome": "FAILED",
+              "actualOutcome": null,
+              "actualChecksSha256": null,
+              "checkCount": 0,
+              "diagnosticCode": "FACT_EVALUATION_BUSY_OR_LIMIT",
               "checks": []
             }
           ]

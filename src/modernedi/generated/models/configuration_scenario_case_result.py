@@ -33,7 +33,7 @@ class ConfigurationScenarioCaseResult(BaseModel):
     status: StrictStr = Field(description="Whether actual interpreter results match all saved expectations. Mapping or document evaluation errors never satisfy negative expectations.")
     actual_outcome: Optional[StrictStr] = Field(description="Actual offline interpreter outcome; null when evaluation could not run.", alias="actualOutcome")
     actual_checks_sha256: Optional[Annotated[str, Field(strict=True)]] = Field(description="Hash of all actual check IDs, outcomes, and codes; null on evaluation errors.", alias="actualChecksSha256")
-    diagnostic_code: Optional[StrictStr] = Field(description="Safe diagnostic category, or null when the saved test passed.", alias="diagnosticCode")
+    diagnostic_code: Optional[StrictStr] = Field(description="Safe diagnostic category, or null when the saved test passed. Fact timeouts and busy/limit errors leave the conversation unevaluated and never satisfy negative expectations. Retry verification; repeated failures may require simplifying the fact expression or contacting support. Raw documents, fact values, and Mapper errors are not included.", alias="diagnosticCode")
     check_count: Annotated[int, Field(strict=True, ge=0)] = Field(description="Total evaluated interpreter checks, including checks omitted from the bounded preview.", alias="checkCount")
     checks: Annotated[List[ConfigurationScenarioCaseCheck], Field(max_length=100)] = Field(description="Bounded preview, non-passing checks first. Contains no raw inputs, outputs, fact values, or engine error text.")
     __properties: ClassVar[List[str]] = ["scenarioBindingResourceKey", "id", "name", "mode", "caseSha256", "expectedOutcome", "status", "actualOutcome", "actualChecksSha256", "diagnosticCode", "checkCount", "checks"]
@@ -92,8 +92,8 @@ class ConfigurationScenarioCaseResult(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['EXPECTED_RESULT_MISMATCH', 'MAPPING_CASE_FAILED', 'DOCUMENT_EVALUATION_FAILED']):
-            raise ValueError("must be one of enum values ('EXPECTED_RESULT_MISMATCH', 'MAPPING_CASE_FAILED', 'DOCUMENT_EVALUATION_FAILED')")
+        if value not in set(['EXPECTED_RESULT_MISMATCH', 'MAPPING_CASE_FAILED', 'DOCUMENT_EVALUATION_FAILED', 'FACT_EVALUATION_TIMEOUT', 'FACT_EVALUATION_BUSY_OR_LIMIT']):
+            raise ValueError("must be one of enum values ('EXPECTED_RESULT_MISMATCH', 'MAPPING_CASE_FAILED', 'DOCUMENT_EVALUATION_FAILED', 'FACT_EVALUATION_TIMEOUT', 'FACT_EVALUATION_BUSY_OR_LIMIT')")
         return value
 
     model_config = ConfigDict(
