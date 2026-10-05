@@ -1,7 +1,7 @@
 {
   "apiVersion": "1.36.0",
   "generatorVersion": "7.24.0",
-  "bundledSpecificationSha256": "676c5c93eb83abdfd06986481ef80b4f921a82df9875284540385d244d235a2f",
+  "bundledSpecificationSha256": "755cf1e8ca297977b34fd9ad3bafefff1bb9e16ded18780e1dbd2e9efe42a4e4",
   "operations": [
     {
       "operationId": "acknowledgeMappedOutput",
